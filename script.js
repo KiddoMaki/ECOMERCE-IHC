@@ -53,6 +53,7 @@ let checkoutStep = 1;
 let currentRoute = "/";
 let detailQuantity = 1;
 let detailVariant = "";
+let detailImageIndex = 0;
 let pendingRemoval = null;
 let removalConfirmationResolve = null;
 let focusBeforeRemovalConfirmation = null;
@@ -63,10 +64,29 @@ function money(value) {
 }
 
 function productVisual(product) {
-  if (product.image) {
-    return `<img class="product-photo" src="${product.image}" alt="" loading="lazy" decoding="async" />`;
+  const image = product.images?.[0] || product.image;
+  if (image) {
+    return `<img class="product-photo" src="${image}" alt="" loading="lazy" decoding="async" />`;
   }
   return `<i class="fa-solid ${product.icon}" aria-hidden="true"></i>`;
+}
+
+function renderDetailVisual(product) {
+  const images = product.images || (product.image ? [product.image] : []);
+  if (!images.length) {
+    return `<div class="detail-art product-art ${product.color}" role="img" aria-label="${product.name}"><span class="art-tag">${product.tag}</span>${productVisual(product)}</div>`;
+  }
+  const selectedIndex = Math.min(detailImageIndex, images.length - 1);
+  const thumbnails = images.length > 1
+    ? `<div class="product-gallery-thumbnails" role="group" aria-label="Imágenes de ${product.name}">${images.map((image, index) => `
+        <button class="product-gallery-thumbnail${index === selectedIndex ? " active" : ""}" type="button" data-detail-image="${index}" aria-label="Ver imagen ${index + 1} de ${images.length} de ${product.name}" aria-pressed="${index === selectedIndex}">
+          <img src="${image}" alt="" loading="lazy" decoding="async" />
+        </button>`).join("")}</div>`
+    : "";
+  return `<div class="product-gallery">
+    <div class="detail-art product-art detail-gallery-image ${product.color}" data-testid="detail-gallery-image"><span class="art-tag">${product.tag}</span><img class="product-photo" src="${images[selectedIndex]}" alt="${product.name}, imagen ${selectedIndex + 1} de ${images.length}" fetchpriority="high" /></div>
+    ${thumbnails}
+  </div>`;
 }
 
 function renderProducts() {
@@ -260,6 +280,7 @@ function renderRoute() {
     document.title = `${product.name} — PichuPaper`;
     detailQuantity = 1;
     detailVariant = productDetails[product.id].variants[0];
+    detailImageIndex = 0;
     routePage.innerHTML = renderProductDetail(product);
     routePage.focus({ preventScroll: true });
     window.scrollTo(0, 0);
@@ -287,7 +308,7 @@ function renderProductDetail(product) {
   const detail = productDetails[product.id];
   return `<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="#/" data-route="/">Inicio</a><span aria-hidden="true">/</span><a href="#catalogo" data-route="/">Catálogo</a><span aria-hidden="true">/</span><span aria-current="page">${product.name}</span></nav>
     <section class="detail-layout" data-testid="product-detail-${product.id}">
-      <div class="detail-art product-art ${product.color}" role="img" aria-label="${product.name}"><span class="art-tag">${product.tag}</span>${productVisual(product)}</div>
+      ${renderDetailVisual(product)}
       <div class="detail-copy"><span class="section-kicker">${product.category} · PichuPaper</span><h1>${product.name}</h1><div class="rating"><i class="fa-solid fa-star" aria-hidden="true"></i> ${product.rating} · selección de la tienda</div><p class="detail-description">${detail.description}</p><div class="detail-price">${money(product.price)} <span>Precio de ejemplo</span></div>
       <label class="detail-label" for="detailVariant">Formato o variante</label><select id="detailVariant" class="detail-select" data-testid="select-product-variant">${detail.variants.map((variant) => `<option>${variant}</option>`).join("")}</select>
       <div class="detail-buy"><div class="quantity-control detail-quantity"><button type="button" data-detail-quantity="-1" aria-label="Restar una unidad" data-testid="button-detail-decrease">−</button><span data-testid="text-detail-quantity">${detailQuantity}</span><button type="button" data-detail-quantity="1" aria-label="Añadir una unidad" data-testid="button-detail-increase">+</button></div><button class="button-primary" type="button" data-action="add-detail" data-testid="button-add-detail">Añadir al carrito <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i></button></div>
@@ -622,6 +643,24 @@ routePage.addEventListener("click", (event) => {
     detailQuantity = Math.max(1, detailQuantity + Number(detailQty.dataset.detailQuantity));
     const quantityNode = routePage.querySelector('[data-testid="text-detail-quantity"]');
     if (quantityNode) quantityNode.textContent = String(detailQuantity);
+    return;
+  }
+  const detailImageButton = event.target.closest("[data-detail-image]");
+  if (detailImageButton) {
+    detailImageIndex = Number(detailImageButton.dataset.detailImage);
+    const id = currentRoute.split("/")[2];
+    const product = products.find((item) => item.id === id);
+    const images = product?.images || (product?.image ? [product.image] : []);
+    const mainImage = routePage.querySelector(".detail-gallery-image");
+    if (product && images[detailImageIndex] && mainImage) {
+      mainImage.src = images[detailImageIndex];
+      mainImage.alt = `${product.name}, imagen ${detailImageIndex + 1} de ${images.length}`;
+      routePage.querySelectorAll("[data-detail-image]").forEach((button) => {
+        const selected = Number(button.dataset.detailImage) === detailImageIndex;
+        button.classList.toggle("active", selected);
+        button.setAttribute("aria-pressed", String(selected));
+      });
+    }
     return;
   }
   if (event.target.closest('[data-action="add-detail"]')) {

@@ -43,7 +43,7 @@ El catálogo está definido al inicio de `script.js`, en el arreglo `products`. 
 
 1. Añade un objeto con `id` único, `name`, `category`, `price`, `rating`, `icon`, `color` y `tag`.
 2. Añade su descripción y las opciones en el objeto `productDetails`, usando el mismo `id`.
-3. Para mostrar una fotografía en lugar del icono, coloca el archivo dentro del proyecto, por ejemplo en `assets/products/`, y agrega una propiedad `image` con su ruta relativa.
+3. Para mostrar fotografías, coloca los archivos en `assets/products/` con el formato `<id-del-producto>-01.webp`, `<id-del-producto>-02.webp`, etc. Agrega sus rutas, en el mismo orden, al arreglo `images`.
 
 Ejemplo de producto con imagen:
 
@@ -57,7 +57,11 @@ Ejemplo de producto con imagen:
   icon: "fa-book-open",
   color: "art-mint",
   tag: "Nuevo",
-  image: "assets/products/cuaderno-floral.webp"
+  images: [
+    "assets/products/cuaderno-floral-01.webp",
+    "assets/products/cuaderno-floral-02.webp",
+    "assets/products/cuaderno-floral-03.webp"
+  ]
 }
 ```
 
@@ -70,7 +74,14 @@ Luego, junto a los otros detalles del catálogo:
 }
 ```
 
-Usa una imagen JPG, PNG o WebP optimizada; conserva exactamente las mayúsculas/minúsculas del nombre y la ruta. Al subir el proyecto a GitHub, sube también el archivo de imagen: Pages no puede mostrar imágenes que solo estén en tu computadora. Si no defines `image`, se usa automáticamente el icono de Font Awesome.
+La primera imagen del arreglo es la foto principal y también se usa en la tarjeta y el carrito. En la ficha aparecen miniaturas que permiten cambiar entre las fotos. Puedes usar JPG, PNG o WebP optimizado; recomendamos WebP y nombres en minúsculas, sin espacios ni tildes. Conserva exactamente las mayúsculas/minúsculas de nombres y rutas. Sube las imágenes al repositorio junto con el código: Pages no puede mostrar archivos que solo estén en tu computadora. Si un producto no tiene imágenes, se usa automáticamente el icono de Font Awesome.
+
+| Producto (`id`) | Archivos que debes subir |
+|-----------------|--------------------------|
+| `cuaderno-a5` | `assets/products/cuaderno-a5-01.webp`, `cuaderno-a5-02.webp` |
+| `boligrafo-gel` | `assets/products/boligrafo-gel-01.webp`, `boligrafo-gel-02.webp` |
+
+Incluí una guía de nombres y carga dentro de [assets/products/README.md](./assets/products/README.md).
 
 ## Ejecutar localmente
 Necesitas Node.js 18 o posterior. En esta carpeta ejecuta:
