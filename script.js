@@ -7,7 +7,15 @@ const products = [
   { id: "organizador", name: "Organizador de escritorio", category: "Escritorio", price: 12.75, rating: "4.8", icon: "fa-box-open", color: "art-white", tag: "Orden bonito" },
   { id: "notas-adhesivas", name: "Notas adhesivas color", category: "Escritorio", price: 3.60, rating: "4.6", icon: "fa-note-sticky", color: "art-mint", tag: "Set x 5" },
   { id: "lapices-color", name: "Lápices de color · 12 tonos", category: "Arte", price: 7.80, rating: "4.9", icon: "fa-palette", color: "art-sky", tag: "12 colores" },
-  { id: "marcadores-arte", name: "Marcadores para ilustrar", category: "Arte", price: 9.40, rating: "4.8", icon: "fa-paintbrush", color: "art-navy", tag: "Doble punta" }
+  { id: "marcadores-arte", name: "Marcadores para ilustrar", category: "Arte", price: 9.40, rating: "4.8", icon: "fa-paintbrush", color: "art-navy", tag: "Doble punta" },
+  { id: "planificador-semanal", name: "Planificador semanal A5", category: "Cuadernos", price: 11.50, rating: "4.9", icon: "fa-calendar-days", color: "art-mint", tag: "Organiza tu semana" },
+  { id: "bloc-listas", name: "Bloc de listas desprendibles", category: "Cuadernos", price: 4.25, rating: "4.7", icon: "fa-list-check", color: "art-white", tag: "50 hojas" },
+  { id: "boligrafo-retractil", name: "Bolígrafo retráctil negro", category: "Bolígrafos", price: 1.80, rating: "4.6", icon: "fa-pen", color: "art-navy", tag: "Trazo 0.7 mm" },
+  { id: "set-boligrafos-color", name: "Set de bolígrafos de colores", category: "Bolígrafos", price: 6.20, rating: "4.8", icon: "fa-marker", color: "art-sky", tag: "Set x 6" },
+  { id: "portalapices", name: "Portalápices de escritorio", category: "Escritorio", price: 8.95, rating: "4.7", icon: "fa-pen-ruler", color: "art-mint", tag: "Orden práctico" },
+  { id: "cinta-decorativa", name: "Cinta decorativa washi", category: "Escritorio", price: 3.40, rating: "4.8", icon: "fa-tape", color: "art-sky", tag: "Set x 3" },
+  { id: "acuarelas", name: "Set de acuarelas compactas", category: "Arte", price: 10.75, rating: "4.9", icon: "fa-droplet", color: "art-white", tag: "12 colores" },
+  { id: "cuaderno-dibujo", name: "Cuaderno para dibujo A4", category: "Arte", price: 9.95, rating: "4.8", icon: "fa-pencil", color: "art-navy", tag: "Papel grueso" }
 ];
 const productDetails = {
   "cuaderno-a5": { description: "Un cuaderno ligero para apuntes, listas y bocetos cotidianos. Papel de buen cuerpo y una portada botánica que alegra el escritorio.", variants: ["A5 · rayado", "A5 · puntos", "A4 · rayado"] },
@@ -17,7 +25,15 @@ const productDetails = {
   organizador: { description: "Un espacio práctico para tener a mano tus herramientas favoritas y despejar la mesa.", variants: ["Natural · compacto", "Natural · amplio"] },
   "notas-adhesivas": { description: "Notas adhesivas en cinco colores para recordatorios, marcadores y pequeñas ideas.", variants: ["Set x 5 · cuadradas"] },
   "lapices-color": { description: "Doce tonos versátiles para colorear, sombrear y dar vida a tus dibujos.", variants: ["12 tonos · estándar"] },
-  "marcadores-arte": { description: "Marcadores de doble punta para trazos expresivos, lettering e ilustración.", variants: ["Set x 6 · surtidos", "Set x 12 · surtidos"] }
+  "marcadores-arte": { description: "Marcadores de doble punta para trazos expresivos, lettering e ilustración.", variants: ["Set x 6 · surtidos", "Set x 12 · surtidos"] },
+  "planificador-semanal": { description: "Planificador compacto para ordenar tareas, citas y prioridades durante la semana.", variants: ["A5 · semana vista", "A4 · semana vista"] },
+  "bloc-listas": { description: "Bloc desprendible para listas de compras, pendientes y recordatorios del día.", variants: ["50 hojas · liso"] },
+  "boligrafo-retractil": { description: "Bolígrafo retráctil de tinta negra para notas y escritura cotidiana.", variants: ["Negro · 0.7 mm"] },
+  "set-boligrafos-color": { description: "Seis colores vivos para organizar apuntes y destacar ideas importantes.", variants: ["Set x 6 · surtidos"] },
+  portalapices: { description: "Portalápices compacto para mantener tus herramientas de escritura al alcance.", variants: ["Verde salvia", "Azul cielo"] },
+  "cinta-decorativa": { description: "Cintas de papel decorativas para personalizar cuadernos, tarjetas y proyectos creativos.", variants: ["Set x 3 · estampados surtidos"] },
+  acuarelas: { description: "Set compacto de acuarelas para practicar mezclas y crear ilustraciones en cualquier lugar.", variants: ["12 colores · incluye pincel"] },
+  "cuaderno-dibujo": { description: "Cuaderno con papel de mayor gramaje, ideal para bocetos, lápiz y técnicas secas.", variants: ["A4 · 30 hojas"] }
 };
 
 const productGrid = document.querySelector("#productGrid");
@@ -46,6 +62,13 @@ function money(value) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
 }
 
+function productVisual(product) {
+  if (product.image) {
+    return `<img class="product-photo" src="${product.image}" alt="" loading="lazy" decoding="async" />`;
+  }
+  return `<i class="fa-solid ${product.icon}" aria-hidden="true"></i>`;
+}
+
 function renderProducts() {
   const query = searchInput.value.trim().toLocaleLowerCase("es");
   const visible = products.filter((product) => {
@@ -64,7 +87,7 @@ function renderProducts() {
       <a class="product-art-link" href="#/product/${product.id}" data-route="/product/${product.id}" aria-label="Ver detalles de ${product.name}" data-testid="link-detail-image-${product.id}">
         <div class="product-art ${product.color}" aria-hidden="true">
           <span class="art-tag">${product.originalPrice ? `Oferta · ${product.tag}` : product.tag}</span>
-          <i class="fa-solid ${product.icon}"></i>
+          ${productVisual(product)}
         </div>
       </a>
       <div class="product-info">
@@ -95,7 +118,7 @@ function renderCart() {
     const product = products.find((entry) => entry.id === item.id);
     const variantKey = encodeURIComponent(item.variant || "");
     return `<article class="cart-row" data-testid="cart-item-${product.id}">
-      <div class="cart-thumb ${product.color}" aria-hidden="true"><i class="fa-solid ${product.icon}"></i></div>
+      <div class="cart-thumb ${product.color}" aria-hidden="true">${productVisual(product)}</div>
       <div><p class="cart-product-name">${product.name}</p><span class="cart-product-price">${item.variant ? `${item.variant} · ` : ""}${money(product.price)} c/u</span>
         <div class="quantity-control" aria-label="Cantidad de ${product.name}">
           <button type="button" data-quantity="-1" data-id="${product.id}" data-variant="${variantKey}" aria-label="Restar una unidad de ${product.name}" data-testid="button-decrease-${product.id}">−</button>
@@ -264,7 +287,7 @@ function renderProductDetail(product) {
   const detail = productDetails[product.id];
   return `<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="#/" data-route="/">Inicio</a><span aria-hidden="true">/</span><a href="#catalogo" data-route="/">Catálogo</a><span aria-hidden="true">/</span><span aria-current="page">${product.name}</span></nav>
     <section class="detail-layout" data-testid="product-detail-${product.id}">
-      <div class="detail-art product-art ${product.color}" role="img" aria-label="${product.name}"><span class="art-tag">${product.tag}</span><i class="fa-solid ${product.icon}" aria-hidden="true"></i></div>
+      <div class="detail-art product-art ${product.color}" role="img" aria-label="${product.name}"><span class="art-tag">${product.tag}</span>${productVisual(product)}</div>
       <div class="detail-copy"><span class="section-kicker">${product.category} · PichuPaper</span><h1>${product.name}</h1><div class="rating"><i class="fa-solid fa-star" aria-hidden="true"></i> ${product.rating} · selección de la tienda</div><p class="detail-description">${detail.description}</p><div class="detail-price">${money(product.price)} <span>Precio de ejemplo</span></div>
       <label class="detail-label" for="detailVariant">Formato o variante</label><select id="detailVariant" class="detail-select" data-testid="select-product-variant">${detail.variants.map((variant) => `<option>${variant}</option>`).join("")}</select>
       <div class="detail-buy"><div class="quantity-control detail-quantity"><button type="button" data-detail-quantity="-1" aria-label="Restar una unidad" data-testid="button-detail-decrease">−</button><span data-testid="text-detail-quantity">${detailQuantity}</span><button type="button" data-detail-quantity="1" aria-label="Añadir una unidad" data-testid="button-detail-increase">+</button></div><button class="button-primary" type="button" data-action="add-detail" data-testid="button-add-detail">Añadir al carrito <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i></button></div>
@@ -286,7 +309,7 @@ function renderCartPage() {
     const variantKey = encodeURIComponent(item.variant || "");
     const testKey = `${product.id}-${variantKey || "default"}`;
     return `<article class="cart-page-row" data-testid="cart-item-${testKey}">
-      <div class="cart-thumb ${product.color}" aria-hidden="true"><i class="fa-solid ${product.icon}"></i></div>
+      <div class="cart-thumb ${product.color}" aria-hidden="true">${productVisual(product)}</div>
       <div class="cart-page-info">
         <a href="#/product/${product.id}" data-route="/product/${product.id}" class="cart-product-name">${product.name}</a>
         <span class="cart-product-price">${variant} · ${money(product.price)} c/u</span>
