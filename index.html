@@ -152,6 +152,18 @@
       </div>
     </aside>
     <div class="checkout-backdrop" id="checkoutBackdrop" aria-hidden="true"></div>
+    <div class="remove-confirm-backdrop" id="removeConfirmBackdrop" hidden></div>
+    <section class="remove-confirm" id="removeConfirm" role="alertdialog" aria-modal="true" aria-labelledby="removeConfirmTitle" aria-describedby="removeConfirmMessage" aria-hidden="true" inert hidden>
+      <div class="remove-confirm-card">
+        <span class="remove-confirm-icon" aria-hidden="true"><i class="fa-regular fa-trash-can"></i></span>
+        <h2 id="removeConfirmTitle">¿Eliminar este producto?</h2>
+        <p id="removeConfirmMessage"></p>
+        <div class="remove-confirm-actions">
+          <button class="button-secondary" id="cancelRemove" type="button">Conservar producto</button>
+          <button class="button-danger" id="confirmRemove" type="button">Sí, eliminar</button>
+        </div>
+      </div>
+    </section>
     <section class="checkout-modal" id="checkoutModal" aria-labelledby="checkoutTitle" aria-hidden="true" inert data-testid="checkout-page">
       <div class="checkout-shell">
         <header class="checkout-header">

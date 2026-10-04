@@ -38,6 +38,9 @@ let currentRoute = "/";
 let detailQuantity = 1;
 let detailVariant = "";
 let pendingRemoval = null;
+let removalConfirmationResolve = null;
+let focusBeforeRemovalConfirmation = null;
+let bodyOverflowBeforeRemovalConfirmation = "";
 
 function money(value) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
@@ -118,11 +121,46 @@ function showToast(message) {
   toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
 }
 
-function removeCartItem(id, variant = "") {
+function setRemovalConfirmationOpen(open) {
+  const modal = document.querySelector("#removeConfirm");
+  const backdrop = document.querySelector("#removeConfirmBackdrop");
+  if (open) bodyOverflowBeforeRemovalConfirmation = document.body.style.overflow;
+  modal.hidden = !open;
+  backdrop.hidden = !open;
+  modal.inert = !open;
+  modal.setAttribute("aria-hidden", String(!open));
+  document.body.style.overflow = open ? "hidden" : bodyOverflowBeforeRemovalConfirmation;
+  if (open) {
+    document.querySelector("#cancelRemove").focus();
+    return;
+  }
+  if (focusBeforeRemovalConfirmation?.isConnected) focusBeforeRemovalConfirmation.focus();
+  else if (cartDrawer.classList.contains("open")) document.querySelector("#cartClose").focus();
+  else if (currentRoute === "/cart") routePage.focus({ preventScroll: true });
+}
+
+function confirmCartRemoval(productName) {
+  document.querySelector("#removeConfirmMessage").textContent = `¿Quieres eliminar "${productName}" del carrito?`;
+  focusBeforeRemovalConfirmation = document.activeElement;
+  setRemovalConfirmationOpen(true);
+  return new Promise((resolve) => {
+    removalConfirmationResolve = resolve;
+  });
+}
+
+function finishRemovalConfirmation(confirmed) {
+  if (!removalConfirmationResolve) return;
+  const resolve = removalConfirmationResolve;
+  removalConfirmationResolve = null;
+  setRemovalConfirmationOpen(false);
+  resolve(confirmed);
+}
+
+async function removeCartItem(id, variant = "") {
   const index = cart.findIndex((item) => item.id === id && (item.variant || "") === variant);
   if (index < 0) return;
   const product = products.find((item) => item.id === id);
-  if (!window.confirm(`¿Quieres eliminar "${product.name}" del carrito?`)) return;
+  if (!await confirmCartRemoval(product.name)) return;
   pendingRemoval = { item: cart[index], index };
   cart.splice(index, 1);
   renderCart();
@@ -147,6 +185,10 @@ function removeCartItem(id, variant = "") {
     pendingRemoval = null;
   }, 5000);
 }
+
+document.querySelector("#cancelRemove").addEventListener("click", () => finishRemovalConfirmation(false));
+document.querySelector("#confirmRemove").addEventListener("click", () => finishRemovalConfirmation(true));
+document.querySelector("#removeConfirmBackdrop").addEventListener("click", () => finishRemovalConfirmation(false));
 
 const routePage = document.querySelector("#routePage");
 function navigate(path, replace = false) {
@@ -685,7 +727,8 @@ searchToggle.addEventListener("click", () => {
 document.querySelector("#year").textContent = new Date().getFullYear();
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
-    if (checkoutModal.classList.contains("open")) navigate("/cart");
+    if (!document.querySelector("#removeConfirm").hidden) finishRemovalConfirmation(false);
+    else if (checkoutModal.classList.contains("open")) navigate("/cart");
     else if (cartDrawer.classList.contains("open")) setCartOpen(false);
     if (mobileNav.classList.contains("open")) {
       mobileNav.classList.remove("open");
@@ -716,6 +759,18 @@ document.addEventListener("keydown", (event) => {
       event.preventDefault();
       last.focus();
     } else if (last && !event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+  if (event.key === "Tab" && !document.querySelector("#removeConfirm").hidden) {
+    const focusable = [...document.querySelector("#removeConfirm").querySelectorAll("button:not(:disabled)")];
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
       event.preventDefault();
       first.focus();
     }

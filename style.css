@@ -326,6 +326,17 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 .checkout-backdrop.open { opacity:1; visibility:visible; }
 .checkout-modal { position:fixed; inset:0; z-index:40; display:grid; place-items:center; padding:22px; overflow:auto; opacity:0; visibility:hidden; transition:opacity .2s,visibility .2s; }
 .checkout-modal.open { opacity:1; visibility:visible; }
+.remove-confirm-backdrop { position:fixed; inset:0; z-index:49; background:rgba(30,41,59,.58); backdrop-filter:blur(2px); }
+.remove-confirm { position:fixed; inset:0; z-index:50; display:grid; place-items:center; padding:20px; }
+.remove-confirm[hidden],.remove-confirm-backdrop[hidden] { display:none; }
+.remove-confirm-card { width:min(420px,100%); padding:28px; border:1px solid var(--line); border-radius:12px; background:var(--white); color:var(--navy); text-align:center; box-shadow:0 24px 70px rgba(30,41,59,.24); animation:confirm-enter .18s ease-out; }
+.remove-confirm-icon { display:grid; place-items:center; width:48px; height:48px; margin:0 auto 15px; border-radius:50%; background:var(--soft-sky); color:var(--navy); font-size:18px; }
+.remove-confirm-card h2 { margin:0; font-size:20px; letter-spacing:-.04em; }
+.remove-confirm-card p { margin:9px 0 22px; color:var(--secondary-text); font-size:12px; line-height:1.6; }
+.remove-confirm-actions { display:flex; justify-content:center; gap:10px; }
+.button-danger { min-height:42px; padding:0 17px; border:1px solid #B91C1C; border-radius:var(--radius); background:#B91C1C; color:var(--white); font-size:11px; font-weight:700; cursor:pointer; }
+.button-danger:hover { background:#991B1B; border-color:#991B1B; }
+@keyframes confirm-enter { from { opacity:0; transform:translateY(7px) scale(.98); } to { opacity:1; transform:translateY(0) scale(1); } }
 .checkout-shell { width:min(760px,100%); max-height:min(92dvh,900px); overflow:auto; background:var(--paper); border:1px solid var(--line); border-radius:12px; box-shadow:0 24px 70px rgba(30,41,59,.24); padding:27px 32px 30px; }
 .checkout-header { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; }
 .checkout-brand { color:var(--secondary-text); text-transform:uppercase; letter-spacing:.14em; font-size:9px; font-weight:750; }
@@ -411,7 +422,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
   .checkout-step-heading h3 { font-size:19px; }
 }
 @media (prefers-reduced-motion:reduce) {
-  .checkout-modal,.checkout-backdrop { transition:none; }
+  .checkout-modal,.checkout-backdrop,.remove-confirm-card { transition:none; animation:none; }
 }
 
 /* Nuevas pantallas de navegación: conservan la paleta y el ritmo de la tienda. */
