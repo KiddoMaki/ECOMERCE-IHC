@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#F8FAFC" />
+    <meta name="description" content="PichuPaper: papelería bonita y útil para estudiar, crear y trabajar. Compra en línea desde Ecuador." />
+    <title>PichuPaper — Ideas que toman forma</title>
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..750&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#inicio">Saltar al contenido principal</a>
+    <!-- Una franja breve aterriza la tienda en Ecuador y presenta su promesa de envío. -->
+    <div class="announcement"><strong>Envíos a todo Ecuador</strong>&nbsp; · &nbsp;Gratis en compras desde $35</div>
+    <header class="site-header">
+      <div class="container header-main">
+        <a class="brand" href="#inicio" aria-label="PichuPaper, inicio" data-testid="link-home">
+          <span class="brand-mark" aria-hidden="true"><i class="fa-solid fa-pen-nib"></i></span>
+          <span class="brand-copy"><span class="brand-name">PichuPaper</span><span class="brand-note">Ideas que toman forma</span></span>
+        </a>
+        <nav class="desktop-nav" aria-label="Navegación principal">
+          <a href="#inicio" data-testid="link-home-nav">Inicio</a>
+          <a href="#catalogo" data-testid="link-categories">Categorías</a>
+          <a href="#catalogo" data-offers-only data-testid="link-offers">Ofertas</a>
+          <a href="#contacto" data-testid="link-contact">Contacto</a>
+        </nav>
+        <div class="header-tools">
+          <div class="search-wrap" id="searchWrap">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <input id="searchInput" type="search" placeholder="Busca algo bonito..." aria-label="Buscar productos" data-testid="input-search" />
+          </div>
+          <button class="icon-button search-toggle" id="searchToggle" type="button" aria-label="Abrir búsqueda" aria-expanded="false" data-testid="button-search-toggle"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
+          <button class="cart-trigger" id="cartOpen" type="button" aria-label="Ver carrito" data-testid="button-open-cart">
+            <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i><span class="cart-label">Mi carrito</span><span class="cart-count" id="cartCount" aria-live="polite" data-testid="text-cart-count">0</span>
+          </button>
+          <button class="icon-button mobile-menu" id="menuToggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileNav" data-testid="button-mobile-menu"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
+        </div>
+      </div>
+      <nav class="mobile-nav" id="mobileNav" aria-label="Navegación móvil">
+        <a href="#inicio" data-testid="mobile-link-home">Inicio</a>
+        <a href="#catalogo" data-testid="mobile-link-categories">Categorías</a>
+        <a href="#catalogo" data-offers-only data-testid="mobile-link-offers">Ofertas</a>
+        <a href="#contacto" data-testid="mobile-link-contact">Contacto</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Hero ilustrado con papelería apilada: un guiño a la mesa de trabajo cotidiana. -->
+      <section class="hero container" id="inicio" aria-labelledby="hero-title">
+        <div class="hero-panel">
+          <div class="hero-copy">
+            <div class="eyebrow">Tu espacio, tus ideas</div>
+            <h1 id="hero-title">Todo lo que necesitas para tu <span>oficina y estudio</span></h1>
+            <p>Herramientas que dan ganas de empezar. Encuentra tus esenciales para estudiar, crear y hacer que el trabajo fluya.</p>
+            <a class="button-primary" href="#catalogo" data-testid="button-explore-catalog">Explorar Catálogo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+            <div class="hero-stats" aria-label="Beneficios">
+              <span class="hero-stat"><i class="fa-solid fa-box-open" aria-hidden="true"></i> Despachos desde Quito</span>
+              <span class="hero-stat"><i class="fa-solid fa-heart" aria-hidden="true"></i> Elegido con cariño</span>
+            </div>
+          </div>
+          <div class="hero-art" aria-label="Cuadernos y lápiz de colores" role="img">
+            <span class="art-circle one"></span><span class="art-circle two"></span><span class="art-circle three"></span>
+            <span class="scribble" aria-hidden="true">ideas<br />en marcha</span>
+            <div class="stationery-stack" aria-hidden="true">
+              <div class="notebook back"></div><div class="notebook mid"></div>
+              <div class="notebook front"><div class="cover-label">Pichu<strong>Paper</strong>Cuaderno de ideas</div></div>
+              <span class="pencil"></span>
+            </div>
+            <span class="hero-caption">Un buen comienzo cabe en una página</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="trust-strip" aria-label="Ventajas de comprar en PichuPaper">
+        <div class="container trust-inner">
+          <div class="trust-item"><i class="fa-solid fa-truck-fast" aria-hidden="true"></i><span><strong>Envíos nacionales</strong> · Ecuador</span></div>
+          <div class="trust-item"><i class="fa-solid fa-lock" aria-hidden="true"></i><span><strong>Compra simulada</strong> · sin cobros</span></div>
+          <div class="trust-item"><i class="fa-solid fa-box" aria-hidden="true"></i><span><strong>Listo para regalar</strong> · cada detalle cuenta</span></div>
+          <div class="trust-item"><i class="fa-regular fa-comment-dots" aria-hidden="true"></i><span><strong>¿Una duda?</strong> Estamos para ayudarte</span></div>
+        </div>
+      </section>
+
+      <section class="catalog container" id="catalogo" aria-labelledby="catalog-title">
+        <div class="section-head">
+          <div><span class="section-kicker">Pequeñas cosas, grandes ideas</span><h2 id="catalog-title">Encuentra tus esenciales</h2><p>Útiles para el día a día, escogidos para durar.</p></div>
+          <span class="product-count" id="productCount" data-testid="text-product-count"></span>
+        </div>
+        <div class="category-bar" role="group" aria-label="Filtrar por categoría" id="categoryFilters">
+          <button class="category-filter active" type="button" data-category="Todos" aria-pressed="true" data-testid="filter-all">Todos</button>
+          <button class="category-filter" type="button" data-category="Cuadernos" aria-pressed="false" data-testid="filter-cuadernos">Cuadernos</button>
+          <button class="category-filter" type="button" data-category="Bolígrafos" aria-pressed="false" data-testid="filter-boligrafos">Bolígrafos</button>
+          <button class="category-filter" type="button" data-category="Escritorio" aria-pressed="false" data-testid="filter-escritorio">Escritorio</button>
+          <button class="category-filter" type="button" data-category="Arte" aria-pressed="false" data-testid="filter-arte">Arte</button>
+        </div>
+        <div class="product-grid" id="productGrid" aria-live="polite" data-testid="product-grid"></div>
+      </section>
+
+      <section class="brand-note-section container" id="nuestra-esencia" aria-labelledby="note-title">
+        <div class="note-panel">
+          <div class="note-copy">
+            <span class="section-kicker">Hecho para el día a día</span>
+            <h2 id="note-title">Una buena idea merece un buen papel.</h2>
+            <p>Somos una tienda ecuatoriana para quienes disfrutan hacer listas, dibujar en los márgenes y encontrar orden entre tantas ideas. Lo útil también puede ser especial.</p>
+          </div>
+          <div class="note-art" role="img" aria-label="Página de notas con flores dibujadas">
+            <div class="note-paper"><span>hoy puede<br />ser un buen día</span></div><i class="fa-solid fa-wand-magic-sparkles note-flower" aria-hidden="true"></i>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- El pie reúne accesos prácticos, formas de pago informativas y contacto. -->
+    <footer class="site-footer" id="contacto">
+      <div class="container">
+        <div class="footer-main">
+          <div class="footer-brand">
+            <a class="brand" href="#inicio" aria-label="PichuPaper, inicio" data-testid="footer-link-home">
+              <span class="brand-mark" aria-hidden="true"><i class="fa-solid fa-pen-nib"></i></span>
+              <span class="brand-copy"><span class="brand-name">PichuPaper</span><span class="brand-note">Ideas que toman forma</span></span>
+            </a>
+            <p>Un rincón de papelería para acompañar tus ideas, desde Ecuador y con mucho cariño.</p>
+          </div>
+          <div class="footer-col"><h3>La tienda</h3><div class="footer-links"><a href="#catalogo" data-testid="footer-link-catalog">Ver catálogo</a><a href="#catalogo" data-offers-only data-testid="footer-link-offers">Ofertas</a><a href="#nuestra-esencia" data-testid="footer-link-about">Nuestra esencia</a></div></div>
+          <div class="footer-col"><h3>¿Necesitas ayuda?</h3><div class="footer-links"><a href="mailto:hola@papelytinta.ec" data-testid="footer-link-email">Escríbenos</a><a href="#contacto" data-testid="footer-link-shipping">Envíos y entregas</a><a href="#contacto" data-testid="footer-link-faq">Preguntas frecuentes</a></div></div>
+        </div>
+        <div class="footer-bottom"><p>© <span id="year"></span> PichuPaper · Hecho con cariño en Ecuador.</p><p>Catálogo demostrativo · No se procesan pagos en este sitio.</p></div>
+      </div>
+    </footer>
+
+    <main class="route-page container" id="routePage" hidden tabindex="-1" aria-live="polite"></main>
+
+    <!-- El panel es un diálogo modal no bloqueante; sus controles siempre actualizan el carrito local. -->
+    <div class="cart-backdrop" id="cartBackdrop" aria-hidden="true"></div>
+    <aside class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true" inert data-testid="cart-drawer">
+      <div class="drawer-head">
+        <div class="drawer-title"><h2 id="cartTitle">Tu carrito</h2><span id="cartItemsLabel" data-testid="text-cart-items-label">0 productos</span></div>
+        <button class="close-cart" id="cartClose" type="button" aria-label="Cerrar carrito" data-testid="button-close-cart"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+      </div>
+      <div class="cart-items" id="cartItems" data-testid="cart-items"></div>
+      <div class="cart-summary" id="cartSummary">
+        <div class="subtotal-line"><span>Subtotal</span><span id="cartSubtotal" data-testid="text-cart-subtotal">$0.00</span></div>
+        <p class="shipping-note">El checkout muestra un costo de envío solo ilustrativo.</p>
+        <button class="checkout-button" id="checkoutButton" type="button" data-testid="button-checkout"><i class="fa-solid fa-lock" aria-hidden="true"></i> Procesar Pago</button>
+        <p class="demo-note">Demostración: no hay pagos reales ni se guardan o envían datos.</p>
+      </div>
+    </aside>
+    <div class="checkout-backdrop" id="checkoutBackdrop" aria-hidden="true"></div>
+    <section class="checkout-modal" id="checkoutModal" aria-labelledby="checkoutTitle" aria-hidden="true" inert data-testid="checkout-page">
+      <div class="checkout-shell">
+        <header class="checkout-header">
+          <div>
+            <span class="checkout-brand">PichuPaper · simulación</span>
+            <h2 id="checkoutTitle">Completa tu compra de prueba</h2>
+          </div>
+          <button class="checkout-close" id="checkoutClose" type="button" aria-label="Cerrar checkout" data-testid="button-close-checkout"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+        </header>
+        <div class="checkout-progress" aria-label="Progreso del checkout">
+          <span class="progress-step active" data-progress="1">01 <span>Entrega</span></span>
+          <span class="progress-rule"></span>
+          <span class="progress-step" data-progress="2">02 <span>Pago</span></span>
+          <span class="progress-rule"></span>
+          <span class="progress-step" data-progress="3">03 <span>Revisión</span></span>
+        </div>
+        <div class="checkout-warning" role="note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>Prototipo de baja fidelidad. Usa únicamente datos ficticios. No ingreses datos reales ni hagas transferencias.</span></div>
+        <div class="checkout-error" id="checkoutError" role="alert" aria-live="assertive" hidden data-testid="status-checkout-error"></div>
+
+        <form id="checkoutForm" novalidate autocomplete="off">
+          <section class="checkout-step" data-step="1" aria-labelledby="deliveryHeading">
+            <div class="checkout-step-heading"><span class="section-kicker">Paso 1 de 3</span><h3 id="deliveryHeading">¿A dónde lo enviamos?</h3><p>Datos de contacto y entrega para esta demostración.</p></div>
+            <div class="checkout-fields">
+              <label class="checkout-field field-wide">Nombre completo<input id="shippingName" name="name" type="text" autocomplete="off" required data-testid="input-shipping-name" /><small class="field-error" data-error-for="shippingName"></small></label>
+              <label class="checkout-field">Correo electrónico<input id="shippingEmail" name="email" type="email" autocomplete="off" required data-testid="input-shipping-email" /><small class="field-error" data-error-for="shippingEmail"></small></label>
+              <label class="checkout-field">Teléfono en Ecuador<input id="shippingPhone" name="phone" type="tel" autocomplete="off" inputmode="tel" placeholder="09XXXXXXXX o +593XXXXXXXXX" required data-testid="input-shipping-phone" /><small class="field-error" data-error-for="shippingPhone"></small></label>
+              <label class="checkout-field">Provincia<select id="shippingProvince" name="province" required data-testid="select-shipping-province"><option value="">Elige una provincia</option><option>Azuay</option><option>Guayas</option><option>Pichincha</option><option>Manabí</option><option>Loja</option><option>Tungurahua</option><option>Otra provincia</option></select><small class="field-error" data-error-for="shippingProvince"></small></label>
+              <label class="checkout-field field-wide" id="otherProvinceField" hidden>Escribe el nombre de la provincia<input id="shippingProvinceOther" name="provinceOther" type="text" maxlength="40" autocomplete="off" aria-describedby="otherProvinceHelp" data-testid="input-shipping-province-other" /><small id="otherProvinceHelp">Máximo 40 caracteres. La primera letra se pondrá en mayúscula.</small><small class="field-error" data-error-for="shippingProvinceOther"></small></label>
+              <label class="checkout-field">Ciudad<input id="shippingCity" name="city" type="text" autocomplete="off" required data-testid="input-shipping-city" /><small class="field-error" data-error-for="shippingCity"></small></label>
+              <label class="checkout-field field-wide">Dirección de entrega<input id="shippingAddress" name="address" type="text" autocomplete="off" required data-testid="input-shipping-address" /><small class="field-error" data-error-for="shippingAddress"></small></label>
+            </div>
+            <div class="shipping-estimate" data-testid="text-shipping-estimate"><i class="fa-solid fa-truck-fast" aria-hidden="true"></i><span><strong>Envío ilustrativo: $4.25</strong><small>Ejemplo de despacho a Quito, Ecuador. No es una cotización real.</small></span></div>
+            <div class="checkout-actions"><button class="button-primary checkout-next" type="button" data-action="to-payment" data-testid="button-to-payment">Continuar al pago <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>
+          </section>
+
+          <section class="checkout-step" data-step="2" aria-labelledby="paymentHeading" hidden>
+            <div class="checkout-step-heading"><span class="section-kicker">Paso 2 de 3</span><h3 id="paymentHeading">Elige un método de pago</h3><p>Opciones visuales de prueba; aquí no se mueve dinero.</p></div>
+            <fieldset class="payment-options">
+              <legend class="sr-only">Método de pago de demostración</legend>
+              <label class="payment-option"><input type="radio" name="paymentMethod" value="card" checked data-testid="radio-payment-card" /><span class="payment-option-icon"><i class="fa-regular fa-credit-card" aria-hidden="true"></i></span><span><strong>Tarjeta · demo</strong><small>Validación local de campos ficticios</small></span><span class="radio-mark" aria-hidden="true"></span></label>
+              <label class="payment-option"><input type="radio" name="paymentMethod" value="transfer" data-testid="radio-payment-transfer" /><span class="payment-option-icon"><i class="fa-solid fa-building-columns" aria-hidden="true"></i></span><span><strong>Transferencia bancaria · demo</strong><small>Datos de ejemplo, no transferir</small></span><span class="radio-mark" aria-hidden="true"></span></label>
+            </fieldset>
+            <div class="card-demo-fields" id="cardDemoFields">
+              <div class="demo-card-notice"><strong>Solo valores ficticios:</strong> número 0000 0000 0000 0000 · vencimiento 12/30 · código 000. No uses una tarjeta real.</div>
+              <div class="checkout-fields card-fields">
+                <label class="checkout-field field-wide">Número de tarjeta (demo)<input id="cardNumber" name="cardNumber" type="text" inputmode="numeric" autocomplete="off" placeholder="0000 0000 0000 0000" data-testid="input-demo-card-number" /><small class="field-error" data-error-for="cardNumber"></small></label>
+                <label class="checkout-field">Vencimiento<input id="cardExpiry" name="cardExpiry" type="text" inputmode="numeric" autocomplete="off" placeholder="12/30" data-testid="input-demo-card-expiry" /><small class="field-error" data-error-for="cardExpiry"></small></label>
+                <label class="checkout-field">Código de seguridad<input id="cardCvv" name="cardCvv" type="text" inputmode="numeric" autocomplete="off" placeholder="000" data-testid="input-demo-card-cvv" /><small class="field-error" data-error-for="cardCvv"></small></label>
+              </div>
+            </div>
+            <div class="transfer-demo-fields" id="transferDemoFields" hidden data-testid="panel-demo-transfer">
+              <div class="transfer-warning"><strong>No realices una transferencia.</strong> Estos datos son inventados y no corresponden a una cuenta bancaria.</div>
+              <dl class="transfer-details"><div><dt>Institución ficticia</dt><dd>Banco Ejemplo (no existe)</dd></div><div><dt>Cuenta de muestra</dt><dd>000000000000 · solo prototipo</dd></div><div><dt>Beneficiario</dt><dd>PichuPaper DEMO</dd></div></dl>
+              <p class="transfer-caption">La selección solo sirve para recorrer la maqueta; no se registra ni confirma ningún pago.</p>
+            </div>
+            <div class="checkout-actions checkout-actions-split"><button class="button-secondary" type="button" data-action="to-delivery" data-testid="button-back-to-delivery">Volver</button><button class="button-primary checkout-next" type="button" data-action="to-review" data-testid="button-to-review">Revisar compra <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>
+          </section>
+
+          <section class="checkout-step" data-step="3" aria-labelledby="reviewHeading" hidden>
+            <div class="checkout-step-heading"><span class="section-kicker">Paso 3 de 3</span><h3 id="reviewHeading">Revisa tu pedido de prueba</h3><p>Todo es ilustrativo y se borrará al cerrar o reiniciar.</p></div>
+            <div class="review-layout">
+              <div class="review-card"><div class="review-card-title"><strong>Entrega</strong><button type="button" data-action="edit-delivery" data-testid="button-edit-delivery">Editar</button></div><div id="reviewContact" class="review-contact" data-testid="text-review-contact"></div></div>
+              <div class="review-card"><div class="review-card-title"><strong>Método</strong><button type="button" data-action="edit-payment" data-testid="button-edit-payment">Editar</button></div><p id="reviewPayment" data-testid="text-review-payment"></p></div>
+              <div class="review-card"><strong>Artículos</strong><div id="reviewItems" class="review-items" data-testid="review-items"></div><div class="review-total"><span>Subtotal</span><strong id="reviewSubtotal"></strong></div><div class="review-total"><span>Envío ilustrativo</span><strong>$4.25</strong></div><div class="review-total review-grand"><span>Total estimado</span><strong id="reviewTotal"></strong></div></div>
+            </div>
+            <p class="final-demo-warning">Al finalizar solo verás una confirmación de demostración. No se toma ningún pago ni se crea un pedido real.</p>
+            <div class="checkout-actions checkout-actions-split"><button class="button-secondary" type="button" data-action="to-payment" data-testid="button-back-to-payment">Volver</button><button class="button-primary checkout-next" type="button" data-action="finish-demo" data-testid="button-finish-demo">Finalizar simulación</button></div>
+          </section>
+        </form>
+        <section class="checkout-step checkout-result" data-step="success" hidden aria-labelledby="successHeading" data-testid="status-checkout-success">
+          <div class="success-mark"><i class="fa-solid fa-check" aria-hidden="true"></i></div><span class="section-kicker">Simulación completada</span><h3 id="successHeading">Así se vería una confirmación</h3><p>No se tomó ningún pago y no se creó ningún pedido real.</p><p class="success-detail">Tus datos solo estuvieron en esta página y no se guardaron ni enviaron. Al cerrar, se borrarán.</p>
+          <div class="checkout-actions"><button class="button-primary" type="button" data-action="reset-demo" data-testid="button-reset-demo">Volver a la tienda</button></div>
+        </section>
+      </div>
+    </section>
+    <div class="toast" id="toast" role="status" aria-live="polite"><i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMessage"></span><button id="toastAction" type="button" hidden></button></div>
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>
