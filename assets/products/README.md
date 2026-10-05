@@ -2,6 +2,15 @@
 
 Guarda aquí las imágenes de producto y súbelas a GitHub junto con el resto del sitio.
 
+## Imágenes ya conectadas
+
+Las siguientes fotos ya están asociadas al catálogo en `script.js`:
+
+- `cuaderno-a5`: `cuaderno-a5-01.png`, `cuaderno-a5-02.png`, `cuaderno-a5-03.png`
+- `cuaderno-rayas`: `libreta-rayas-del-dia-01.png`, `libreta-rayas-del-dia-02.png`, `libreta-rayas-del-dia-03.png`
+- `planificador-semanal`: `planificador-semanal-a5-01.png`, `planificador-semanal-a5-02.png`
+- `bloc-listas`: `bloc-listas-desprendibles-01.png`, `bloc-listas-desprendibles-02.png`
+
 ## Convención de nombres
 
 Usa el `id` del producto definido en `script.js`, seguido por un guion y un número de dos cifras:

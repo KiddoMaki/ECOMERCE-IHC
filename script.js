@@ -1,15 +1,15 @@
 /* PichuPaper: catálogo, filtros y carrito funcionan enteramente en el navegador. */
 const products = [
-  { id: "cuaderno-a5", name: "Cuaderno A5 Botánica", category: "Cuadernos", price: 8.50, originalPrice: 10.00, rating: "4.9", icon: "fa-book-open", color: "art-mint", tag: "Favorito" },
-  { id: "cuaderno-rayas", name: "Libreta Rayas del día", category: "Cuadernos", price: 6.25, rating: "4.8", icon: "fa-book", color: "art-sky", tag: "A5 · 80 hojas" },
+  { id: "cuaderno-a5", name: "Cuaderno A5 Botánica", category: "Cuadernos", price: 8.50, originalPrice: 10.00, rating: "4.9", icon: "fa-book-open", color: "art-mint", tag: "Favorito", images: ["assets/products/cuaderno-a5-01.png", "assets/products/cuaderno-a5-02.png", "assets/products/cuaderno-a5-03.png"] },
+  { id: "cuaderno-rayas", name: "Libreta Rayas del día", category: "Cuadernos", price: 6.25, rating: "4.8", icon: "fa-book", color: "art-sky", tag: "A5 · 80 hojas", images: ["assets/products/libreta-rayas-del-dia-01.png", "assets/products/libreta-rayas-del-dia-02.png", "assets/products/libreta-rayas-del-dia-03.png"] },
   { id: "boligrafo-gel", name: "Bolígrafo gel punta fina", category: "Bolígrafos", price: 2.40, rating: "4.7", icon: "fa-pen", color: "art-sky", tag: "Tinta azul" },
   { id: "set-resaltadores", name: "Set de resaltadores pastel", category: "Bolígrafos", price: 5.30, originalPrice: 5.90, rating: "4.9", icon: "fa-highlighter", color: "art-navy", tag: "Set x 4" },
   { id: "organizador", name: "Organizador de escritorio", category: "Escritorio", price: 12.75, rating: "4.8", icon: "fa-box-open", color: "art-white", tag: "Orden bonito" },
   { id: "notas-adhesivas", name: "Notas adhesivas color", category: "Escritorio", price: 3.60, rating: "4.6", icon: "fa-note-sticky", color: "art-mint", tag: "Set x 5" },
   { id: "lapices-color", name: "Lápices de color · 12 tonos", category: "Arte", price: 7.80, rating: "4.9", icon: "fa-palette", color: "art-sky", tag: "12 colores" },
   { id: "marcadores-arte", name: "Marcadores para ilustrar", category: "Arte", price: 9.40, rating: "4.8", icon: "fa-paintbrush", color: "art-navy", tag: "Doble punta" },
-  { id: "planificador-semanal", name: "Planificador semanal A5", category: "Cuadernos", price: 11.50, rating: "4.9", icon: "fa-calendar-days", color: "art-mint", tag: "Organiza tu semana" },
-  { id: "bloc-listas", name: "Bloc de listas desprendibles", category: "Cuadernos", price: 4.25, rating: "4.7", icon: "fa-list-check", color: "art-white", tag: "50 hojas" },
+  { id: "planificador-semanal", name: "Planificador semanal A5", category: "Cuadernos", price: 11.50, rating: "4.9", icon: "fa-calendar-days", color: "art-mint", tag: "Organiza tu semana", images: ["assets/products/planificador-semanal-a5-01.png", "assets/products/planificador-semanal-a5-02.png"] },
+  { id: "bloc-listas", name: "Bloc de listas desprendibles", category: "Cuadernos", price: 4.25, rating: "4.7", icon: "fa-list-check", color: "art-white", tag: "50 hojas", images: ["assets/products/bloc-listas-desprendibles-01.png", "assets/products/bloc-listas-desprendibles-02.png"] },
   { id: "boligrafo-retractil", name: "Bolígrafo retráctil negro", category: "Bolígrafos", price: 1.80, rating: "4.6", icon: "fa-pen", color: "art-navy", tag: "Trazo 0.7 mm" },
   { id: "set-boligrafos-color", name: "Set de bolígrafos de colores", category: "Bolígrafos", price: 6.20, rating: "4.8", icon: "fa-marker", color: "art-sky", tag: "Set x 6" },
   { id: "portalapices", name: "Portalápices de escritorio", category: "Escritorio", price: 8.95, rating: "4.7", icon: "fa-pen-ruler", color: "art-mint", tag: "Orden práctico" },
@@ -651,7 +651,7 @@ routePage.addEventListener("click", (event) => {
     const id = currentRoute.split("/")[2];
     const product = products.find((item) => item.id === id);
     const images = product?.images || (product?.image ? [product.image] : []);
-    const mainImage = routePage.querySelector(".detail-gallery-image");
+    const mainImage = routePage.querySelector(".detail-gallery-image .product-photo");
     if (product && images[detailImageIndex] && mainImage) {
       mainImage.src = images[detailImageIndex];
       mainImage.alt = `${product.name}, imagen ${detailImageIndex + 1} de ${images.length}`;

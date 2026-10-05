@@ -76,10 +76,14 @@ Luego, junto a los otros detalles del catálogo:
 
 La primera imagen del arreglo es la foto principal y también se usa en la tarjeta y el carrito. En la ficha aparecen miniaturas que permiten cambiar entre las fotos. Puedes usar JPG, PNG o WebP optimizado; recomendamos WebP y nombres en minúsculas, sin espacios ni tildes. Conserva exactamente las mayúsculas/minúsculas de nombres y rutas. Sube las imágenes al repositorio junto con el código: Pages no puede mostrar archivos que solo estén en tu computadora. Si un producto no tiene imágenes, se usa automáticamente el icono de Font Awesome.
 
-| Producto (`id`) | Archivos que debes subir |
-|-----------------|--------------------------|
-| `cuaderno-a5` | `assets/products/cuaderno-a5-01.webp`, `cuaderno-a5-02.webp` |
-| `boligrafo-gel` | `assets/products/boligrafo-gel-01.webp`, `boligrafo-gel-02.webp` |
+Estas son las imágenes que ya están conectadas:
+
+| Producto (`id`) | Archivos |
+|-----------------|----------|
+| `cuaderno-a5` | `cuaderno-a5-01.png`, `cuaderno-a5-02.png`, `cuaderno-a5-03.png` |
+| `cuaderno-rayas` | `libreta-rayas-del-dia-01.png`, `libreta-rayas-del-dia-02.png`, `libreta-rayas-del-dia-03.png` |
+| `planificador-semanal` | `planificador-semanal-a5-01.png`, `planificador-semanal-a5-02.png` |
+| `bloc-listas` | `bloc-listas-desprendibles-01.png`, `bloc-listas-desprendibles-02.png` |
 
 Incluí una guía de nombres y carga dentro de [assets/products/README.md](./assets/products/README.md).
 
