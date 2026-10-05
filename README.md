@@ -12,9 +12,9 @@ PichuPaper es un prototipo de baja fidelidad de una tienda ecuatoriana de papele
 - Validación de usuario con mensajes claros en una demo sin backend real.
 
 ## Heurísticas aplicadas
-En este prototipo se aplican 7 heurísticas de Nielsen de manera funcional y verificable. Las 3 restantes no se pueden aplicar de forma exhaustiva en una demo sin backend ni sistema real de gestión, por lo que se mantienen como criterios no implementables en este alcance.
+En este prototipo hay 7 heurísticas de Nielsen aplicadas funcionalmente y 3 con alcance parcial por tratarse de una demo estática sin perfiles, persistencia, sistema de soporte ni contenido de ayuda completo.
 
-### Heurísticas implementadas
+### Aplicadas funcionalmente
 - Visibilidad del estado del sistema.
 - Relación entre el sistema y el mundo real.
 - Consistencia y estándares.
@@ -23,12 +23,12 @@ En este prototipo se aplican 7 heurísticas de Nielsen de manera funcional y ver
 - Reconocimiento antes que recuerdo.
 - Diseño estético y minimalista.
 
-### Heurísticas no aplicables en esta demo
+### Aplicación parcial
 - Flexibilidad y eficiencia de uso.
 - Ayuda al usuario para reconocer, diagnosticar y recuperarse de errores.
 - Ayuda y documentación.
 
-La auditoría completa está en [AUDITORIA_PICHUPAPER.md](./AUDITORIA_PICHUPAPER.md).
+La auditoría actualizada, con evidencias y límites de alcance, está en [AUDITORIA_PICHUPAPER.md](./AUDITORIA_PICHUPAPER.md).
 
 ## Archivos incluidos
 - `index.html`: estructura y contenido principal.
