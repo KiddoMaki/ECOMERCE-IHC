@@ -10,7 +10,7 @@ const products = [
   { id: "marcadores-arte", name: "Marcadores para ilustrar", category: "Arte", price: 9.40, rating: "4.8", icon: "fa-paintbrush", color: "art-navy", tag: "Doble punta" },
   { id: "planificador-semanal", name: "Planificador semanal A5", category: "Cuadernos", price: 11.50, rating: "4.9", icon: "fa-calendar-days", color: "art-mint", tag: "Organiza tu semana", images: ["assets/products/planificador-semanal-a5-01.png", "assets/products/planificador-semanal-a5-02.png"] },
   { id: "bloc-listas", name: "Bloc de listas desprendibles", category: "Cuadernos", price: 4.25, rating: "4.7", icon: "fa-list-check", color: "art-white", tag: "50 hojas", images: ["assets/products/bloc-listas-desprendibles-01.png", "assets/products/bloc-listas-desprendibles-02.png"] },
-  { id: "boligrafo-retractil", name: "Bolígrafo retráctil negro", category: "Bolígrafos", price: 1.80, rating: "4.6", icon: "fa-pen", color: "art-navy", tag: "Trazo 0.7 mm" },
+  { id: "boligrafo-retractil", name: "Bolígrafo retráctil negro", category: "Bolígrafos", price: 1.80, rating: "4.6", icon: "fa-pen", color: "art-navy", tag: "Trazo 0.7 mm", images: ["assets/products/boligrafo-retractil-negro-01.png", "assets/products/boligrafo-retractil-negro-02.png"] },
   { id: "set-boligrafos-color", name: "Set de bolígrafos de colores", category: "Bolígrafos", price: 6.20, rating: "4.8", icon: "fa-marker", color: "art-sky", tag: "Set x 6" },
   { id: "portalapices", name: "Portalápices de escritorio", category: "Escritorio", price: 8.95, rating: "4.7", icon: "fa-pen-ruler", color: "art-mint", tag: "Orden práctico" },
   { id: "cinta-decorativa", name: "Cinta decorativa washi", category: "Escritorio", price: 3.40, rating: "4.8", icon: "fa-tape", color: "art-sky", tag: "Set x 3" },
