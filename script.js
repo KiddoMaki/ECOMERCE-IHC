@@ -58,9 +58,64 @@ let pendingRemoval = null;
 let removalConfirmationResolve = null;
 let focusBeforeRemovalConfirmation = null;
 let bodyOverflowBeforeRemovalConfirmation = "";
+const reviewStorageKey = "pichupaper-product-reviews";
+
+function loadProductReviews() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(reviewStorageKey) || "{}");
+    return stored && typeof stored === "object" && !Array.isArray(stored) ? stored : {};
+  } catch {
+    return {};
+  }
+}
+
+const reviewsByProduct = loadProductReviews();
 
 function money(value) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[character]);
+}
+
+function renderProductReviews(product) {
+  const storedReviews = reviewsByProduct[product.id];
+  const reviews = Array.isArray(storedReviews)
+    ? storedReviews.filter((review) => review && Number.isInteger(review.rating) && review.rating >= 1 && review.rating <= 5 && typeof review.comment === "string" && Number.isFinite(Date.parse(review.createdAt)))
+    : [];
+  const reviewItems = reviews.length
+    ? reviews.map((review) => `
+        <article class="review-entry">
+          <div class="review-entry-meta"><span class="review-stars" aria-label="${review.rating} de 5 estrellas">${'<i class="fa-solid fa-star" aria-hidden="true"></i>'.repeat(review.rating)}</span><time datetime="${escapeHtml(review.createdAt)}">${new Intl.DateTimeFormat("es-EC", { dateStyle: "medium" }).format(new Date(review.createdAt))}</time></div>
+          <p>${escapeHtml(review.comment)}</p>
+        </article>`).join("")
+    : `<p class="reviews-empty">Aún no hay reseñas para este producto.</p>`;
+  return `<section class="reviews-section" data-testid="product-reviews-${product.id}" aria-labelledby="reviews-title-${product.id}">
+    <div class="reviews-heading"><div><span class="section-kicker">Opiniones de clientes</span><h2 id="reviews-title-${product.id}" tabindex="-1">Reseñas</h2></div><span class="reviews-count" data-testid="review-count-${product.id}">${reviews.length} ${reviews.length === 1 ? "reseña" : "reseñas"}</span></div>
+    <div class="reviews-layout">
+      <form class="review-form" data-review-form data-product-id="${product.id}">
+        <h3>Comparte tu opinión</h3>
+        <label class="review-field-label" for="review-email-${product.id}">Correo electrónico</label>
+        <input class="review-input" id="review-email-${product.id}" name="review-email" type="email" autocomplete="email" maxlength="254" required data-testid="review-email-${product.id}" />
+        <fieldset class="review-rating-fieldset">
+          <legend class="review-field-label">Calificación</legend>
+          <div class="review-star-options" aria-label="Elige de 1 a 5 estrellas">${[5, 4, 3, 2, 1].map((rating) => `<label class="review-star-option"><input class="sr-only" type="radio" name="review-rating" value="${rating}" required /><span class="review-star-glyph" aria-hidden="true"><i class="fa-solid fa-star"></i></span><span class="sr-only">${rating} ${rating === 1 ? "estrella" : "estrellas"}</span></label>`).join("")}</div>
+        </fieldset>
+        <label class="review-field-label" for="review-comment-${product.id}">Comentario</label>
+        <textarea class="review-input review-textarea" id="review-comment-${product.id}" name="review-comment" rows="4" maxlength="600" required data-testid="review-comment-${product.id}"></textarea>
+        <button class="button-primary review-submit" type="submit" data-testid="review-submit-${product.id}">Publicar reseña <i class="fa-solid fa-paper-plane" aria-hidden="true"></i></button>
+        <p class="review-data-note">El correo se valida pero no se publica ni se guarda. Las reseñas quedan en este navegador.</p>
+      </form>
+      <div class="reviews-list" data-testid="review-list-${product.id}" aria-live="polite">${reviewItems}</div>
+    </div>
+  </section>`;
 }
 
 function productVisual(product, variant = "") {
@@ -317,7 +372,7 @@ function renderProductDetail(product) {
       <label class="detail-label" for="detailVariant">Formato o variante</label><select id="detailVariant" class="detail-select" data-testid="select-product-variant">${detail.variants.map((variant) => `<option>${variant}</option>`).join("")}</select>
       <div class="detail-buy"><div class="quantity-control detail-quantity"><button type="button" data-detail-quantity="-1" aria-label="Restar una unidad" data-testid="button-detail-decrease">−</button><span data-testid="text-detail-quantity">${detailQuantity}</span><button type="button" data-detail-quantity="1" aria-label="Añadir una unidad" data-testid="button-detail-increase">+</button></div><button class="button-primary" type="button" data-action="add-detail" data-testid="button-add-detail">Añadir al carrito <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i></button></div>
       <p class="detail-delivery"><i class="fa-solid fa-truck-fast" aria-hidden="true"></i> Envíos ilustrativos a todo Ecuador. Compra de demostración.</p><button class="text-link" type="button" data-route="/cart" data-testid="button-detail-view-cart">Ver carrito <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>
-    </section><div class="detail-footnote" role="note">Los productos y precios son ejemplos. No se procesa ningún pago ni se crea un pedido real.</div>`;
+    </section>${renderProductReviews(product)}<div class="detail-footnote" role="note">Los productos y precios son ejemplos. No se procesa ningún pago ni se crea un pedido real.</div>`;
 }
 function renderCartPage() {
   const subtotal = cart.reduce((sum, item) => sum + products.find((product) => product.id === item.id).price * item.quantity, 0);
@@ -719,6 +774,35 @@ routePage.addEventListener("change", (event) => {
       if (gallery) gallery.outerHTML = renderDetailVisual(product);
     }
   }
+});
+routePage.addEventListener("input", (event) => {
+  if (event.target.matches('[name="review-comment"]')) event.target.setCustomValidity("");
+});
+routePage.addEventListener("submit", (event) => {
+  const form = event.target.closest("[data-review-form]");
+  if (!form) return;
+  event.preventDefault();
+  const commentInput = form.elements.namedItem("review-comment");
+  const comment = commentInput.value.trim();
+  if (!comment) {
+    commentInput.setCustomValidity("Escribe un comentario antes de publicar.");
+    commentInput.reportValidity();
+    return;
+  }
+  const productId = form.dataset.productId;
+  const rating = Number(new FormData(form).get("review-rating"));
+  const nextReviews = [{ rating, comment, createdAt: new Date().toISOString() }, ...(Array.isArray(reviewsByProduct[productId]) ? reviewsByProduct[productId] : [])];
+  try {
+    localStorage.setItem(reviewStorageKey, JSON.stringify({ ...reviewsByProduct, [productId]: nextReviews }));
+  } catch {
+    showToast("No se pudo guardar la reseña en este navegador.");
+    return;
+  }
+  reviewsByProduct[productId] = nextReviews;
+  const product = products.find((item) => item.id === productId);
+  routePage.querySelector(`[data-testid="product-reviews-${productId}"]`).outerHTML = renderProductReviews(product);
+  routePage.querySelector(`#reviews-title-${productId}`).focus({ preventScroll: true });
+  showToast("Gracias por compartir tu reseña.");
 });
 checkoutModal.addEventListener("click", (event) => {
   const action = event.target.closest("[data-action]")?.dataset.action;
