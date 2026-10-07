@@ -13,6 +13,7 @@ Las siguientes fotos ya están asociadas al catálogo en `script.js`:
 - `set-boligrafos-color`: `set-boligrafos-colores-01.png`, `set-boligrafos-colores-02.png`
 - `organizador`: `organizador-escritorio-compacto-01.png`, `organizador-escritorio-compacto-02.png`, `organizador-escritorio-ampliado-01.png`, `organizador-escritorio-ampliado-02.png` (dos imágenes por opción)
 - `notas-adhesivas`: `notas-adhesivas-colores-01.png`, `notas-adhesivas-colores-02.png`, `notas-adhesivas-colores-03.png`
+- `portalapices`: `portalapices-verde-01.png`, `portalapices-verde-02.png`, `portalapices-azul-01.png`, `portalapices-azul-02.png` (dos imágenes por color)
 - `set-resaltadores`: `set-resaltadores-pastel-01.png`, `set-resaltadores-pastel-02.png`
 - `planificador-semanal`: `planificador-semanal-a5-01.png`, `planificador-semanal-a5-02.png`
 - `bloc-listas`: `bloc-listas-desprendibles-01.png`, `bloc-listas-desprendibles-02.png`
