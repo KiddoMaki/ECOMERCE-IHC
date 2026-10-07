@@ -2,9 +2,9 @@
 const products = [
   { id: "cuaderno-a5", name: "Cuaderno A5 Botánica", category: "Cuadernos", price: 8.50, originalPrice: 10.00, rating: "4.9", icon: "fa-book-open", color: "art-mint", tag: "Favorito", images: ["assets/products/cuaderno-a5-01.png", "assets/products/cuaderno-a5-02.png", "assets/products/cuaderno-a5-03.png"] },
   { id: "cuaderno-rayas", name: "Libreta Rayas del día", category: "Cuadernos", price: 6.25, rating: "4.8", icon: "fa-book", color: "art-sky", tag: "A5 · 80 hojas", images: ["assets/products/libreta-rayas-del-dia-01.png", "assets/products/libreta-rayas-del-dia-02.png", "assets/products/libreta-rayas-del-dia-03.png"] },
-  { id: "boligrafo-gel", name: "Bolígrafo gel punta fina", category: "Bolígrafos", price: 2.40, rating: "4.7", icon: "fa-pen", color: "art-sky", tag: "3 colores · 0.5 mm", variantImages: true, images: ["assets/products/boligrafo-gel-punta-fina-azul-01.png", "assets/products/boligrafo-gel-punta-fina-negrop-01.png", "assets/products/boligrafo-gel-punta-fina-verde-01.png"] },
+  { id: "boligrafo-gel", name: "Bolígrafo gel punta fina", category: "Bolígrafos", price: 2.40, rating: "4.7", icon: "fa-pen", color: "art-sky", tag: "3 colores · 0.5 mm", images: ["assets/products/boligrafo-gel-punta-fina-azul-01.png", "assets/products/boligrafo-gel-punta-fina-negrop-01.png", "assets/products/boligrafo-gel-punta-fina-verde-01.png"], variantImageGroups: [[0], [1], [2]] },
   { id: "set-resaltadores", name: "Set de resaltadores pastel", category: "Bolígrafos", price: 5.30, originalPrice: 5.90, rating: "4.9", icon: "fa-highlighter", color: "art-navy", tag: "Set x 4", images: ["assets/products/set-resaltadores-pastel-01.png", "assets/products/set-resaltadores-pastel-02.png"] },
-  { id: "organizador", name: "Organizador de escritorio", category: "Escritorio", price: 12.75, rating: "4.8", icon: "fa-box-open", color: "art-white", tag: "Orden bonito" },
+  { id: "organizador", name: "Organizador de escritorio", category: "Escritorio", price: 12.75, rating: "4.8", icon: "fa-box-open", color: "art-white", tag: "Orden bonito", images: ["assets/products/organizador-escritorio-compacto-01.png", "assets/products/organizador-escritorio-compacto-02.png", "assets/products/organizador-escritorio-ampliado-01.png", "assets/products/organizador-escritorio-ampliado-02.png"], variantImageGroups: [[0, 1], [2, 3]] },
   { id: "notas-adhesivas", name: "Notas adhesivas color", category: "Escritorio", price: 3.60, rating: "4.6", icon: "fa-note-sticky", color: "art-mint", tag: "Set x 5" },
   { id: "lapices-color", name: "Lápices de color · 12 tonos", category: "Arte", price: 7.80, rating: "4.9", icon: "fa-palette", color: "art-sky", tag: "12 colores" },
   { id: "marcadores-arte", name: "Marcadores para ilustrar", category: "Arte", price: 9.40, rating: "4.8", icon: "fa-paintbrush", color: "art-navy", tag: "Doble punta" },
@@ -22,7 +22,7 @@ const productDetails = {
   "cuaderno-rayas": { description: "Una libreta sencilla para llevar ideas a todas partes, con hojas rayadas y encuadernación flexible.", variants: ["A5 · 80 hojas", "A6 · 80 hojas"] },
   "boligrafo-gel": { description: "Trazo fluido de punta fina para escribir con precisión en tus apuntes y listas.", variants: ["Azul · 0.5 mm", "Negro · 0.5 mm", "Verde · 0.5 mm"] },
   "set-resaltadores": { description: "Cuatro tonos suaves para subrayar sin perder de vista lo importante.", variants: ["Set pastel · 4 tonos"] },
-  organizador: { description: "Un espacio práctico para tener a mano tus herramientas favoritas y despejar la mesa.", variants: ["Natural · compacto", "Natural · amplio"] },
+  organizador: { description: "Un espacio práctico para tener a mano tus herramientas favoritas y despejar la mesa.", variants: ["Natural · compacto", "Natural · ampliado"] },
   "notas-adhesivas": { description: "Notas adhesivas en cinco colores para recordatorios, marcadores y pequeñas ideas.", variants: ["Set x 5 · cuadradas"] },
   "lapices-color": { description: "Doce tonos versátiles para colorear, sombrear y dar vida a tus dibujos.", variants: ["12 tonos · estándar"] },
   "marcadores-arte": { description: "Marcadores de doble punta para trazos expresivos, lettering e ilustración.", variants: ["Set x 6 · surtidos", "Set x 12 · surtidos"] },
@@ -64,8 +64,9 @@ function money(value) {
 }
 
 function productVisual(product, variant = "") {
-  const variantIndex = product.variantImages ? productDetails[product.id].variants.indexOf(variant) : -1;
-  const image = product.images?.[variantIndex] || product.images?.[0] || product.image;
+  const variantIndex = productDetails[product.id].variants.indexOf(variant);
+  const imageIndex = product.variantImageGroups?.[variantIndex]?.[0] ?? (product.variantImages && variantIndex >= 0 ? variantIndex : 0);
+  const image = product.images?.[imageIndex] || product.images?.[0] || product.image;
   if (image) {
     return `<img class="product-photo" src="${image}" alt="" loading="lazy" decoding="async" />`;
   }
@@ -77,11 +78,13 @@ function renderDetailVisual(product) {
   if (!images.length) {
     return `<div class="detail-art product-art ${product.color}" role="img" aria-label="${product.name}"><span class="art-tag">${product.tag}</span>${productVisual(product)}</div>`;
   }
-  const selectedIndex = Math.min(detailImageIndex, images.length - 1);
-  const thumbnails = images.length > 1
-    ? `<div class="product-gallery-thumbnails" role="group" aria-label="Imágenes de ${product.name}">${images.map((image, index) => `
+  const variantIndex = productDetails[product.id].variants.indexOf(detailVariant);
+  const imageIndexes = product.variantImageGroups?.[variantIndex] || images.map((_, index) => index);
+  const selectedIndex = imageIndexes.includes(detailImageIndex) ? detailImageIndex : imageIndexes[0];
+  const thumbnails = imageIndexes.length > 1
+    ? `<div class="product-gallery-thumbnails" role="group" aria-label="Imágenes de ${product.name}">${imageIndexes.map((index) => `
         <button class="product-gallery-thumbnail${index === selectedIndex ? " active" : ""}" type="button" data-detail-image="${index}" aria-label="Ver imagen ${index + 1} de ${images.length} de ${product.name}" aria-pressed="${index === selectedIndex}">
-          <img src="${image}" alt="" loading="lazy" decoding="async" />
+          <img src="${images[index]}" alt="" loading="lazy" decoding="async" />
         </button>`).join("")}</div>`
     : "";
   return `<div class="product-gallery">
@@ -412,9 +415,13 @@ function setDetailImage(index) {
     button.classList.toggle("active", selected);
     button.setAttribute("aria-pressed", String(selected));
   });
-  if (product.variantImages) {
+  if (product.variantImageGroups) {
+    const variantIndex = product.variantImageGroups.findIndex((group) => group.includes(index));
     const variantSelect = routePage.querySelector("#detailVariant");
-    if (variantSelect) variantSelect.selectedIndex = index;
+    if (variantIndex >= 0) {
+      detailVariant = productDetails[product.id].variants[variantIndex];
+      if (variantSelect) variantSelect.selectedIndex = variantIndex;
+    }
   }
 }
 
@@ -703,7 +710,15 @@ routePage.addEventListener("change", (event) => {
   if (event.target.id !== "detailVariant") return;
   const productId = currentRoute.split("/")[2];
   const product = products.find((item) => item.id === productId);
-  if (product?.variantImages) setDetailImage(event.target.selectedIndex);
+  if (product?.variantImageGroups) {
+    const imageIndex = product.variantImageGroups[event.target.selectedIndex]?.[0];
+    if (imageIndex !== undefined) {
+      detailVariant = event.target.value;
+      detailImageIndex = imageIndex;
+      const gallery = routePage.querySelector(".product-gallery");
+      if (gallery) gallery.outerHTML = renderDetailVisual(product);
+    }
+  }
 });
 checkoutModal.addEventListener("click", (event) => {
   const action = event.target.closest("[data-action]")?.dataset.action;
