@@ -234,7 +234,16 @@
           </section>
         </form>
         <section class="checkout-step checkout-result" data-step="success" hidden aria-labelledby="successHeading" data-testid="status-checkout-success">
-          <div class="success-mark"><i class="fa-solid fa-check" aria-hidden="true"></i></div><span class="section-kicker">Simulación completada</span><h3 id="successHeading">Así se vería una confirmación</h3><p>No se tomó ningún pago y no se creó ningún pedido real.</p><p class="success-detail">Tus datos solo estuvieron en esta página y no se guardaron ni enviaron. Al cerrar, se borrarán.</p>
+          <div class="success-mark"><i class="fa-solid fa-check" aria-hidden="true"></i></div><span class="section-kicker">Confirmación de pedido · simulación</span><h3 id="successHeading">¡Tu pedido está confirmado!</h3><p id="successLead">Tu compra de prueba quedó registrada.</p>
+          <div class="success-order" data-testid="demo-order-summary">
+            <div class="success-order-heading"><span>Número de pedido</span><strong id="successOrderNumber"></strong></div>
+            <div class="success-status-list">
+              <div class="success-status"><span class="success-status-icon"><i class="fa-solid fa-credit-card" aria-hidden="true"></i></span><span class="success-status-copy"><strong id="successPaymentTitle">Pago de demostración</strong><span id="successPaymentDescription"></span></span><span class="success-status-badge" id="successPaymentBadge"></span></div>
+              <div class="success-status"><span class="success-status-icon"><i class="fa-solid fa-truck-fast" aria-hidden="true"></i></span><span class="success-status-copy"><strong>En camino</strong><span id="successShippingDescription"></span></span><span class="success-status-badge">Simulado</span></div>
+            </div>
+            <div class="success-order-items"><strong>Artículos</strong><div id="successOrderItems" data-testid="success-order-items"></div><div class="success-order-total"><span>Total estimado</span><strong id="successOrderTotal"></strong></div></div>
+          </div>
+          <p class="success-demo-note">Solo demostración: no se realizó ningún cobro ni envío, y los datos no se guardaron.</p>
           <div class="checkout-actions"><button class="button-primary" type="button" data-action="reset-demo" data-testid="button-reset-demo">Volver a la tienda</button></div>
         </section>
       </div>

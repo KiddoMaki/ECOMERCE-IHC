@@ -5,11 +5,21 @@ PichuPaper es un prototipo de baja fidelidad de una tienda ecuatoriana de papele
 ## Alcance del proyecto
 - Catálogo de productos con búsqueda y filtros.
 - 16 productos distribuidos en las categorías existentes.
-- Carrito de compras y resumen de pedido.
-- Checkout simulado con validación básica de datos ficticios.
+- Fichas con galerías de fotos; las opciones de color o tamaño pueden mostrar grupos de imágenes distintos.
+- Carrito de compras, resumen de pedido y checkout simulado con validación de entrega y pago ficticios.
+- Confirmación de demostración con número de pedido, artículos, total y estados simulados de pago y envío.
+- Reseñas por producto con calificación de 1 a 5 estrellas y comentario; el correo se valida y no se publica ni se guarda.
+- Reseñas de muestra identificadas con la etiqueta «Ejemplo».
 - Vistas por ruta para catálogo, carrito, detalle de producto y descargas.
 - Diseño responsivo y navegación con foco visible.
-- Validación de usuario con mensajes claros en una demo sin backend real.
+- Validación de datos con mensajes claros en una demo sin backend real.
+
+## Reseñas y checkout de demostración
+Las reseñas enviadas se guardan en `localStorage` de ese navegador, asociadas al producto. El correo solo se usa para validar el formulario y no se almacena ni aparece en la reseña. Las reseñas precargadas son ejemplos, están etiquetadas y no representan opiniones verificadas.
+
+El checkout no procesa pagos, no crea pedidos reales y no envía productos. La pantalla final ilustra cómo se vería una compra: muestra un número `PP-DEMO`, los artículos, el total y estados como «Aprobado · demo» y «En camino / Simulado». Si se elige transferencia, el estado de pago permanece pendiente.
+
+Para recorrer la tarjeta de demostración usa exclusivamente estos valores ficticios: número `0000 0000 0000 0000`, vencimiento `12/30` y código `000`. Un teléfono válido de prueba es `0991234567`. No introduzcas datos reales.
 
 ## Heurísticas aplicadas
 En este prototipo hay 7 heurísticas de Nielsen aplicadas funcionalmente y 3 con alcance parcial por tratarse de una demo estática sin perfiles, persistencia, sistema de soporte ni contenido de ayuda completo.
@@ -35,6 +45,8 @@ La auditoría actualizada, con evidencias y límites de alcance, está en [AUDIT
 - `style.css`: estilos visuales y responsividad.
 - `script.js`: lógica del catálogo, carrito, navegación y checkout simulado.
 - `favicon.svg` y `robots.txt`: recursos del sitio.
+- `assets/logo-pichupaper.jpg`: logo mostrado en el encabezado y pie.
+- `assets/products/`: fotografías conectadas a las galerías del catálogo.
 - `server.mjs`: servidor local para ejecutar la demo.
 - `package.json`: ejecución del proyecto en Node.js.
 
@@ -74,7 +86,9 @@ Luego, junto a los otros detalles del catálogo:
 }
 ```
 
-La primera imagen del arreglo es la foto principal y también se usa en la tarjeta y el carrito. En la ficha aparecen miniaturas que permiten cambiar entre las fotos. Puedes usar JPG, PNG o WebP optimizado; recomendamos WebP y nombres en minúsculas, sin espacios ni tildes. Conserva exactamente las mayúsculas/minúsculas de nombres y rutas. Sube las imágenes al repositorio junto con el código: Pages no puede mostrar archivos que solo estén en tu computadora. Si un producto no tiene imágenes, se usa automáticamente el icono de Font Awesome.
+La primera imagen del arreglo es la foto principal y también se usa en la tarjeta y el carrito. En la ficha aparecen miniaturas que permiten cambiar entre las fotos. Para asociar grupos de imágenes con variantes, usa `variantImageGroups`: cada grupo contiene los índices de `images` correspondientes a la variante en la misma posición de `productDetails.variants`. Por ejemplo, el organizador agrupa dos fotos compactas y dos ampliadas.
+
+Puedes usar JPG, PNG o WebP optimizado; recomendamos WebP y nombres en minúsculas, sin espacios ni tildes. Conserva exactamente las mayúsculas/minúsculas de nombres y rutas existentes. Sube las imágenes al repositorio junto con el código: Pages no puede mostrar archivos que solo estén en tu computadora. Si un producto no tiene imágenes, se usa automáticamente el icono de Font Awesome.
 
 Estas son las imágenes que ya están conectadas:
 
@@ -82,8 +96,20 @@ Estas son las imágenes que ya están conectadas:
 |-----------------|----------|
 | `cuaderno-a5` | `cuaderno-a5-01.png`, `cuaderno-a5-02.png`, `cuaderno-a5-03.png` |
 | `cuaderno-rayas` | `libreta-rayas-del-dia-01.png`, `libreta-rayas-del-dia-02.png`, `libreta-rayas-del-dia-03.png` |
+| `boligrafo-gel` | `boligrafo-gel-punta-fina-azul-01.png`, `boligrafo-gel-punta-fina-negrop-01.png`, `boligrafo-gel-punta-fina-verde-01.png` (Azul, Negro y Verde) |
+| `set-resaltadores` | `set-resaltadores-pastel-01.png`, `set-resaltadores-pastel-02.png` |
+| `organizador` | `organizador-escritorio-compacto-01.png`, `organizador-escritorio-compacto-02.png`, `organizador-escritorio-ampliado-01.png`, `organizador-escritorio-ampliado-02.png` |
+| `notas-adhesivas` | `notas-adhesivas-colores-01.png`, `notas-adhesivas-colores-02.png`, `notas-adhesivas-colores-03.png` |
+| `lapices-color` | `set-lapices-12-colores-01.png`, `set-lapices-12-colores-02.png` |
+| `marcadores-arte` | `marcadores-ilustrar-6-01.png`, `marcadores-ilustrar-12-01.png` (sets de 6 y 12) |
 | `planificador-semanal` | `planificador-semanal-a5-01.png`, `planificador-semanal-a5-02.png` |
 | `bloc-listas` | `bloc-listas-desprendibles-01.png`, `bloc-listas-desprendibles-02.png` |
+| `boligrafo-retractil` | `boligrafo-retractil-negro-01.png`, `boligrafo-retractil-negro-02.png` |
+| `set-boligrafos-color` | `set-boligrafos-colores-01.png`, `set-boligrafos-colores-02.png` |
+| `portalapices` | `portalapices-verde-01.png`, `portalapices-verde-02.png`, `portalapices-azul-01.png`, `portalapices-azul-02.png` (Verde y Azul) |
+| `cinta-decorativa` | `citas-decorativas-washi-01.png`, `citas-decorativas-washi.02.png` |
+| `acuarelas` | `set-acuarelas-compactas-01.png`, `set-acuarelas-compactas-02.png` |
+| `cuaderno-dibujo` | `cuaderno-A4-dibujo-01.png`, `cuaderno-A4-dibujo-02.png` |
 
 Incluí una guía de nombres y carga dentro de [assets/products/README.md](./assets/products/README.md).
 

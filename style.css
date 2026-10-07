@@ -414,6 +414,23 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 .success-mark { display:grid; place-items:center; width:56px; height:56px; margin:0 auto 17px; border-radius:50%; background:var(--mint-wash); color:var(--navy); font-size:22px; }
 .checkout-result>p { max-width:450px; margin:10px auto; color:var(--secondary-text); font-size:12px; line-height:1.65; }
 .checkout-result>p:first-of-type { color:var(--navy); font-weight:750; }
+.success-order { max-width:560px; margin:24px auto 0; padding:20px; border:1px solid var(--line); border-radius:var(--radius); background:var(--white); text-align:left; }
+.success-order-heading,.success-status,.success-order-item,.success-order-total { display:flex; align-items:center; justify-content:space-between; gap:14px; }
+.success-order-heading { padding-bottom:15px; border-bottom:1px solid var(--line); color:var(--secondary-text); font-size:11px; }
+.success-order-heading strong { color:var(--navy); font-size:12px; }
+.success-status-list { display:grid; gap:12px; padding:16px 0; border-bottom:1px solid var(--line); }
+.success-status { justify-content:flex-start; min-width:0; }
+.success-status-icon { width:34px; height:34px; flex:0 0 34px; display:grid; place-items:center; border-radius:50%; background:var(--mint-wash); color:var(--navy); font-size:13px; }
+.success-status-copy { display:grid; gap:3px; min-width:0; flex:1; }
+.success-status-copy strong { font-size:11px; }
+.success-status-copy>span { color:var(--secondary-text); font-size:10px; line-height:1.45; }
+.success-status-badge { padding:5px 8px; border-radius:4px; background:var(--soft-sky); color:var(--navy); font-size:9px; font-weight:700; white-space:nowrap; }
+.success-order-items { padding-top:15px; font-size:11px; }
+.success-order-items>strong { display:block; margin-bottom:8px; }
+.success-order-item { padding:6px 0; font-size:10px; }
+.success-order-item>span { overflow-wrap:anywhere; }
+.success-order-total { margin-top:8px; padding-top:12px; border-top:1px solid var(--line); font-size:11px; }
+.success-demo-note { max-width:560px !important; margin:15px auto !important; padding:10px 12px; border-radius:var(--radius); background:var(--soft-sky); color:var(--navy) !important; font-size:10px !important; }
 .checkout-result .checkout-actions { justify-content:center; }
 @media (max-width:600px) {
   .checkout-modal { display:block; padding:0; }

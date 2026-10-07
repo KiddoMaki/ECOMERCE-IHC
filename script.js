@@ -717,6 +717,31 @@ function renderReview() {
   document.querySelector("#reviewTotal").textContent = money(subtotal + 4.25);
 }
 
+function renderSuccessConfirmation() {
+  const isCardPayment = selectedPayment() === "card";
+  const subtotal = cart.reduce((sum, item) => sum + products.find((product) => product.id === item.id).price * item.quantity, 0);
+  const total = subtotal + 4.25;
+  const province = checkoutContact?.province || "";
+  const city = checkoutContact?.city || "";
+  document.querySelector("#successHeading").textContent = isCardPayment ? "¡Tu pedido está confirmado!" : "¡Tu pedido quedó registrado!";
+  document.querySelector("#successLead").textContent = isCardPayment
+    ? `La compra de prueba por ${money(total)} quedó confirmada.`
+    : "El pedido quedó registrado; la transferencia sigue pendiente en esta simulación.";
+  document.querySelector("#successOrderNumber").textContent = `PP-DEMO-${Date.now().toString().slice(-6)}`;
+  document.querySelector("#successPaymentTitle").textContent = isCardPayment ? "Pago aprobado" : "Pago pendiente";
+  document.querySelector("#successPaymentDescription").textContent = isCardPayment
+    ? "Tarjeta ficticia validada para esta demostración."
+    : "No se recibió una transferencia; no envíes dinero.";
+  document.querySelector("#successPaymentBadge").textContent = isCardPayment ? "Aprobado · demo" : "Pendiente · demo";
+  document.querySelector("#successShippingDescription").textContent = `Destino de prueba: ${city}, ${province}.`;
+  document.querySelector("#successOrderItems").innerHTML = cart.map((item) => {
+    const product = products.find((entry) => entry.id === item.id);
+    const variant = item.variant ? ` · ${escapeHtml(item.variant)}` : "";
+    return `<div class="success-order-item"><span>${escapeHtml(product.name)}${variant} × ${item.quantity}</span><strong>${money(product.price * item.quantity)}</strong></div>`;
+  }).join("");
+  document.querySelector("#successOrderTotal").textContent = money(total);
+}
+
 document.querySelector("#checkoutButton").addEventListener("click", () => {
   if (!cart.length) return;
   navigate("/payment");
@@ -830,6 +855,7 @@ checkoutModal.addEventListener("click", (event) => {
   } else if (action === "edit-payment" || action === "back-to-payment") {
     setCheckoutStep(2);
   } else if (action === "finish-demo") {
+    renderSuccessConfirmation();
     checkoutForm.hidden = true;
     checkoutModal.querySelector('[data-step="success"]').hidden = false;
     checkoutProgress.forEach((node) => { node.classList.add("done"); node.classList.remove("active"); });
