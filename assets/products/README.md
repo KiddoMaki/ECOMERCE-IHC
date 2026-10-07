@@ -15,6 +15,7 @@ Las siguientes fotos ya están asociadas al catálogo en `script.js`:
 - `notas-adhesivas`: `notas-adhesivas-colores-01.png`, `notas-adhesivas-colores-02.png`, `notas-adhesivas-colores-03.png`
 - `portalapices`: `portalapices-verde-01.png`, `portalapices-verde-02.png`, `portalapices-azul-01.png`, `portalapices-azul-02.png` (dos imágenes por color)
 - `cinta-decorativa`: `citas-decorativas-washi-01.png`, `citas-decorativas-washi.02.png`
+- `lapices-color`: `set-lapices-12-colores-01.png`, `set-lapices-12-colores-02.png`
 - `set-resaltadores`: `set-resaltadores-pastel-01.png`, `set-resaltadores-pastel-02.png`
 - `planificador-semanal`: `planificador-semanal-a5-01.png`, `planificador-semanal-a5-02.png`
 - `bloc-listas`: `bloc-listas-desprendibles-01.png`, `bloc-listas-desprendibles-02.png`
