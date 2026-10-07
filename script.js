@@ -2,8 +2,8 @@
 const products = [
   { id: "cuaderno-a5", name: "Cuaderno A5 Botánica", category: "Cuadernos", price: 8.50, originalPrice: 10.00, rating: "4.9", icon: "fa-book-open", color: "art-mint", tag: "Favorito", images: ["assets/products/cuaderno-a5-01.png", "assets/products/cuaderno-a5-02.png", "assets/products/cuaderno-a5-03.png"] },
   { id: "cuaderno-rayas", name: "Libreta Rayas del día", category: "Cuadernos", price: 6.25, rating: "4.8", icon: "fa-book", color: "art-sky", tag: "A5 · 80 hojas", images: ["assets/products/libreta-rayas-del-dia-01.png", "assets/products/libreta-rayas-del-dia-02.png", "assets/products/libreta-rayas-del-dia-03.png"] },
-  { id: "boligrafo-gel", name: "Bolígrafo gel punta fina", category: "Bolígrafos", price: 2.40, rating: "4.7", icon: "fa-pen", color: "art-sky", tag: "Tinta azul" },
-  { id: "set-resaltadores", name: "Set de resaltadores pastel", category: "Bolígrafos", price: 5.30, originalPrice: 5.90, rating: "4.9", icon: "fa-highlighter", color: "art-navy", tag: "Set x 4" },
+  { id: "boligrafo-gel", name: "Bolígrafo gel punta fina", category: "Bolígrafos", price: 2.40, rating: "4.7", icon: "fa-pen", color: "art-sky", tag: "3 colores · 0.5 mm", variantImages: true, images: ["assets/products/boligrafo-gel-punta-fina-azul-01.png", "assets/products/boligrafo-gel-punta-fina-negrop-01.png", "assets/products/boligrafo-gel-punta-fina-verde-01.png"] },
+  { id: "set-resaltadores", name: "Set de resaltadores pastel", category: "Bolígrafos", price: 5.30, originalPrice: 5.90, rating: "4.9", icon: "fa-highlighter", color: "art-navy", tag: "Set x 4", images: ["assets/products/set-resaltadores-pastel-01.png", "assets/products/set-resaltadores-pastel-02.png"] },
   { id: "organizador", name: "Organizador de escritorio", category: "Escritorio", price: 12.75, rating: "4.8", icon: "fa-box-open", color: "art-white", tag: "Orden bonito" },
   { id: "notas-adhesivas", name: "Notas adhesivas color", category: "Escritorio", price: 3.60, rating: "4.6", icon: "fa-note-sticky", color: "art-mint", tag: "Set x 5" },
   { id: "lapices-color", name: "Lápices de color · 12 tonos", category: "Arte", price: 7.80, rating: "4.9", icon: "fa-palette", color: "art-sky", tag: "12 colores" },
@@ -63,8 +63,9 @@ function money(value) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
 }
 
-function productVisual(product) {
-  const image = product.images?.[0] || product.image;
+function productVisual(product, variant = "") {
+  const variantIndex = product.variantImages ? productDetails[product.id].variants.indexOf(variant) : -1;
+  const image = product.images?.[variantIndex] || product.images?.[0] || product.image;
   if (image) {
     return `<img class="product-photo" src="${image}" alt="" loading="lazy" decoding="async" />`;
   }
@@ -138,7 +139,7 @@ function renderCart() {
     const product = products.find((entry) => entry.id === item.id);
     const variantKey = encodeURIComponent(item.variant || "");
     return `<article class="cart-row" data-testid="cart-item-${product.id}">
-      <div class="cart-thumb ${product.color}" aria-hidden="true">${productVisual(product)}</div>
+      <div class="cart-thumb ${product.color}" aria-hidden="true">${productVisual(product, item.variant)}</div>
       <div><p class="cart-product-name">${product.name}</p><span class="cart-product-price">${item.variant ? `${item.variant} · ` : ""}${money(product.price)} c/u</span>
         <div class="quantity-control" aria-label="Cantidad de ${product.name}">
           <button type="button" data-quantity="-1" data-id="${product.id}" data-variant="${variantKey}" aria-label="Restar una unidad de ${product.name}" data-testid="button-decrease-${product.id}">−</button>
@@ -330,7 +331,7 @@ function renderCartPage() {
     const variantKey = encodeURIComponent(item.variant || "");
     const testKey = `${product.id}-${variantKey || "default"}`;
     return `<article class="cart-page-row" data-testid="cart-item-${testKey}">
-      <div class="cart-thumb ${product.color}" aria-hidden="true">${productVisual(product)}</div>
+      <div class="cart-thumb ${product.color}" aria-hidden="true">${productVisual(product, item.variant)}</div>
       <div class="cart-page-info">
         <a href="#/product/${product.id}" data-route="/product/${product.id}" class="cart-product-name">${product.name}</a>
         <span class="cart-product-price">${variant} · ${money(product.price)} c/u</span>
@@ -393,6 +394,28 @@ function setCartOpen(open) {
   document.body.style.overflow = open ? "hidden" : "";
   if (open) document.querySelector("#cartClose").focus();
   else if (focusBeforeCart && typeof focusBeforeCart.focus === "function") focusBeforeCart.focus();
+}
+
+function setDetailImage(index) {
+  const productId = currentRoute.split("/")[2];
+  const product = products.find((item) => item.id === productId);
+  const image = product?.images?.[index];
+  if (!product || !image) return;
+  detailImageIndex = index;
+  const mainImage = routePage.querySelector(".detail-gallery-image .product-photo");
+  if (mainImage) {
+    mainImage.src = image;
+    mainImage.alt = `${product.name}, imagen ${index + 1} de ${product.images.length}`;
+  }
+  routePage.querySelectorAll("[data-detail-image]").forEach((button) => {
+    const selected = Number(button.dataset.detailImage) === index;
+    button.classList.toggle("active", selected);
+    button.setAttribute("aria-pressed", String(selected));
+  });
+  if (product.variantImages) {
+    const variantSelect = routePage.querySelector("#detailVariant");
+    if (variantSelect) variantSelect.selectedIndex = index;
+  }
 }
 
 // Filtros y búsqueda comparten el mismo render para combinarse sin resultados inconsistentes.
@@ -647,20 +670,7 @@ routePage.addEventListener("click", (event) => {
   }
   const detailImageButton = event.target.closest("[data-detail-image]");
   if (detailImageButton) {
-    detailImageIndex = Number(detailImageButton.dataset.detailImage);
-    const id = currentRoute.split("/")[2];
-    const product = products.find((item) => item.id === id);
-    const images = product?.images || (product?.image ? [product.image] : []);
-    const mainImage = routePage.querySelector(".detail-gallery-image .product-photo");
-    if (product && images[detailImageIndex] && mainImage) {
-      mainImage.src = images[detailImageIndex];
-      mainImage.alt = `${product.name}, imagen ${detailImageIndex + 1} de ${images.length}`;
-      routePage.querySelectorAll("[data-detail-image]").forEach((button) => {
-        const selected = Number(button.dataset.detailImage) === detailImageIndex;
-        button.classList.toggle("active", selected);
-        button.setAttribute("aria-pressed", String(selected));
-      });
-    }
+    setDetailImage(Number(detailImageButton.dataset.detailImage));
     return;
   }
   if (event.target.closest('[data-action="add-detail"]')) {
@@ -688,6 +698,12 @@ routePage.addEventListener("click", (event) => {
     renderCart();
     renderRoute();
   }
+});
+routePage.addEventListener("change", (event) => {
+  if (event.target.id !== "detailVariant") return;
+  const productId = currentRoute.split("/")[2];
+  const product = products.find((item) => item.id === productId);
+  if (product?.variantImages) setDetailImage(event.target.selectedIndex);
 });
 checkoutModal.addEventListener("click", (event) => {
   const action = event.target.closest("[data-action]")?.dataset.action;

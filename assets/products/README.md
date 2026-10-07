@@ -8,6 +8,8 @@ Las siguientes fotos ya están asociadas al catálogo en `script.js`:
 
 - `cuaderno-a5`: `cuaderno-a5-01.png`, `cuaderno-a5-02.png`, `cuaderno-a5-03.png`
 - `cuaderno-rayas`: `libreta-rayas-del-dia-01.png`, `libreta-rayas-del-dia-02.png`, `libreta-rayas-del-dia-03.png`
+- `boligrafo-gel`: `boligrafo-gel-punta-fina-azul-01.png`, `boligrafo-gel-punta-fina-negrop-01.png`, `boligrafo-gel-punta-fina-verde-01.png` (Azul, Negro y Verde; cada imagen corresponde a su variante)
+- `set-resaltadores`: `set-resaltadores-pastel-01.png`, `set-resaltadores-pastel-02.png`
 - `planificador-semanal`: `planificador-semanal-a5-01.png`, `planificador-semanal-a5-02.png`
 - `bloc-listas`: `bloc-listas-desprendibles-01.png`, `bloc-listas-desprendibles-02.png`
 
