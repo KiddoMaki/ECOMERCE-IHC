@@ -18,6 +18,7 @@ Las siguientes fotos ya están asociadas al catálogo en `script.js`:
 - `lapices-color`: `set-lapices-12-colores-01.png`, `set-lapices-12-colores-02.png`
 - `marcadores-arte`: `marcadores-ilustrar-6-01.png`, `marcadores-ilustrar-12-01.png` (una foto por set)
 - `acuarelas`: `set-acuarelas-compactas-01.png`, `set-acuarelas-compactas-02.png`
+- `cuaderno-dibujo`: `cuaderno-A4-dibujo-01.png`, `cuaderno-A4-dibujo-02.png`
 - `set-resaltadores`: `set-resaltadores-pastel-01.png`, `set-resaltadores-pastel-02.png`
 - `planificador-semanal`: `planificador-semanal-a5-01.png`, `planificador-semanal-a5-02.png`
 - `bloc-listas`: `bloc-listas-desprendibles-01.png`, `bloc-listas-desprendibles-02.png`
