@@ -14,7 +14,7 @@ const products = [
   { id: "set-boligrafos-color", name: "Set de bolígrafos de colores", category: "Bolígrafos", price: 6.20, rating: "4.8", icon: "fa-marker", color: "art-sky", tag: "Set x 6", images: ["assets/products/set-boligrafos-colores-01.png", "assets/products/set-boligrafos-colores-02.png"] },
   { id: "portalapices", name: "Portalápices de escritorio", category: "Escritorio", price: 8.95, rating: "4.7", icon: "fa-pen-ruler", color: "art-mint", tag: "Orden práctico", images: ["assets/products/portalapices-verde-01.png", "assets/products/portalapices-verde-02.png", "assets/products/portalapices-azul-01.png", "assets/products/portalapices-azul-02.png"], variantImageGroups: [[0, 1], [2, 3]] },
   { id: "cinta-decorativa", name: "Cinta decorativa washi", category: "Escritorio", price: 3.40, rating: "4.8", icon: "fa-tape", color: "art-sky", tag: "Set x 3", images: ["assets/products/citas-decorativas-washi-01.png", "assets/products/citas-decorativas-washi.02.png"] },
-  { id: "acuarelas", name: "Set de acuarelas compactas", category: "Arte", price: 10.75, rating: "4.9", icon: "fa-droplet", color: "art-white", tag: "12 colores" },
+  { id: "acuarelas", name: "Set de acuarelas compactas", category: "Arte", price: 10.75, rating: "4.9", icon: "fa-droplet", color: "art-white", tag: "12 colores", images: ["assets/products/set-acuarelas-compactas-01.png", "assets/products/set-acuarelas-compactas-02.png"] },
   { id: "cuaderno-dibujo", name: "Cuaderno para dibujo A4", category: "Arte", price: 9.95, rating: "4.8", icon: "fa-pencil", color: "art-navy", tag: "Papel grueso" }
 ];
 const productDetails = {
