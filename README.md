@@ -21,6 +21,8 @@ El checkout no procesa pagos, no crea pedidos reales y no envía productos. La p
 
 Para recorrer la tarjeta de demostración usa exclusivamente estos valores ficticios: número `0000 0000 0000 0000`, vencimiento `12/30` y código `000`. Un teléfono válido de prueba es `0991234567`. No introduzcas datos reales.
 
+Los campos de tarjeta muestran avisos mientras se escriben si el valor ya no puede coincidir con los datos de prueba; los prefijos correctos no se marcan como error. La transferencia no solicita datos bancarios y su pago permanece pendiente en la confirmación simulada.
+
 ## Heurísticas aplicadas
 En este prototipo hay 7 heurísticas de Nielsen aplicadas funcionalmente y 3 con alcance parcial por tratarse de una demo estática sin perfiles, persistencia, sistema de soporte ni contenido de ayuda completo.
 

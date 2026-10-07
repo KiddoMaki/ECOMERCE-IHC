@@ -679,16 +679,32 @@ function selectedPayment() {
   return checkoutForm.querySelector('input[name="paymentMethod"]:checked').value;
 }
 
+function validatePaymentField(input, allowIncomplete = false) {
+  const rules = {
+    cardNumber: { expected: "0000000000000000", normalize: (value) => value.replace(/\s/g, ""), message: "Para esta demo, usa solo 0000 0000 0000 0000." },
+    cardExpiry: { expected: "12/30", normalize: (value) => value.trim(), message: "Para esta demo, usa solo 12/30." },
+    cardCvv: { expected: "000", normalize: (value) => value.trim(), message: "Para esta demo, usa solo 000." }
+  };
+  const rule = rules[input.id];
+  if (!rule) return true;
+  const value = rule.normalize(input.value);
+  const valid = value === rule.expected;
+  const possiblePrefix = rule.expected.startsWith(value);
+  const error = checkoutModal.querySelector(`[data-error-for="${input.id}"]`);
+  if (valid || (allowIncomplete && possiblePrefix)) {
+    input.removeAttribute("aria-invalid");
+    if (error) error.textContent = "";
+    return valid;
+  }
+  setFieldError(input.id, rule.message);
+  return false;
+}
+
 function validatePayment() {
   clearFieldErrors();
   if (selectedPayment() === "transfer") return true;
-  const number = document.querySelector("#cardNumber").value.replace(/\s/g, "");
-  const expiry = document.querySelector("#cardExpiry").value.trim();
-  const cvv = document.querySelector("#cardCvv").value.trim();
-  let valid = true;
-  if (number !== "0000000000000000") { setFieldError("cardNumber", "Para esta demo, usa solo 0000 0000 0000 0000."); valid = false; }
-  if (expiry !== "12/30") { setFieldError("cardExpiry", "Para esta demo, usa solo 12/30."); valid = false; }
-  if (cvv !== "000") { setFieldError("cardCvv", "Para esta demo, usa solo 000."); valid = false; }
+  const fields = [document.querySelector("#cardNumber"), document.querySelector("#cardExpiry"), document.querySelector("#cardCvv")];
+  const valid = fields.map((input) => validatePaymentField(input)).every(Boolean);
   if (!valid) {
     checkoutError.textContent = "Completa los campos con los valores ficticios indicados. Nunca uses datos reales.";
     checkoutError.hidden = false;
@@ -892,6 +908,12 @@ checkoutForm.addEventListener("change", (event) => {
   document.querySelector("#cardExpiry").value = "";
   document.querySelector("#cardCvv").value = "";
   clearFieldErrors();
+});
+checkoutForm.addEventListener("input", (event) => {
+  if (selectedPayment() !== "card" || !["cardNumber", "cardExpiry", "cardCvv"].includes(event.target.id)) return;
+  validatePaymentField(event.target, true);
+  checkoutError.hidden = true;
+  checkoutError.textContent = "";
 });
 document.querySelector("#shippingProvinceOther").addEventListener("input", (event) => {
   const input = event.target;
