@@ -487,6 +487,8 @@ body.page-route main:not(#routePage),body.page-route footer { display:none; }
 .review-entry { padding:15px 0; border-bottom:1px solid var(--line); }
 .review-entry:first-child { padding-top:0; }
 .review-entry-meta { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.review-entry-details { display:flex; align-items:center; gap:9px; }
+.review-example-badge { padding:4px 7px; border-radius:4px; background:var(--soft-sky); color:var(--navy); font-size:9px; font-weight:700; }
 .review-stars { display:flex; gap:3px; color:#D99A00; font-size:12px; }
 .review-entry time { color:var(--secondary-text); font-size:10px; }
 .review-entry p { margin:9px 0 0; color:var(--navy); font-size:12px; line-height:1.7; overflow-wrap:anywhere; }

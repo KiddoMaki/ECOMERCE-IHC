@@ -70,6 +70,16 @@ function loadProductReviews() {
 }
 
 const reviewsByProduct = loadProductReviews();
+const exampleReviewDate = new Date().toISOString();
+const exampleReviewsByProduct = {
+  "cuaderno-a5": [{ rating: 5, comment: "El papel se siente agradable para tomar apuntes todos los días.", createdAt: exampleReviewDate, example: true }],
+  "boligrafo-gel": [{ rating: 5, comment: "La punta fina deja una escritura clara en mis apuntes.", createdAt: exampleReviewDate, example: true }],
+  "set-resaltadores": [{ rating: 4, comment: "Los tonos pastel ayudan a distinguir ideas sin recargar la página.", createdAt: exampleReviewDate, example: true }],
+  organizador: [{ rating: 5, comment: "El tamaño ampliado deja espacio para cuadernos y accesorios.", createdAt: exampleReviewDate, example: true }],
+  "notas-adhesivas": [{ rating: 4, comment: "Los colores permiten identificar rápido cada pendiente.", createdAt: exampleReviewDate, example: true }],
+  "boligrafo-retractil": [{ rating: 4, comment: "Cómodo para llevar en el estuche y tomar apuntes.", createdAt: exampleReviewDate, example: true }],
+  "set-boligrafos-color": [{ rating: 5, comment: "Los seis colores facilitan organizar materias y notas.", createdAt: exampleReviewDate, example: true }]
+};
 
 function money(value) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
@@ -87,13 +97,14 @@ function escapeHtml(value) {
 
 function renderProductReviews(product) {
   const storedReviews = reviewsByProduct[product.id];
-  const reviews = Array.isArray(storedReviews)
+  const userReviews = Array.isArray(storedReviews)
     ? storedReviews.filter((review) => review && Number.isInteger(review.rating) && review.rating >= 1 && review.rating <= 5 && typeof review.comment === "string" && Number.isFinite(Date.parse(review.createdAt)))
     : [];
+  const reviews = [...userReviews, ...(exampleReviewsByProduct[product.id] || [])];
   const reviewItems = reviews.length
     ? reviews.map((review) => `
         <article class="review-entry">
-          <div class="review-entry-meta"><span class="review-stars" aria-label="${review.rating} de 5 estrellas">${'<i class="fa-solid fa-star" aria-hidden="true"></i>'.repeat(review.rating)}</span><time datetime="${escapeHtml(review.createdAt)}">${new Intl.DateTimeFormat("es-EC", { dateStyle: "medium" }).format(new Date(review.createdAt))}</time></div>
+          <div class="review-entry-meta"><span class="review-stars" aria-label="${review.rating} de 5 estrellas">${'<i class="fa-solid fa-star" aria-hidden="true"></i>'.repeat(review.rating)}</span><span class="review-entry-details">${review.example ? '<span class="review-example-badge">Ejemplo</span>' : ""}<time datetime="${escapeHtml(review.createdAt)}">${new Intl.DateTimeFormat("es-EC", { dateStyle: "medium" }).format(new Date(review.createdAt))}</time></span></div>
           <p>${escapeHtml(review.comment)}</p>
         </article>`).join("")
     : `<p class="reviews-empty">Aún no hay reseñas para este producto.</p>`;
