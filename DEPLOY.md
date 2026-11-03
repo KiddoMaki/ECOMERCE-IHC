@@ -11,7 +11,7 @@ Neon Auth está habilitado en el proyecto. Registra el dominio local (`localhost
 Variables del API:
 
 - `DATABASE_URL`: conexión pooled de Neon, como secreto de Render.
-- `NEON_AUTH_BASE_URL`: URL de Neon Auth.
+- `NEON_AUTH_BASE_URL`: URL pública de Neon Auth. El API valida el `issuer` del JWT contra el origen de esa URL, ya que Neon publica el emisor en el dominio raíz.
 - `NEON_AUTH_JWKS_URL`: URL JWKS publicada por Neon Auth, usada para verificar tokens.
 - `ALLOWED_ORIGINS`: origen HTTPS exacto del sitio, sin ruta ni `/` final.
 - `NODE_ENV=production`; Render proporciona `PORT`.

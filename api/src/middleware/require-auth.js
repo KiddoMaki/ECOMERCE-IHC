@@ -24,7 +24,7 @@ export async function requireAuth(request, response, next) {
 
   try {
     const keys = getJwks();
-    const issuer = process.env.NEON_AUTH_BASE_URL.replace(/\/+$/, "");
+    const issuer = new URL(process.env.NEON_AUTH_BASE_URL).origin;
     const { payload } = await jwtVerify(token, keys, { issuer });
     if (
       typeof payload.sub !== "string" ||

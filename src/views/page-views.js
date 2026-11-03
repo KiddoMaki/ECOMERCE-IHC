@@ -18,7 +18,26 @@ export function renderContactPage() {
       <article class="contact-card"><span class="contact-icon"><i class="fa-regular fa-envelope" aria-hidden="true"></i></span><div><h2>Correo electrónico</h2><p>${contactModel.note}</p><a class="button-primary" href="mailto:${contactModel.email}" data-testid="contact-email">${contactModel.email} <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div></article>
       <article class="contact-card"><span class="contact-icon"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></span><div><h2>Despachos</h2><p>Atendemos pedidos con destino en Ecuador. La dirección y el costo se confirman al coordinar la entrega.</p></div></article>
     </section>
-    <p class="detail-footnote" role="note">El enlace de correo abre tu aplicación de correo.</p>`;
+    <p class="detail-footnote" role="note">El enlace de correo abre tu aplicación de correo.</p>
+    <a class="text-link faq-contact-link" href="#/faq" data-route="/faq">Consulta también las preguntas frecuentes</a>`;
+}
+
+export function renderFaqPage() {
+  const questions = [
+    ["¿A qué lugares realizan envíos?", "Atendemos pedidos con destino en Ecuador. La cobertura, la fecha y el costo de entrega se coordinan antes de confirmar el pedido."],
+    ["¿Cómo hago un pedido?", "Elige los productos y sus variantes, agrégalos al carrito e inicia sesión para completar los datos de entrega y revisar el pedido."],
+    ["¿Cuándo queda confirmado mi pedido?", "Al terminar el checkout se registra como pendiente. El equipo debe coordinar contigo el pago y el envío antes de confirmarlo."],
+    ["¿PichuPaper procesa pagos con tarjeta o transferencia?", "No. El sitio no tiene una pasarela de pago y no realiza cobros ni transferencias. No ingreses datos financieros reales en el formulario."],
+    ["¿Puedo cambiar o cancelar un pedido?", "Escríbenos cuanto antes a hola@papelytinta.ec con el número del pedido. Cualquier cambio debe coordinarse con el equipo."],
+    ["¿Necesito una cuenta para comprar?", "Sí. Inicia sesión o crea una cuenta para completar y registrar un pedido."],
+    ["¿Cómo puedo consultar por un producto?", "Visita la página de Contacto y escríbenos por correo. También puedes revisar las variantes y detalles disponibles en la ficha de cada producto."]
+  ];
+  return `<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="#/" data-route="/">Inicio</a><span aria-hidden="true">/</span><span aria-current="page">Preguntas frecuentes</span></nav>
+    <section class="page-heading" data-testid="faq-page"><span class="section-kicker">Resolvemos tus dudas</span><h1>Preguntas frecuentes</h1><p>Información sobre pedidos, entregas y formas de contacto.</p></section>
+    <section class="faq-list" aria-label="Preguntas y respuestas">
+      ${questions.map(([question, answer]) => `<details class="faq-item"><summary>${question}<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></summary><p>${answer}</p></details>`).join("")}
+    </section>
+    <p class="faq-contact-note">¿No encuentras lo que buscas? <a href="#/contact" data-route="/contact">Ponte en contacto con nosotros</a>.</p>`;
 }
 
 export function renderLoginPage(isSignedIn) {

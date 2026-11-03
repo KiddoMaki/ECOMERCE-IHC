@@ -27,6 +27,7 @@
         <nav class="desktop-nav" aria-label="Navegación principal">
           <a href="#catalogo" data-testid="link-categories">Categorías</a>
           <a href="#/contact" data-route="/contact" data-testid="link-contact">Contacto</a>
+          <a href="#/faq" data-route="/faq" data-testid="link-faq">Preguntas frecuentes</a>
         </nav>
         <div class="header-tools">
           <div class="search-wrap" id="searchWrap">
@@ -46,6 +47,7 @@
       <nav class="mobile-nav" id="mobileNav" aria-label="Navegación móvil">
         <a href="#catalogo" data-testid="mobile-link-categories">Categorías</a>
         <a href="#/contact" data-route="/contact" data-testid="mobile-link-contact">Contacto</a>
+        <a href="#/faq" data-route="/faq" data-testid="mobile-link-faq">Preguntas frecuentes</a>
       </nav>
     </header>
 
@@ -128,7 +130,7 @@
             <p>Un rincón de papelería para acompañar tus ideas, desde Ecuador y con mucho cariño.</p>
           </div>
           <div class="footer-col"><h3>La tienda</h3><div class="footer-links"><a href="#catalogo" data-testid="footer-link-catalog">Ver catálogo</a><a href="#catalogo" data-offers-only data-testid="footer-link-offers">Ofertas</a><a href="#nuestra-esencia" data-testid="footer-link-about">Nuestra esencia</a></div></div>
-          <div class="footer-col"><h3>¿Necesitas ayuda?</h3><div class="footer-links"><a href="mailto:hola@papelytinta.ec" data-testid="footer-link-email">Escríbenos</a><a href="#/contact" data-route="/contact" data-testid="footer-link-shipping">Envíos y entregas</a><a href="#/contact" data-route="/contact" data-testid="footer-link-faq">Preguntas frecuentes</a></div></div>
+          <div class="footer-col"><h3>¿Necesitas ayuda?</h3><div class="footer-links"><a href="mailto:hola@papelytinta.ec" data-testid="footer-link-email">Escríbenos</a><a href="#/contact" data-route="/contact" data-testid="footer-link-shipping">Envíos y entregas</a><a href="#/faq" data-route="/faq" data-testid="footer-link-faq">Preguntas frecuentes</a></div></div>
         </div>
         <div class="footer-bottom"><p>© <span id="year"></span> PichuPaper · Ecuador.</p><p>Los pedidos y pagos requieren confirmación del equipo.</p></div>
       </div>
@@ -252,7 +254,7 @@
         </section>
       </div>
     </section>
-    <div class="toast" id="toast" role="status" aria-live="polite"><i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMessage"></span><button id="toastAction" type="button" hidden></button></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"><i id="toastIcon" class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMessage"></span><button id="toastAction" type="button" hidden></button></div>
     <script src="./api-config.js?v=commerce-auth-1"></script>
     <script type="module" src="./app.js?v=commerce-auth-1"></script>
   </body>

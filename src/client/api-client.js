@@ -9,6 +9,12 @@ const visualClasses = new Set(["art-mint", "art-sky", "art-navy", "art-white"]);
 const isText = (value, maxLength) =>
   typeof value === "string" && value.length > 0 && value.length <= maxLength;
 
+function createApiError(message, status) {
+  const error = new Error(message);
+  error.status = status;
+  return error;
+}
+
 function validateProduct(product) {
   if (!product || typeof product !== "object" || Array.isArray(product)) return false;
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(product.id || "")) return false;
@@ -70,7 +76,7 @@ export async function createOrder(order) {
     body: JSON.stringify(order)
   });
   const payload = await response.json();
-  if (!response.ok) throw new Error(payload.error || `No se pudo registrar el pedido (HTTP ${response.status}).`);
+  if (!response.ok) throw createApiError(payload.error || `No se pudo registrar el pedido (HTTP ${response.status}).`, response.status);
   return payload;
 }
 
@@ -83,7 +89,7 @@ export async function fetchCart() {
     }
   });
   const payload = await response.json();
-  if (!response.ok) throw new Error(payload.error || `No se pudo cargar el carrito (HTTP ${response.status}).`);
+  if (!response.ok) throw createApiError(payload.error || `No se pudo cargar el carrito (HTTP ${response.status}).`, response.status);
   if (!Array.isArray(payload.items)) throw new Error("La respuesta del carrito tiene un formato inesperado.");
   return payload.items;
 }
@@ -100,7 +106,7 @@ export async function saveCart(items) {
     body: JSON.stringify({ items })
   });
   const payload = await response.json();
-  if (!response.ok) throw new Error(payload.error || `No se pudo guardar el carrito (HTTP ${response.status}).`);
+  if (!response.ok) throw createApiError(payload.error || `No se pudo guardar el carrito (HTTP ${response.status}).`, response.status);
   return payload;
 }
 
@@ -126,6 +132,6 @@ export async function createReview(productId, review) {
     body: JSON.stringify(review)
   });
   const payload = await response.json();
-  if (!response.ok) throw new Error(payload.error || `No se pudo publicar la reseña (HTTP ${response.status}).`);
+  if (!response.ok) throw createApiError(payload.error || `No se pudo publicar la reseña (HTTP ${response.status}).`, response.status);
   return payload.item;
 }
