@@ -1,5 +1,5 @@
 import { sessionModel } from "../models/session-model.js";
-import { authConfigured, neonAuth } from "../client/neon-auth-client.js";
+import { authConfigured, invalidateAccessToken, neonAuth } from "../client/neon-auth-client.js";
 
 export function createAuthController(onAuthenticated) {
   return {
@@ -15,6 +15,7 @@ export function createAuthController(onAuthenticated) {
     async signIn(form) {
       if (!form.reportValidity()) return false;
       if (!authConfigured) throw new Error("La autenticación no está configurada.");
+      invalidateAccessToken();
       const { email, password } = Object.fromEntries(new FormData(form));
       const result = await neonAuth.adapter.signIn.email({
         email: String(email).trim(),
@@ -29,6 +30,7 @@ export function createAuthController(onAuthenticated) {
     async signUp(form) {
       if (!form.reportValidity()) return false;
       if (!authConfigured) throw new Error("La autenticación no está configurada.");
+      invalidateAccessToken();
       const { name, email, password } = Object.fromEntries(new FormData(form));
       const result = await neonAuth.adapter.signUp.email({
         name: String(name).trim(),
@@ -47,6 +49,7 @@ export function createAuthController(onAuthenticated) {
       }
       const { error } = await neonAuth.adapter.signOut();
       if (error) throw new Error(error.message || "No se pudo cerrar la sesión.");
+      invalidateAccessToken();
       sessionModel.setUser(null);
     }
   };

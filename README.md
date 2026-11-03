@@ -41,3 +41,5 @@ El API debe recibir `DATABASE_URL`, `NEON_AUTH_BASE_URL` y `NEON_AUTH_JWKS_URL`.
 - No se suben archivos `.env.local`, credenciales, URLs de conexión ni secretos del API.
 
 El estado pendiente del pago y la coordinación del envío se muestran deliberadamente: la aplicación registra pedidos, pero no cuenta con pasarela de pago ni confirmación operativa del vendedor.
+
+Para una descripción del negocio, los límites operativos y el diagnóstico de sesión vigente, consulta [`docs/CONTEXTO_NEGOCIO_Y_PROBLEMA_ACTUAL.md`](./docs/CONTEXTO_NEGOCIO_Y_PROBLEMA_ACTUAL.md).

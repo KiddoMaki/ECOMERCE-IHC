@@ -1,6 +1,6 @@
 import { createAuthController } from "./src/controllers/auth-controller.js";
 import { sessionModel } from "./src/models/session-model.js";
-import { renderContactPage, renderLoginPage, renderRegisterPage } from "./src/views/page-views.js";
+import { renderContactPage, renderFaqPage, renderLoginPage, renderRegisterPage } from "./src/views/page-views.js";
 import { apiConfigured, createOrder, createReview, fetchCart, fetchProducts, fetchReviews, saveCart } from "./src/client/api-client.js";
 import { authConfigured } from "./src/client/neon-auth-client.js";
 
@@ -67,12 +67,12 @@ function syncCart() {
     };
   });
   if (items.some((item) => !item.variantSku)) {
-    showToast("No se pudo identificar una variante del carrito.");
+    showToast("No se pudo identificar una variante del carrito.", { type: "error" });
     return;
   }
   cartSync = cartSync.then(() => saveCart(items)).catch((error) => {
     console.error("No se pudo guardar el carrito en la cuenta.", error);
-    showToast(error.message || "No se pudo sincronizar el carrito.");
+    showApiError(error, "No se pudo sincronizar el carrito.");
   });
 }
 
@@ -270,15 +270,33 @@ function renderCart() {
   document.querySelector("#cartSubtotal").textContent = money(subtotal);
 }
 
-function showToast(message) {
+function showToast(message, { type = "success", actionLabel = "", onAction = null, duration = 5000 } = {}) {
   pendingRemoval = null;
   document.querySelector("#toastMessage").textContent = message;
+  const icon = document.querySelector("#toastIcon");
+  const isError = type === "error";
+  toast.dataset.type = type;
+  toast.setAttribute("role", isError ? "alert" : "status");
+  toast.setAttribute("aria-live", isError ? "assertive" : "polite");
+  icon.className = `fa-solid ${isError ? "fa-circle-exclamation" : type === "warning" ? "fa-triangle-exclamation" : "fa-circle-check"}`;
   const action = document.querySelector("#toastAction");
-  action.hidden = true;
-  action.onclick = null;
+  action.textContent = actionLabel;
+  action.hidden = !actionLabel || typeof onAction !== "function";
+  action.onclick = onAction;
   toast.classList.add("show");
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), duration);
+}
+
+function showApiError(error, fallbackMessage) {
+  if (error?.status === 401) {
+    showToast("El servidor no pudo validar la sesión. Tu cuenta sigue conectada; inténtalo de nuevo en unos instantes.", {
+      type: "error",
+      duration: 10000
+    });
+    return;
+  }
+  showToast(error?.message || fallbackMessage, { type: error?.status === 403 ? "warning" : "error", duration: 8000 });
 }
 
 function setRemovalConfirmationOpen(open) {
@@ -328,6 +346,10 @@ async function removeCartItem(id, variant = "") {
   if (currentRoute === "/cart") renderRoute();
   const action = document.querySelector("#toastAction");
   document.querySelector("#toastMessage").textContent = `${product.name} se eliminó del carrito.`;
+  toast.dataset.type = "info";
+  toast.setAttribute("role", "status");
+  toast.setAttribute("aria-live", "polite");
+  document.querySelector("#toastIcon").className = "fa-solid fa-circle-check";
   action.textContent = "Deshacer";
   action.hidden = false;
   action.onclick = () => {
@@ -345,7 +367,7 @@ async function removeCartItem(id, variant = "") {
   toastTimer = setTimeout(() => {
     toast.classList.remove("show");
     pendingRemoval = null;
-  }, 5000);
+  }, 8000);
 }
 
 document.querySelector("#cancelRemove").addEventListener("click", () => finishRemovalConfirmation(false));
@@ -416,6 +438,13 @@ function renderRoute() {
   if (path === "/contact") {
     document.title = "Contacto — PichuPaper";
     routePage.innerHTML = renderContactPage();
+    routePage.focus({ preventScroll: true });
+    window.scrollTo(0, 0);
+    return;
+  }
+  if (path === "/faq") {
+    document.title = "Preguntas frecuentes — PichuPaper";
+    routePage.innerHTML = renderFaqPage();
     routePage.focus({ preventScroll: true });
     window.scrollTo(0, 0);
     return;
@@ -564,7 +593,10 @@ function addToCart(productId, quantity = 1, variant = "") {
   renderCart();
   syncCart();
   const product = products.find((entry) => entry.id === productId);
-  showToast(`${product.name} se añadió a tu carrito.`);
+  showToast(`${product.name} se añadió a tu carrito.`, {
+    actionLabel: "Ver carrito",
+    onAction: () => setCartOpen(true)
+  });
 }
 
 const authController = createAuthController(() => {
@@ -935,6 +967,9 @@ async function submitOrder(button) {
     checkoutError.textContent = error.message || "No se pudo registrar el pedido.";
     checkoutError.hidden = false;
     checkoutError.focus?.();
+    if (error?.status === 401 || error?.status === 403) {
+      showApiError(error, "No se pudo registrar el pedido.");
+    }
   } finally {
     button.disabled = false;
     button.removeAttribute("aria-busy");
@@ -1000,7 +1035,7 @@ routePage.addEventListener("click", (event) => {
       updateAccountControl();
       renderRoute();
       showToast("Sesión cerrada.");
-    }).catch((error) => showToast(error.message));
+    }).catch((error) => showToast(error.message, { type: "error" }));
     return;
   }
   if (event.target.closest('[data-action="go-payment"]')) {
@@ -1085,17 +1120,26 @@ routePage.addEventListener("submit", (event) => {
   const rating = Number(new FormData(form).get("review-rating"));
   const button = form.querySelector('[type="submit"]');
   button.disabled = true;
+  reviewsByProduct[productId] ||= [];
   createReview(productId, { rating, comment }).then(async () => {
-    reviewsByProduct[productId] = await fetchReviews(productId);
+    let refreshFailed = false;
+    try {
+      reviewsByProduct[productId] = await fetchReviews(productId);
+    } catch (error) {
+      refreshFailed = true;
+      console.error("La reseña se guardó, pero no se pudo actualizar la lista.", error);
+    }
     const product = products.find((item) => item.id === productId);
     if (product && reviewsByProduct[productId].length) {
       product.rating = String(reviewsByProduct[productId]
         .reduce((sum, review) => sum + review.rating, 0) / reviewsByProduct[productId].length);
     }
     renderRoute();
-    showToast("Tu reseña se guardó correctamente.");
+    showToast(refreshFailed
+      ? "Tu reseña se guardó, pero no se pudo actualizar la lista. Recarga la página para verla."
+      : "Tu reseña se guardó correctamente.", { type: refreshFailed ? "warning" : "success" });
   }).catch((error) => {
-    showToast(error.message);
+    showApiError(error, "No se pudo publicar la reseña.");
   }).finally(() => { button.disabled = false; });
 });
 checkoutModal.addEventListener("click", (event) => {
@@ -1318,7 +1362,7 @@ authController.restoreSession().then(async () => {
         if (currentRoute === "/cart") renderRoute();
       } catch (error) {
         console.error("No se pudo restaurar el carrito de la cuenta.", error);
-        showToast(error.message || "No se pudo cargar el carrito guardado.");
+        showApiError(error, "No se pudo cargar el carrito guardado.");
       }
     }
   }
