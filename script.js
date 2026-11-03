@@ -292,7 +292,6 @@ function showApiError(error, fallbackMessage) {
   if (error?.status === 401) {
     sessionModel.setUser(null);
     updateAccountControl();
-    renderRoute();
     showToast("La sesión ya no está autorizada. Inicia sesión nuevamente para continuar.", {
       type: "error",
       actionLabel: "Iniciar sesión",
@@ -485,7 +484,7 @@ function renderRoute() {
     if (!cart.length) { navigate("/cart", true); return; }
     if (!sessionModel.isSignedIn()) {
       pendingCheckout = true;
-      showToast("Inicia sesión para continuar con tu pedido.", { type: "warning" });
+      showToast("Inicia sesión para continuar con tu pedido.");
       navigate("/login", true);
       return;
     }
@@ -969,10 +968,6 @@ async function submitOrder(button) {
     successHeading.setAttribute("tabindex", "-1");
     successHeading.focus({ preventScroll: true });
   } catch (error) {
-    if (error?.status === 401) {
-      showApiError(error, "No se pudo registrar el pedido.");
-      return;
-    }
     checkoutError.textContent = error.message || "No se pudo registrar el pedido.";
     checkoutError.hidden = false;
     checkoutError.focus?.();
@@ -986,7 +981,7 @@ document.querySelector("#checkoutButton").addEventListener("click", () => {
   if (!cart.length) return;
   if (!sessionModel.isSignedIn()) {
     pendingCheckout = true;
-    showToast("Inicia sesión para continuar con tu pedido.", { type: "warning" });
+    showToast("Inicia sesión para continuar con tu pedido.");
     navigate("/login");
     return;
   }
@@ -1026,7 +1021,7 @@ routePage.addEventListener("click", (event) => {
     detailVariant = routePage.querySelector("#detailVariant").value;
     if (!sessionModel.isSignedIn()) {
       pendingAdd = { productId: id, quantity: detailQuantity, variant: detailVariant };
-      showToast("Inicia sesión para añadir este producto al carrito.", { type: "warning" });
+      showToast("Inicia sesión para añadir este producto al carrito.");
       navigate("/login");
       return;
     }

@@ -24,16 +24,19 @@ export function renderContactPage() {
 
 export function renderFaqPage() {
   const questions = [
-    ["¿A qué lugares realizan envíos?", "Atendemos pedidos con destino en Ecuador. La cobertura, la fecha y el costo de entrega se coordinan antes de confirmar el pedido."],
-    ["¿Cómo hago un pedido?", "Elige los productos y sus variantes, agrégalos al carrito e inicia sesión para completar los datos de entrega y revisar el pedido."],
-    ["¿Cuándo queda confirmado mi pedido?", "Al terminar el checkout se registra como pendiente. El equipo debe coordinar contigo el pago y el envío antes de confirmarlo."],
-    ["¿PichuPaper procesa pagos con tarjeta o transferencia?", "No. El sitio no tiene una pasarela de pago y no realiza cobros ni transferencias. No ingreses datos financieros reales en el formulario."],
-    ["¿Puedo cambiar o cancelar un pedido?", "Escríbenos cuanto antes a hola@papelytinta.ec con el número del pedido. Cualquier cambio debe coordinarse con el equipo."],
-    ["¿Necesito una cuenta para comprar?", "Sí. Inicia sesión o crea una cuenta para completar y registrar un pedido."],
-    ["¿Cómo puedo consultar por un producto?", "Visita la página de Contacto y escríbenos por correo. También puedes revisar las variantes y detalles disponibles en la ficha de cada producto."]
+    ["¿Cómo puedo hacer un pedido?", "Explora el catálogo, elige el producto y la variante que prefieras, añádelo al carrito y continúa con el formulario de entrega para revisar tu pedido."],
+    ["¿Necesito crear una cuenta?", "Sí. Inicia sesión o crea una cuenta para guardar tu carrito y registrar un pedido."],
+    ["¿Cómo sé qué incluye un producto?", "Abre su ficha desde el catálogo para consultar la descripción, las variantes disponibles, el precio y las reseñas."],
+    ["¿Puedo cambiar la variante o la cantidad?", "Sí. Puedes seleccionar la variante y la cantidad en la ficha del producto. También puedes ajustar las cantidades desde el carrito antes de revisar el pedido."],
+    ["¿A qué lugares realizan entregas?", "Atendemos pedidos con destino en Ecuador. La cobertura, la dirección, la fecha y el costo de entrega se coordinan antes de confirmar el pedido."],
+    ["¿Cuándo queda confirmado mi pedido?", "Al finalizar la revisión, el pedido queda registrado como pendiente. El equipo debe coordinar contigo el pago y el envío antes de confirmarlo."],
+    ["¿El sitio cobra pagos con tarjeta o transferencia?", "No. El sitio no procesa pagos ni transferencias. El formulario solo revisa el formato de los datos; no ingreses información financiera real."],
+    ["¿Puedo cambiar o cancelar un pedido?", "Contacta al equipo cuanto antes e incluye el número de pedido si ya lo tienes. Los cambios y cancelaciones deben coordinarse directamente."],
+    ["¿Cómo puedo dejar una reseña?", "Inicia sesión, abre la ficha del producto y completa el formulario de reseña. El equipo puede requerir que tu correo esté verificado."],
+    ["¿Cómo consulto por un producto o pedido?", `Escríbenos a <a href="mailto:${contactModel.email}">${contactModel.email}</a>. Incluye el nombre del producto o el número de pedido para ayudarnos a atenderte.`]
   ];
   return `<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="#/" data-route="/">Inicio</a><span aria-hidden="true">/</span><span aria-current="page">Preguntas frecuentes</span></nav>
-    <section class="page-heading" data-testid="faq-page"><span class="section-kicker">Resolvemos tus dudas</span><h1>Preguntas frecuentes</h1><p>Información sobre pedidos, entregas y formas de contacto.</p></section>
+    <section class="page-heading" data-testid="faq-page"><span class="section-kicker">Resolvemos tus dudas</span><h1>Preguntas y respuestas</h1><p>Información útil sobre productos, cuentas, pedidos, entregas y pagos.</p></section>
     <section class="faq-list" aria-label="Preguntas y respuestas">
       ${questions.map(([question, answer]) => `<details class="faq-item"><summary>${question}<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></summary><p>${answer}</p></details>`).join("")}
     </section>

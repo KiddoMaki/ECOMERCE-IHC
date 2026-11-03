@@ -710,6 +710,7 @@ body.page-route main:not(#routePage),body.page-route footer { display:none; }
 .faq-item[open] summary { border-bottom:1px solid var(--line); }
 .faq-item[open] summary i { transform:rotate(180deg); }
 .faq-item p { margin:0; padding:16px 20px 20px; color:var(--secondary-text); font-size:14px; line-height:1.7; }
+.faq-item p a { color:var(--mint-ink); font-weight:700; text-decoration:underline; text-underline-offset:3px; }
 .faq-contact-note { margin:24px 0 0; color:var(--secondary-text); font-size:14px; }
 .faq-contact-note a { color:var(--mint-ink); font-weight:700; text-decoration:underline; text-underline-offset:3px; }
 .auth-page { width:min(480px,100%); margin:0 auto; padding:20px 0 40px; }
