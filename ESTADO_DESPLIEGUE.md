@@ -31,7 +31,7 @@ Las variables privadas del API, incluida `DATABASE_URL`, se configuraron como va
 - Catálogo, variantes y reseñas desde Neon; altas y modificaciones de reseña persistentes.
 - Carrito persistente por cuenta.
 - Pedidos con usuario autenticado, dirección, productos/variantes verificados desde la base, subtotal recalculado y registros de pedido/pago en estado pendiente.
-- No se piden datos de tarjeta ni CVV; no se confirma un pago o envío que el sistema no pueda verificar.
+- Se valida el formato de tarjeta/cuenta en el navegador; sus valores se borran antes de revisar el pedido y no se envían ni guardan. No se realizan cobros, transferencias ni se confirma un pago o envío.
 - Esquema actualizado, migración aplicada a la rama existente y semilla idempotente.
 
 ## Pendiente antes de operación comercial

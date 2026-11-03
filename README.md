@@ -9,7 +9,7 @@ Tienda web de papelería con frontend estático y API Express. Neon PostgreSQL a
 - Carrito persistente por cuenta; requiere sesión para añadir productos y registrar pedidos.
 - Pedidos con precios y variantes recalculados en el servidor, vinculados a la cuenta y guardados como pendientes.
 - Reseñas persistentes asociadas a la cuenta.
-- Los pagos no se cobran ni se declaran aprobados. No se piden ni almacenan números de tarjeta o CVV. El costo de envío queda por coordinar.
+- El checkout valida localmente el formato de tarjeta o cuenta para la interfaz, pero no procesa ni verifica pagos. Los valores ingresados se borran antes de revisar el pedido y nunca se envían ni guardan; no ingreses datos financieros reales. El costo de envío queda por coordinar.
 - Diseño adaptable, controles accesibles y navegación interna con rutas de fragmento (`#/...`).
 
 ## Estructura

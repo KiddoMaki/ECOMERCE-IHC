@@ -45,6 +45,6 @@ En `.env.local` (ignorado por Git) configura `DATABASE_URL`, `NEON_AUTH_BASE_URL
 
 ## Alcance de pago y entrega
 
-No hay pasarela de pago ni integración para verificar transferencias. El checkout no solicita ni envía números de tarjeta/CVV, no marca pagos como aprobados y no fija un costo de envío. Los pedidos quedan pendientes y muestran explícitamente que ambos puntos deben coordinarse.
+No hay pasarela de pago ni integración para verificar transferencias. El checkout comprueba localmente el formato de los campos de tarjeta o cuenta para la interfaz; no valida tarjetas/cuentas reales, no realiza cobros ni transferencias y no fija un costo de envío. Los datos ingresados se borran antes de revisar el pedido y no se envían ni guardan. No ingreses información financiera real. Los pedidos quedan pendientes hasta coordinar el pago y el envío.
 
 Antes de habilitar ventas reales, verifica los precios y disponibilidad del catálogo, el correo/datos del vendedor, las condiciones de entrega, la política de privacidad y los dominios de correo/Neon Auth. No publiques números de cuenta ni promesas de envío sin confirmarlos.

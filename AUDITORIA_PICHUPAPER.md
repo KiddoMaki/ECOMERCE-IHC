@@ -6,7 +6,7 @@
 
 La tienda sirve 16 productos desde Neon; el catálogo incluye categorías, búsqueda, filtro combinado de ofertas, ficha, variantes y reseñas. Neon Auth proporciona registro, sesión persistente y cierre de sesión. El carrito se guarda por cuenta. El API calcula precios y persiste pedidos, direcciones y pagos como pendientes.
 
-El pedido no se presenta como compra pagada o enviada: el envío está por coordinar, no se aceptan datos de tarjeta/CVV y no se marcan pagos como aprobados. No se verificaron los procesos operativos del vendedor, logística, disponibilidad física ni cobros reales. La integración con una cuenta Neon Auth real y un despliegue público queda pendiente.
+El pedido no se presenta como compra pagada o enviada: el envío está por coordinar, el formulario comprueba solo el formato de los datos de pago en el navegador y no se marcan pagos como aprobados. Los valores de tarjeta/cuenta se borran antes de revisar el pedido y no se envían ni guardan; no se verifican tarjetas ni cuentas reales. No se verificaron los procesos operativos del vendedor, logística, disponibilidad física ni cobros reales.
 
 ## Heurísticas de Nielsen
 
@@ -16,7 +16,7 @@ El pedido no se presenta como compra pagada o enviada: el envío está por coord
 | 2 | Relación entre sistema y mundo real | Aplicada | Etiquetas y formularios en español, moneda USD y formatos de contacto de Ecuador; pedido describe con claridad coordinación de entrega/pago. | Confirmar condiciones reales de venta con el operador. |
 | 3 | Control y libertad | Aplicada | Navegación entre vistas, edición de pasos, variación de cantidades, confirmación y deshacer eliminación. | Añadir cancelación de pedido solo cuando exista una política de negocio. |
 | 4 | Consistencia y estándares | Aplicada | Componentes y patrones consistentes; navegación con rutas internas; controles HTML nativos. | Prueba moderada con usuarios. |
-| 5 | Prevención de errores | Aplicada | Validación de dirección/teléfono, límites en cantidades, verificación JWT, precio recalculado en servidor y métodos de pago sin captura de tarjetas. | Añadir reglas de inventario y reglas comerciales cuando existan. |
+| 5 | Prevención de errores | Aplicada | Validación de longitud y formato en entrega y pago, límites en cantidades, verificación JWT y precio recalculado en servidor. Los campos de pago se validan solo en el navegador y se borran antes de enviar el pedido. | Añadir reglas de inventario y una pasarela certificada si se habilitan cobros reales. |
 | 6 | Reconocimiento antes que recuerdo | Aplicada | Variantes visibles, galería con estado seleccionado, carrito por cuenta y resumen del pedido. | Historial de pedidos en la cuenta. |
 | 7 | Flexibilidad y eficiencia | Parcial | Búsqueda en vivo, ofertas combinables con categorías, variantes y carrito persistente. | Atajos, favoritos y preferencias de compra. |
 | 8 | Diseño estético y minimalista | Aplicada | Jerarquía de catálogo y detalle, imágenes contenidas y mejoras de tipografía responsiva. | Optimizar peso de imágenes y validar en más dispositivos. |
@@ -30,11 +30,11 @@ Las heurísticas 7, 9 y 10 quedan parciales; no se les atribuyen funcionalidades
 - Estructura semántica, idioma español, enlace para saltar al contenido, etiquetas accesibles, nombres para iconos, mensajes con `role`/`aria-live`, foco visible y botones nativos.
 - Formularios de cuenta con `autocomplete`, restricciones de longitud y mensajes de error.
 - Diálogo de checkout con pasos, foco, errores asociados y avisos claros de pago pendiente.
-- En navegador local: catálogo con 16 tarjetas, cuenta y creación de cuenta visibles, cero desbordamiento horizontal en viewport de 390 px, cero campos de tarjeta/CVV y redirección al login antes de añadir productos sin sesión.
+- En navegador local: catálogo con 16 tarjetas, cuenta y creación de cuenta visibles, cero desbordamiento horizontal en viewport de 390 px, campos de pago con validación solo de formato y redirección al login antes de añadir productos sin sesión.
 - En API local: health check conectado a Neon, 16 productos, solicitudes de carrito/pedido sin autenticación rechazadas con HTTP 401 y preflight CORS para `PUT`.
 
 ## Pendiente antes de operación pública
 
-Probar alta/verificación/inicio/cierre de sesión con una cuenta de prueba controlada; verificar persistencia del carrito, pedido y reseñas con JWT válido; ejecutar teclado/lector de pantalla y axe/Lighthouse; confirmar precio, stock, política de privacidad, contacto y logística; configurar dominios de confianza Neon Auth, Render y Netlify. No introducir números de tarjeta ni hacer transferencias.
+Probar alta/verificación/inicio/cierre de sesión con una cuenta de prueba controlada; verificar persistencia del carrito, pedido y reseñas con JWT válido; ejecutar teclado/lector de pantalla y axe/Lighthouse; confirmar precio, stock, política de privacidad, contacto y logística; configurar dominios de confianza Neon Auth, Render y Netlify. No introducir datos financieros reales ni hacer transferencias durante las pruebas.
 
 Documentos relacionados: [`docs/REVISION_10_HEURISTICAS.md`](./docs/REVISION_10_HEURISTICAS.md), [`docs/AUDITORIA_ACCESIBILIDAD.md`](./docs/AUDITORIA_ACCESIBILIDAD.md), [`docs/PRUEBAS_ACCESIBILIDAD.md`](./docs/PRUEBAS_ACCESIBILIDAD.md), [`DISENO_BASE_DATOS_PICHUPAPER.md`](./DISENO_BASE_DATOS_PICHUPAPER.md).

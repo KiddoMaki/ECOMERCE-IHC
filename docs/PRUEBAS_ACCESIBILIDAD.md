@@ -12,7 +12,7 @@ Este registro separa comprobaciones ejecutadas de las que siguen pendientes. Una
 | Alta al carrito sin sesión | Redirige a la página de login. |
 | Solicitud de carrito y pedidos sin JWT | API responde HTTP 401. |
 | CORS | Preflight `PUT` permitido para el origen local probado. |
-| Pago | No hay campos de tarjeta/CVV; pedido y pago quedan pendientes. |
+| Pago | Los formatos de tarjeta y cuenta se validan localmente; los valores se borran antes de revisar y no se envían ni guardan. Pedido y pago quedan pendientes. |
 | Build y sintaxis | `npm run build`, `node --check` y `git diff --check` pasaron en la revisión anterior a esta actualización documental. |
 
 ## Revisión manual que debe conservarse
@@ -31,4 +31,4 @@ Este registro separa comprobaciones ejecutadas de las que siguen pendientes. Una
 - Probar dispositivos y navegadores adicionales y verificar configuración de dominios de confianza.
 - Confirmar políticas reales de envío, pago, privacidad y disponibilidad.
 
-No usar tarjetas reales ni realizar transferencias durante estas pruebas. El sistema aún no procesa ni confirma pagos.
+No usar datos financieros reales ni realizar transferencias durante estas pruebas. El sistema solo comprueba formato; no procesa ni confirma pagos.

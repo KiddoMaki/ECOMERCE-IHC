@@ -693,12 +693,26 @@ const checkoutForm = document.querySelector("#checkoutForm");
 const checkoutError = document.querySelector("#checkoutError");
 const checkoutSteps = [...checkoutModal.querySelectorAll(".checkout-step[data-step]")];
 const checkoutProgress = [...checkoutModal.querySelectorAll(".progress-step")];
+let validatedPaymentMethod = null;
 
 function clearFieldErrors() {
   checkoutModal.querySelectorAll(".field-error").forEach((node) => { node.textContent = ""; });
   checkoutModal.querySelectorAll("[aria-invalid='true']").forEach((node) => node.removeAttribute("aria-invalid"));
   checkoutError.hidden = true;
   checkoutError.textContent = "";
+}
+
+function clearPaymentInputs() {
+  ["demoCardNumber", "demoCardExpiry", "demoCardCvv", "demoAccountNumber"].forEach((id) => {
+    document.getElementById(id).value = "";
+  });
+  document.querySelector("#demoAccountType").value = "";
+}
+
+function updatePaymentPanels() {
+  const isCard = selectedPayment() === "card";
+  document.querySelector("#cardPaymentFields").hidden = !isCard;
+  document.querySelector("#transferPaymentFields").hidden = isCard;
 }
 
 function setFieldError(id, message) {
@@ -725,15 +739,18 @@ function setCheckoutStep(step) {
 
 function clearCheckoutData() {
   checkoutContact = null;
+  validatedPaymentMethod = null;
   checkoutForm.reset();
+  clearPaymentInputs();
+  updatePaymentPanels();
+  document.querySelector("#paymentNotice").innerHTML =
+    '<i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>Se comprueba el formato de la tarjeta; no se realizará ningún cobro.</span>';
   document.querySelector("#otherProvinceField").hidden = true;
   document.querySelector("#shippingProvinceOther").required = false;
   document.querySelector("#shippingProvinceOther").value = "";
   checkoutForm.hidden = false;
   const signedInEmail = sessionModel.getUser()?.email || "";
   document.querySelector("#shippingEmail").value = signedInEmail;
-  document.querySelector("#paymentNotice").textContent =
-    "No compartas datos de tarjeta ni realices transferencias hasta recibir instrucciones verificadas.";
   checkoutModal.querySelector('[data-step="success"]').hidden = true;
   setCheckoutStep(1);
 }
@@ -771,9 +788,9 @@ function validateContact() {
   const city = document.querySelector("#shippingCity").value.trim();
   const address = document.querySelector("#shippingAddress").value.trim();
   let valid = true;
-  if (name.length < 2) { setFieldError("shippingName", "Escribe tu nombre (mínimo 2 caracteres)."); valid = false; }
+  if (name.length < 2 || name.length > 80) { setFieldError("shippingName", "Escribe un nombre de 2 a 80 caracteres."); valid = false; }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setFieldError("shippingEmail", "Ingresa un correo con formato válido."); valid = false; }
-  if (!/^(09\d{8}|\+5939\d{8}|5939\d{8})$/.test(phone.replace(/[\s()-]/g, ""))) { setFieldError("shippingPhone", "Usa un formato ecuatoriano: 09XXXXXXXX o +5939XXXXXXXX."); valid = false; }
+  if (phone.length > 16 || !/^(09\d{8}|\+5939\d{8}|5939\d{8})$/.test(phone.replace(/[\s()-]/g, ""))) { setFieldError("shippingPhone", "Ingresa 10 dígitos (09...) o el formato internacional +5939XXXXXXXX."); valid = false; }
   if (!provinceSelect.value) { setFieldError("shippingProvince", "Selecciona una provincia."); valid = false; }
   else if (provinceSelect.value === "Otra provincia") {
     const normalizedProvince = provinceOther.normalize("NFD").replace(/\p{Diacritic}/gu, "");
@@ -782,7 +799,7 @@ function validateContact() {
       valid = false;
     }
   }
-  if (city.length < 2) { setFieldError("shippingCity", "Ingresa una ciudad."); valid = false; }
+  if (city.length < 2 || city.length > 60) { setFieldError("shippingCity", "Ingresa una ciudad de 2 a 60 caracteres."); valid = false; }
   if (address.length < 5) { setFieldError("shippingAddress", "Ingresa una dirección (mínimo 5 caracteres)."); valid = false; }
   if (valid) checkoutContact = { name, email, phone, province, city, address };
   else {
@@ -799,6 +816,44 @@ function selectedPayment() {
 
 function validatePayment() {
   clearFieldErrors();
+  const method = selectedPayment();
+  if (validatedPaymentMethod === method) return true;
+
+  let valid = true;
+  if (method === "card") {
+    const number = document.querySelector("#demoCardNumber").value;
+    const expiry = document.querySelector("#demoCardExpiry").value;
+    const cvv = document.querySelector("#demoCardCvv").value;
+    const digits = number.replace(/\s/g, "");
+    const expiryMatch = /^(0[1-9]|1[0-2])\/(\d{2})$/.exec(expiry);
+    if (!/^\d{16}$/.test(digits)) { setFieldError("demoCardNumber", "Ingresa 16 dígitos en cuatro grupos de cuatro."); valid = false; }
+    if (!expiryMatch) {
+      setFieldError("demoCardExpiry", "Usa el formato MM/AA con un mes entre 01 y 12."); valid = false;
+    } else {
+      const month = Number(expiryMatch[1]);
+      const year = 2000 + Number(expiryMatch[2]);
+      const now = new Date();
+      if (year < now.getFullYear() || (year === now.getFullYear() && month < now.getMonth() + 1)) {
+        setFieldError("demoCardExpiry", "La fecha de vencimiento debe ser actual o futura."); valid = false;
+      }
+    }
+    if (!/^\d{3}$/.test(cvv)) { setFieldError("demoCardCvv", "El CVV debe tener exactamente 3 dígitos."); valid = false; }
+  } else {
+    const accountType = document.querySelector("#demoAccountType").value;
+    const accountNumber = document.querySelector("#demoAccountNumber").value;
+    if (!["savings", "checking"].includes(accountType)) { setFieldError("demoAccountType", "Selecciona ahorros o corriente."); valid = false; }
+    if (!/^\d{10,20}$/.test(accountNumber)) { setFieldError("demoAccountNumber", "Ingresa únicamente de 10 a 20 dígitos."); valid = false; }
+  }
+
+  if (!valid) {
+    checkoutError.textContent = "Revisa los datos del método de pago seleccionado.";
+    checkoutError.hidden = false;
+    checkoutModal.querySelector("[aria-invalid='true']")?.focus();
+    return false;
+  }
+
+  validatedPaymentMethod = method;
+  clearPaymentInputs();
   return true;
 }
 
@@ -806,8 +861,8 @@ function renderReview() {
   const contact = checkoutContact;
   document.querySelector("#reviewContact").textContent = `${contact.name}\n${contact.email} · ${contact.phone}\n${contact.address}\n${contact.city}, ${contact.province}`;
   document.querySelector("#reviewPayment").textContent = selectedPayment() === "card"
-    ? "Tarjeta (pendiente de coordinación)"
-    : "Transferencia (pendiente de coordinación)";
+    ? "Tarjeta (formato validado; pago pendiente, sin cobro)"
+    : "Transferencia (formato de cuenta validado; pago pendiente)";
   const rows = cart.map((item) => {
     const product = products.find((entry) => entry.id === item.id);
     const variant = item.variant ? ` · ${item.variant}` : "";
@@ -1081,13 +1136,47 @@ checkoutForm.addEventListener("change", (event) => {
     }
     return;
   }
-  if (event.target.name !== "paymentMethod") return;
-  document.querySelector("#paymentNotice").textContent = selectedPayment() === "card"
-    ? "No ingreses datos de tarjeta; el pago se coordinará mediante un canal seguro."
-    : "No transfieras dinero hasta recibir instrucciones verificadas del equipo.";
+  if (event.target.name === "paymentMethod") {
+    validatedPaymentMethod = null;
+    clearPaymentInputs();
+    clearFieldErrors();
+    updatePaymentPanels();
+    document.querySelector("#paymentNotice").innerHTML = selectedPayment() === "card"
+      ? '<i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>Se comprueba el formato de la tarjeta; no se realizará ningún cobro.</span>'
+      : '<i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>Se comprueba el formato del número; no se consulta la cuenta ni se realiza una transferencia.</span>';
+    return;
+  }
+  if (event.target.id === "demoAccountType") {
+    validatedPaymentMethod = null;
+    event.target.removeAttribute("aria-invalid");
+    checkoutModal.querySelector('[data-error-for="demoAccountType"]').textContent = "";
+    checkoutError.hidden = true;
+  }
 });
 checkoutForm.addEventListener("input", (event) => {
-  if (event.target.name === "paymentMethod") {
+  const input = event.target;
+  const formatters = {
+    demoCardNumber: (value) => value.replace(/\D/g, "").slice(0, 16).replace(/(\d{4})(?=\d)/g, "$1 "),
+    demoCardExpiry: (value) => {
+      const digits = value.replace(/\D/g, "").slice(0, 4);
+      return digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
+    },
+    demoCardCvv: (value) => value.replace(/\D/g, "").slice(0, 3),
+    demoAccountNumber: (value) => value.replace(/\D/g, "").slice(0, 20)
+  };
+  if (formatters[input.id]) {
+    input.value = formatters[input.id](input.value);
+    validatedPaymentMethod = null;
+  }
+  if (input.name === "paymentMethod") {
+    validatedPaymentMethod = null;
+    checkoutError.hidden = true;
+    checkoutError.textContent = "";
+  }
+  const fieldError = checkoutModal.querySelector(`[data-error-for="${input.id}"]`);
+  if (fieldError) {
+    input.removeAttribute("aria-invalid");
+    fieldError.textContent = "";
     checkoutError.hidden = true;
     checkoutError.textContent = "";
   }
