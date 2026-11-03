@@ -257,14 +257,14 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .checkout-button:hover { box-shadow:0 6px 16px rgba(30,41,59,.14); }
 .checkout-button:disabled { cursor:not-allowed; opacity:.5; }
 .demo-note { text-align:center; color:var(--secondary-text); font-size:12px; line-height:1.55; margin:11px 0 0; }
-.toast { position:fixed; z-index:30; bottom:24px; left:50%; width:min(620px, calc(100vw - 32px)); transform:translate(-50%,18px); opacity:0; pointer-events:none; display:flex; align-items:center; gap:14px; padding:18px 20px; border:1px solid rgba(255,255,255,.2); border-radius:12px; background:var(--navy); color:var(--white); box-shadow:0 12px 34px rgba(30,41,59,.32); font-size:15px; font-weight:600; line-height:1.5; transition:opacity .2s, transform .2s; }
+.toast { position:fixed; z-index:30; bottom:24px; left:50%; width:min(700px, calc(100vw - 32px)); transform:translate(-50%,18px); opacity:0; pointer-events:none; display:flex; align-items:center; gap:16px; padding:20px 22px; border:2px solid rgba(255,255,255,.28); border-radius:14px; background:var(--navy); color:var(--white); box-shadow:0 14px 40px rgba(30,41,59,.38); font-size:16px; font-weight:650; line-height:1.55; transition:opacity .2s, transform .2s; }
 .toast.show { opacity:1; transform:translate(-50%,0); pointer-events:auto; }
-.toast > i { flex:0 0 auto; color:var(--mint); font-size:22px; }
+.toast > i { flex:0 0 auto; color:var(--mint); font-size:26px; }
 .toast[data-type="error"] { border-color:#FCA5A5; background:#7F1D1D; }
 .toast[data-type="error"] > i { color:#FECACA; }
 .toast[data-type="warning"] { border-color:#FCD34D; background:#78350F; }
 .toast[data-type="warning"] > i { color:#FDE68A; }
-.toast button { flex:0 0 auto; min-height:42px; border:0; border-radius:6px; padding:8px 14px; background:var(--mint); color:var(--navy); font-size:14px; font-weight:750; cursor:pointer; }
+.toast button { flex:0 0 auto; min-height:44px; border:0; border-radius:6px; padding:9px 15px; background:var(--mint); color:var(--navy); font-size:15px; font-weight:750; cursor:pointer; }
 .toast button:hover { background:var(--soft-sky); }
 .toast button:focus-visible { outline:3px solid var(--white); outline-offset:3px; }
 .mobile-nav { display:none; }
@@ -301,7 +301,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .mobile-nav a { min-height:44px; display:flex; align-items:center; padding:12px 7px; border-bottom:1px solid var(--line); font-size:14px; font-weight:600; color:var(--secondary-text); }
   .mobile-nav a[aria-current="page"] { color:var(--navy); }
   .mobile-nav a:last-child { border-bottom:0; }
-  .toast { bottom:16px; align-items:flex-start; flex-wrap:wrap; gap:10px 12px; padding:16px; font-size:14px; }
+  .toast { bottom:16px; align-items:flex-start; flex-wrap:wrap; gap:10px 12px; padding:18px; font-size:15px; }
   .toast > span { flex:1 1 calc(100% - 38px); }
   .toast button { margin-left:34px; }
   .hero { padding:18px 0 34px; }

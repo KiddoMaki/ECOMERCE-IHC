@@ -29,7 +29,7 @@ export async function requireAuth(request, response, next) {
     if (
       typeof payload.sub !== "string" ||
       typeof payload.email !== "string" ||
-      payload.email_verified !== true ||
+      (payload.emailVerified !== true && payload.email_verified !== true) ||
       payload.email.length > 254
     ) {
       response.status(403).json({ error: "Verifica tu correo electrónico para continuar." });

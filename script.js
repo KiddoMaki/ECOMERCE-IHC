@@ -290,17 +290,13 @@ function showToast(message, { type = "success", actionLabel = "", onAction = nul
 
 function showApiError(error, fallbackMessage) {
   if (error?.status === 401) {
-    sessionModel.setUser(null);
-    updateAccountControl();
-    showToast("La sesión ya no está autorizada. Inicia sesión nuevamente para continuar.", {
+    showToast("El servidor no pudo validar la sesión. Tu cuenta sigue conectada; inténtalo de nuevo en unos instantes.", {
       type: "error",
-      actionLabel: "Iniciar sesión",
-      onAction: () => navigate("/login"),
-      duration: 8000
+      duration: 10000
     });
     return;
   }
-  showToast(error?.message || fallbackMessage, { type: "error" });
+  showToast(error?.message || fallbackMessage, { type: error?.status === 403 ? "warning" : "error", duration: 8000 });
 }
 
 function setRemovalConfirmationOpen(open) {
@@ -971,6 +967,9 @@ async function submitOrder(button) {
     checkoutError.textContent = error.message || "No se pudo registrar el pedido.";
     checkoutError.hidden = false;
     checkoutError.focus?.();
+    if (error?.status === 401 || error?.status === 403) {
+      showApiError(error, "No se pudo registrar el pedido.");
+    }
   } finally {
     button.disabled = false;
     button.removeAttribute("aria-busy");

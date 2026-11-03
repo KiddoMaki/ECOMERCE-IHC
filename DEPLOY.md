@@ -16,7 +16,7 @@ Variables del API:
 - `ALLOWED_ORIGINS`: origen HTTPS exacto del sitio, sin ruta ni `/` final.
 - `NODE_ENV=production`; Render proporciona `PORT`.
 
-El middleware del API valida la firma JWT, emisor, expiración e identidad con las claves remotas de Neon Auth; exige correo verificado y vincula la cuenta a `users.auth_user_id`. Nunca confía en un ID enviado por el navegador.
+El middleware del API valida la firma JWT, emisor, expiración e identidad con las claves remotas de Neon Auth; exige el claim `emailVerified` de Neon Auth y vincula la cuenta a `users.auth_user_id`. Nunca confía en un ID enviado por el navegador. El cliente renueva el JWT de la sesión antes de su vencimiento y comparte una sola solicitud de renovación entre peticiones concurrentes.
 
 ## API en Render
 
