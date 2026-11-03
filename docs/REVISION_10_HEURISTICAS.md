@@ -10,7 +10,7 @@ Evaluación de la versión conectada a Neon Auth y a la API de PichuPaper. La ap
 | 2 | Relación entre sistema y mundo real | Aplicada | Lenguaje y moneda apropiados para el público; la interfaz explica que pago y envío se coordinan y no están confirmados. |
 | 3 | Control y libertad | Aplicada | Navegación entre vistas y pasos, actualización de cantidades y deshacer eliminación del carrito. |
 | 4 | Consistencia y estándares | Aplicada | Patrones compartidos de navegación, botones, campos, etiquetas y comportamiento de filtros. |
-| 5 | Prevención de errores | Aplicada | Validación de campos y cantidades; API autentica y recalcula importes; el frontend no solicita tarjetas/CVV. |
+| 5 | Prevención de errores | Aplicada | Validación de campos y cantidades; API autentica y recalcula importes; pago valida formato solo en el navegador, borra esos valores antes de revisar y no los envía ni guarda. |
 | 6 | Reconocimiento antes que recuerdo | Aplicada | Galería y variantes visibles, resumen del carrito y datos guardados por cuenta. |
 | 7 | Flexibilidad y eficiencia de uso | Parcial | Búsqueda en vivo, filtros combinables, selección de variantes y carrito persistente; no hay atajos ni favoritos. |
 | 8 | Diseño estético y minimalista | Aplicada | Jerarquía clara, contenido de producto priorizado y diseño adaptable; falta optimizar todas las imágenes y validar más dispositivos. |

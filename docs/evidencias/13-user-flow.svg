@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1120" viewBox="0 0 1600 1120" role="img" aria-labelledby="title description">
+  <title id="title">Flujo de usuario de PichuPaper</title>
+  <desc id="description">Diagrama desde inicio y catálogo hasta el pedido pendiente, con decisiones de inicio de sesión, validación de entrega y edición de compra.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M1 1 11 6 1 11" fill="none" stroke="#718096" stroke-width="2"/>
+    </marker>
+    <style>
+      text{font-family:Inter,Arial,sans-serif;fill:#223044}
+      .title{font-size:34px;font-weight:750}
+      .subtitle{font-size:16px;fill:#637186}
+      .label{font-size:16px;font-weight:650}
+      .small{font-size:13px;fill:#637186}
+      .node{fill:#fff;stroke:#dbe3ec;stroke-width:2}
+      .action{fill:#f4f8fc;stroke:#a8bdd1;stroke-width:2}
+      .decision{fill:#fff6e8;stroke:#e6bd78;stroke-width:2}
+      .account{fill:#f3efff;stroke:#b9a8ec;stroke-width:2}
+      .pending{fill:#fff5ee;stroke:#e9b69b;stroke-width:2}
+      .success{fill:#eaf8f1;stroke:#8fc9aa;stroke-width:2}
+      .edge{fill:none;stroke:#718096;stroke-width:2.4;marker-end:url(#arrow)}
+      .edge-label{font-size:13px;font-weight:650;fill:#526174}
+      .icon{fill:#9567c7}
+    </style>
+  </defs>
+  <rect width="1600" height="1120" fill="#f8fafc"/>
+  <text x="64" y="70" class="title">PichuPaper · Flujo de usuario</text>
+  <text x="64" y="102" class="subtitle">Navegación de compra; el pago y la entrega requieren coordinación posterior.</text>
+
+  <g>
+    <rect x="650" y="145" width="300" height="76" rx="18" class="node"/>
+    <text x="800" y="178" text-anchor="middle" class="label">Inicio</text>
+    <text x="800" y="201" text-anchor="middle" class="small">Presentación y navegación</text>
+
+    <rect x="650" y="270" width="300" height="82" rx="18" class="action"/>
+    <text x="800" y="304" text-anchor="middle" class="label">Catálogo</text>
+    <text x="800" y="328" text-anchor="middle" class="small">16 productos · búsqueda · categorías · ofertas</text>
+
+    <rect x="650" y="400" width="300" height="82" rx="18" class="action"/>
+    <text x="800" y="434" text-anchor="middle" class="label">Detalle del producto</text>
+    <text x="800" y="458" text-anchor="middle" class="small">Galería · variantes · precio · reseñas</text>
+
+    <polygon points="800,520 930,585 800,650 670,585" class="decision"/>
+    <text x="800" y="580" text-anchor="middle" class="label">¿Añadir al carrito?</text>
+    <text x="800" y="603" text-anchor="middle" class="small">Elegir variante y cantidad</text>
+
+    <rect x="1100" y="550" width="330" height="82" rx="18" class="account"/>
+    <text x="1265" y="584" text-anchor="middle" class="label">Acceso a la cuenta</text>
+    <text x="1265" y="608" text-anchor="middle" class="small">Iniciar sesión o crear cuenta y verificar correo</text>
+
+    <rect x="650" y="700" width="300" height="82" rx="18" class="action"/>
+    <text x="800" y="734" text-anchor="middle" class="label">Carrito</text>
+    <text x="800" y="758" text-anchor="middle" class="small">Cambiar cantidades · quitar artículos</text>
+
+    <polygon points="800,825 930,890 800,955 670,890" class="decision"/>
+    <text x="800" y="885" text-anchor="middle" class="label">¿Sesión activa?</text>
+    <text x="800" y="908" text-anchor="middle" class="small">Necesaria para crear el pedido</text>
+
+    <rect x="1100" y="852" width="330" height="82" rx="18" class="account"/>
+    <text x="1265" y="886" text-anchor="middle" class="label">Iniciar sesión / registro</text>
+    <text x="1265" y="910" text-anchor="middle" class="small">Volver al carrito al completar el acceso</text>
+
+    <rect x="650" y="1000" width="300" height="76" rx="18" class="action"/>
+    <text x="800" y="1033" text-anchor="middle" class="label">Datos de entrega</text>
+    <text x="800" y="1057" text-anchor="middle" class="small">Validar contacto y dirección</text>
+  </g>
+
+  <g>
+    <rect x="80" y="700" width="360" height="82" rx="18" class="pending"/>
+    <text x="260" y="734" text-anchor="middle" class="label">Validación de entrega</text>
+    <text x="260" y="758" text-anchor="middle" class="small">Errores visibles y corregibles antes de continuar</text>
+
+    <rect x="80" y="852" width="360" height="82" rx="18" class="action"/>
+    <text x="260" y="886" text-anchor="middle" class="label">Método para coordinar pago</text>
+    <text x="260" y="910" text-anchor="middle" class="small">Tarjeta o transferencia · sin cobro desde el sitio</text>
+
+    <rect x="80" y="1000" width="360" height="82" rx="18" class="action"/>
+    <text x="260" y="1034" text-anchor="middle" class="label">Revisión del pedido</text>
+    <text x="260" y="1058" text-anchor="middle" class="small">Editar entrega/pago o registrar como pendiente</text>
+
+    <rect x="1100" y="1000" width="400" height="82" rx="18" class="success"/>
+    <text x="1300" y="1034" text-anchor="middle" class="label">Confirmación de pedido pendiente</text>
+    <text x="1300" y="1058" text-anchor="middle" class="small">Número de pedido · pago y envío por coordinar</text>
+  </g>
+
+  <path d="M800 221v43" class="edge"/>
+  <path d="M800 352v43" class="edge"/>
+  <path d="M800 482v32" class="edge"/>
+  <path d="M930 585h160" class="edge"/>
+  <text x="1005" y="570" class="edge-label">Sí, sin sesión</text>
+  <path d="M1265 632v104h-305" class="edge"/>
+  <text x="1280" y="688" class="edge-label">Acceso completado</text>
+  <path d="M800 650v42" class="edge"/>
+  <text x="816" y="678" class="edge-label">Sí</text>
+  <path d="M670 585H520V741H450" class="edge"/>
+  <text x="478" y="570" class="edge-label">No</text>
+  <path d="M800 782v32" class="edge"/>
+  <path d="M670 890H450" class="edge"/>
+  <text x="515" y="875" class="edge-label">No</text>
+  <path d="M930 890h160" class="edge"/>
+  <text x="986" y="875" class="edge-label">Sí</text>
+  <path d="M1265 934v38h-305v66" class="edge"/>
+  <text x="1278" y="970" class="edge-label">Volver al checkout</text>
+  <path d="M650 1038H460" class="edge"/>
+  <text x="508" y="1023" class="edge-label">Datos inválidos</text>
+  <path d="M260 782v62" class="edge"/>
+  <text x="276" y="817" class="edge-label">Datos válidos</text>
+  <path d="M260 934v58" class="edge"/>
+  <path d="M440 1041h640" class="edge"/>
+  <text x="735" y="1025" class="edge-label">Registrar (no cobra)</text>
+  <path d="M800 1000V955" class="edge"/>
+  <path d="M650 1038H520V890H650" class="edge"/>
+  <text x="535" y="929" class="edge-label">Editar datos</text>
+  <path d="M430 1000V934" class="edge"/>
+  <text x="352" y="970" class="edge-label">Editar método</text>
+
+  <rect x="520" y="842" width="1" height="1" fill="none"/>
+  <text x="64" y="1102" class="small">Nota: el registro del pedido queda pendiente; no se confirma cobro, transferencia ni despacho.</text>
+</svg>

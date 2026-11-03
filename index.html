@@ -180,19 +180,19 @@
           <span class="progress-rule"></span>
           <span class="progress-step" data-progress="3">03 <span>Revisión</span></span>
         </div>
-        <div class="checkout-warning" role="note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>El pedido quedará pendiente mientras coordinamos el costo de envío y la confirmación del pago. No ingreses datos de tarjeta.</span></div>
+        <div class="checkout-warning" role="note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>El envío y el pago quedan pendientes de coordinación. Este sitio no realiza cobros ni transferencias; no ingreses datos de tarjetas o cuentas reales.</span></div>
         <div class="checkout-error" id="checkoutError" role="alert" aria-live="assertive" hidden data-testid="status-checkout-error"></div>
 
         <form id="checkoutForm" novalidate autocomplete="off">
           <section class="checkout-step" data-step="1" aria-labelledby="deliveryHeading">
             <div class="checkout-step-heading"><span class="section-kicker">Paso 1 de 3</span><h3 id="deliveryHeading">¿A dónde lo enviamos?</h3><p>Indica los datos para coordinar la entrega de tu pedido.</p></div>
             <div class="checkout-fields">
-              <label class="checkout-field field-wide">Nombre completo<input id="shippingName" name="name" type="text" autocomplete="off" required aria-describedby="shippingNameError" data-testid="input-shipping-name" /><small class="field-error" id="shippingNameError" data-error-for="shippingName"></small></label>
+              <label class="checkout-field field-wide">Nombre completo<input id="shippingName" name="name" type="text" maxlength="80" autocomplete="name" required aria-describedby="shippingNameError" data-testid="input-shipping-name" /><small class="field-error" id="shippingNameError" data-error-for="shippingName"></small></label>
               <label class="checkout-field">Correo electrónico<input id="shippingEmail" name="email" type="email" autocomplete="email" readonly required aria-describedby="shippingEmailError" data-testid="input-shipping-email" /><small class="field-error" id="shippingEmailError" data-error-for="shippingEmail"></small></label>
-              <label class="checkout-field">Teléfono en Ecuador<input id="shippingPhone" name="phone" type="tel" autocomplete="off" inputmode="tel" placeholder="09XXXXXXXX o +593XXXXXXXXX" required aria-describedby="shippingPhoneError" data-testid="input-shipping-phone" /><small class="field-error" id="shippingPhoneError" data-error-for="shippingPhone"></small></label>
+              <label class="checkout-field">Teléfono en Ecuador<input id="shippingPhone" name="phone" type="tel" maxlength="16" autocomplete="tel" inputmode="tel" placeholder="10 dígitos o +593..." required aria-describedby="shippingPhoneError" data-testid="input-shipping-phone" /><small class="field-error" id="shippingPhoneError" data-error-for="shippingPhone"></small></label>
               <label class="checkout-field">Provincia<select id="shippingProvince" name="province" required aria-describedby="shippingProvinceError" data-testid="select-shipping-province"><option value="">Elige una provincia</option><option>Azuay</option><option>Guayas</option><option>Pichincha</option><option>Manabí</option><option>Loja</option><option>Tungurahua</option><option>Otra provincia</option></select><small class="field-error" id="shippingProvinceError" data-error-for="shippingProvince"></small></label>
               <label class="checkout-field field-wide" id="otherProvinceField" hidden>Escribe el nombre de la provincia<input id="shippingProvinceOther" name="provinceOther" type="text" maxlength="40" autocomplete="off" aria-describedby="otherProvinceHelp shippingProvinceOtherError" data-testid="input-shipping-province-other" /><small id="otherProvinceHelp">Máximo 40 caracteres. La primera letra se pondrá en mayúscula.</small><small class="field-error" id="shippingProvinceOtherError" data-error-for="shippingProvinceOther"></small></label>
-              <label class="checkout-field">Ciudad<input id="shippingCity" name="city" type="text" autocomplete="off" required aria-describedby="shippingCityError" data-testid="input-shipping-city" /><small class="field-error" id="shippingCityError" data-error-for="shippingCity"></small></label>
+              <label class="checkout-field">Ciudad<input id="shippingCity" name="city" type="text" maxlength="60" autocomplete="address-level2" required aria-describedby="shippingCityError" data-testid="input-shipping-city" /><small class="field-error" id="shippingCityError" data-error-for="shippingCity"></small></label>
               <label class="checkout-field field-wide">Dirección de entrega<input id="shippingAddress" name="address" type="text" autocomplete="off" required aria-describedby="shippingAddressError" data-testid="input-shipping-address" /><small class="field-error" id="shippingAddressError" data-error-for="shippingAddress"></small></label>
             </div>
             <div class="shipping-estimate" data-testid="text-shipping-estimate"><i class="fa-solid fa-truck-fast" aria-hidden="true"></i><span><strong>Envío por coordinar</strong><small>El costo se confirmará antes de aceptar el despacho.</small></span></div>
@@ -200,13 +200,29 @@
           </section>
 
           <section class="checkout-step" data-step="2" aria-labelledby="paymentHeading" hidden>
-            <div class="checkout-step-heading"><span class="section-kicker">Paso 2 de 3</span><h3 id="paymentHeading">Elige cómo coordinar el pago</h3><p>El pedido se registra pendiente; no se realiza ningún cobro desde este sitio.</p></div>
+            <div class="checkout-step-heading"><span class="section-kicker">Paso 2 de 3</span><h3 id="paymentHeading">Datos de pago</h3><p>Completa los datos para continuar con la revisión de tu pedido.</p></div>
             <fieldset class="payment-options">
-              <legend class="sr-only">Método para coordinar el pago</legend>
-              <label class="payment-option"><input type="radio" name="paymentMethod" value="card" checked data-testid="radio-payment-card" /><span class="payment-option-icon"><i class="fa-regular fa-credit-card" aria-hidden="true"></i></span><span><strong>Tarjeta</strong><small>Se coordinará por un canal de pago seguro.</small></span><span class="radio-mark" aria-hidden="true"></span></label>
-              <label class="payment-option"><input type="radio" name="paymentMethod" value="transfer" data-testid="radio-payment-transfer" /><span class="payment-option-icon"><i class="fa-solid fa-building-columns" aria-hidden="true"></i></span><span><strong>Transferencia</strong><small>Solicita los datos al confirmar el pedido.</small></span><span class="radio-mark" aria-hidden="true"></span></label>
+              <legend class="sr-only">Elige un método de pago</legend>
+              <label class="payment-option"><input type="radio" name="paymentMethod" value="card" checked data-testid="radio-payment-card" /><span class="payment-option-icon"><i class="fa-regular fa-credit-card" aria-hidden="true"></i></span><span><strong>Tarjeta</strong><small>Número, vencimiento y código de seguridad.</small></span><span class="radio-mark" aria-hidden="true"></span></label>
+              <label class="payment-option"><input type="radio" name="paymentMethod" value="transfer" data-testid="radio-payment-transfer" /><span class="payment-option-icon"><i class="fa-solid fa-building-columns" aria-hidden="true"></i></span><span><strong>Transferencia</strong><small>Tipo y número de cuenta.</small></span><span class="radio-mark" aria-hidden="true"></span></label>
             </fieldset>
-            <div class="checkout-warning" id="paymentNotice" role="note">No compartas datos de tarjeta ni realices transferencias hasta recibir instrucciones verificadas.</div>
+            <div class="payment-demo-warning" id="paymentNotice" role="note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>Solo se valida el formato de los datos; no se procesan cobros ni transferencias.</span></div>
+            <fieldset class="payment-demo-fields" id="cardPaymentFields" aria-labelledby="cardFieldsHeading" data-testid="card-payment-fields">
+              <legend id="cardFieldsHeading">Datos de tarjeta</legend>
+              <div class="checkout-fields card-fields">
+                <label class="checkout-field field-wide">Número de tarjeta<input id="demoCardNumber" type="text" inputmode="numeric" maxlength="19" placeholder="0000 0000 0000 0000" autocomplete="off" required aria-describedby="demoCardNumberError" data-testid="input-demo-card-number" /><small class="field-error" id="demoCardNumberError" data-error-for="demoCardNumber"></small></label>
+                <label class="checkout-field">Vencimiento (MM/AA)<input id="demoCardExpiry" type="text" inputmode="numeric" maxlength="5" placeholder="MM/AA" autocomplete="off" required aria-describedby="demoCardExpiryError" data-testid="input-demo-card-expiry" /><small class="field-error" id="demoCardExpiryError" data-error-for="demoCardExpiry"></small></label>
+                <label class="checkout-field">CVV<input id="demoCardCvv" type="password" inputmode="numeric" maxlength="3" placeholder="3 dígitos" autocomplete="off" required aria-describedby="demoCardCvvError" data-testid="input-demo-card-cvv" /><small class="field-error" id="demoCardCvvError" data-error-for="demoCardCvv"></small></label>
+              </div>
+            </fieldset>
+            <fieldset class="payment-demo-fields" id="transferPaymentFields" aria-labelledby="transferFieldsHeading" data-testid="transfer-payment-fields" hidden>
+              <legend id="transferFieldsHeading">Datos de cuenta</legend>
+              <div class="checkout-fields">
+                <label class="checkout-field">Tipo de cuenta<select id="demoAccountType" required aria-describedby="demoAccountTypeError" data-testid="select-demo-account-type"><option value="">Selecciona el tipo</option><option value="savings">Ahorros</option><option value="checking">Corriente</option></select><small class="field-error" id="demoAccountTypeError" data-error-for="demoAccountType"></small></label>
+                <label class="checkout-field">Número de cuenta<input id="demoAccountNumber" type="text" inputmode="numeric" maxlength="20" placeholder="10 a 20 dígitos" autocomplete="off" required aria-describedby="demoAccountNumberError" data-testid="input-demo-account-number" /><small class="field-error" id="demoAccountNumberError" data-error-for="demoAccountNumber"></small></label>
+              </div>
+              <p class="transfer-caption">Solo se comprueba que el número tenga dígitos y una longitud válida. No se consulta ni verifica una cuenta bancaria.</p>
+            </fieldset>
             <div class="checkout-actions checkout-actions-split"><button class="button-secondary" type="button" data-action="to-delivery" data-testid="button-back-to-delivery">Volver</button><button class="button-primary checkout-next" type="button" data-action="to-review" data-testid="button-to-review">Revisar compra <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>
           </section>
 
