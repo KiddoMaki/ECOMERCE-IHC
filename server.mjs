@@ -1,9 +1,12 @@
 import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import { dirname, extname, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const root = dirname(fileURLToPath(import.meta.url));
+const projectRoot = dirname(fileURLToPath(import.meta.url));
+const builtRoot = resolve(projectRoot, "dist");
+const root = existsSync(builtRoot) ? builtRoot : projectRoot;
 const port = Number(process.env.PORT || 4173);
 const types = {
   ".css": "text/css; charset=utf-8",
