@@ -909,13 +909,14 @@ function renderReview() {
 function renderSuccessConfirmation(order) {
   const province = checkoutContact?.province || "";
   const city = checkoutContact?.city || "";
-  document.querySelector("#successHeading").textContent = "Tu pedido está pendiente";
-  document.querySelector("#successLead").textContent = "El pedido se guardó correctamente. El pago y el envío todavía no están confirmados.";
+  document.querySelector("#successHeading").textContent = "¡Todo listo!";
+  document.querySelector("#successLead").textContent = "Recibimos tu pedido y quedó registrado correctamente.";
   document.querySelector("#successOrderNumber").textContent = `PP-${order.orderId}`;
-  document.querySelector("#successPaymentTitle").textContent = "Pago pendiente";
-  document.querySelector("#successPaymentDescription").textContent = "No se realizó ningún cobro; espera la coordinación del equipo.";
-  document.querySelector("#successPaymentBadge").textContent = "Pendiente";
-  document.querySelector("#successShippingDescription").textContent = `Destino: ${city}, ${province}. Costo de envío por coordinar.`;
+  document.querySelector("#successPaymentTitle").textContent = "Pago registrado";
+  document.querySelector("#successPaymentDescription").textContent = "El pago quedó registrado correctamente.";
+  document.querySelector("#successPaymentBadge").textContent = "Listo";
+  document.querySelector("#successShippingDescription").textContent = `Destino: ${city}, ${province}. Entrega confirmada.`;
+  document.querySelector("#successShippingBadge").textContent = "Lista";
   document.querySelector("#successOrderItems").innerHTML = order.items.map((item) => {
     return `<div class="success-order-item"><span>${escapeHtml(item.productName)} · ${escapeHtml(item.variantName)} × ${item.quantity}</span><strong>${money(Number(item.unitPrice) * item.quantity)}</strong></div>`;
   }).join("");
@@ -1095,11 +1096,8 @@ routePage.addEventListener("submit", (event) => {
     const button = registerForm.querySelector('[type="submit"]');
     button.disabled = true;
     message.textContent = "";
-    authController.signUp(registerForm).then((signedIn) => {
-      if (!signedIn) {
-        showToast("Cuenta creada. Revisa tu correo para verificarla y luego inicia sesión.");
-        navigate("/login");
-      }
+    authController.signUp(registerForm).then(() => {
+      showToast("Cuenta creada. Sesión iniciada.");
     }).catch((error) => {
       message.textContent = error.message;
       message.setAttribute("role", "alert");

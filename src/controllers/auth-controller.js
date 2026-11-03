@@ -23,7 +23,7 @@ export function createAuthController(onAuthenticated) {
       });
       if (result.error) throw new Error(result.error.message || "No se pudo iniciar sesión.");
       await this.restoreSession();
-      if (!sessionModel.isSignedIn()) throw new Error("La sesión no quedó iniciada. Verifica tu correo e inténtalo de nuevo.");
+      if (!sessionModel.isSignedIn()) throw new Error("La sesión no quedó iniciada. Inténtalo de nuevo.");
       onAuthenticated();
       return true;
     },
@@ -39,8 +39,22 @@ export function createAuthController(onAuthenticated) {
       });
       if (result.error) throw new Error(result.error.message || "No se pudo crear la cuenta.");
       await this.restoreSession();
-      if (sessionModel.isSignedIn()) onAuthenticated();
-      return sessionModel.isSignedIn();
+      if (!sessionModel.isSignedIn()) {
+        invalidateAccessToken();
+        const signInResult = await neonAuth.adapter.signIn.email({
+          email: String(email).trim(),
+          password: String(password)
+        });
+        if (signInResult.error) {
+          throw new Error(signInResult.error.message || "La cuenta se creó, pero no se pudo iniciar sesión.");
+        }
+        await this.restoreSession();
+      }
+      if (!sessionModel.isSignedIn()) {
+        throw new Error("La cuenta se creó, pero la sesión no quedó iniciada. Intenta iniciar sesión.");
+      }
+      onAuthenticated();
+      return true;
     },
     async signOut() {
       if (!neonAuth) {
