@@ -1,22 +1,10 @@
-/* PichuPaper: catálogo, filtros y carrito funcionan enteramente en el navegador. */
-const products = [
-  { id: "cuaderno-a5", name: "Cuaderno A5 Botánica", category: "Cuadernos", price: 8.50, originalPrice: 10.00, rating: "4.9", icon: "fa-book-open", color: "art-mint", tag: "Favorito", images: ["assets/products/cuaderno-a5-01.png", "assets/products/cuaderno-a5-02.png", "assets/products/cuaderno-a5-03.png"] },
-  { id: "cuaderno-rayas", name: "Libreta Rayas del día", category: "Cuadernos", price: 6.25, rating: "4.8", icon: "fa-book", color: "art-sky", tag: "A5 · 80 hojas", images: ["assets/products/libreta-rayas-del-dia-01.png", "assets/products/libreta-rayas-del-dia-02.png", "assets/products/libreta-rayas-del-dia-03.png"] },
-  { id: "boligrafo-gel", name: "Bolígrafo gel punta fina", category: "Bolígrafos", price: 2.40, rating: "4.7", icon: "fa-pen", color: "art-sky", tag: "3 colores · 0.5 mm", images: ["assets/products/boligrafo-gel-punta-fina-azul-01.png", "assets/products/boligrafo-gel-punta-fina-negrop-01.png", "assets/products/boligrafo-gel-punta-fina-verde-01.png"], variantImageGroups: [[0], [1], [2]] },
-  { id: "set-resaltadores", name: "Set de resaltadores pastel", category: "Bolígrafos", price: 5.30, originalPrice: 5.90, rating: "4.9", icon: "fa-highlighter", color: "art-navy", tag: "Set x 4", images: ["assets/products/set-resaltadores-pastel-01.png", "assets/products/set-resaltadores-pastel-02.png"] },
-  { id: "organizador", name: "Organizador de escritorio", category: "Escritorio", price: 12.75, rating: "4.8", icon: "fa-box-open", color: "art-white", tag: "Orden bonito", images: ["assets/products/organizador-escritorio-compacto-01.png", "assets/products/organizador-escritorio-compacto-02.png", "assets/products/organizador-escritorio-ampliado-01.png", "assets/products/organizador-escritorio-ampliado-02.png"], variantImageGroups: [[0, 1], [2, 3]] },
-  { id: "notas-adhesivas", name: "Notas adhesivas color", category: "Escritorio", price: 3.60, rating: "4.6", icon: "fa-note-sticky", color: "art-mint", tag: "Set x 5", images: ["assets/products/notas-adhesivas-colores-01.png", "assets/products/notas-adhesivas-colores-02.png", "assets/products/notas-adhesivas-colores-03.png"] },
-  { id: "lapices-color", name: "Lápices de color · 12 tonos", category: "Arte", price: 7.80, rating: "4.9", icon: "fa-palette", color: "art-sky", tag: "12 colores", images: ["assets/products/set-lapices-12-colores-01.png", "assets/products/set-lapices-12-colores-02.png"] },
-  { id: "marcadores-arte", name: "Marcadores para ilustrar", category: "Arte", price: 9.40, rating: "4.8", icon: "fa-paintbrush", color: "art-navy", tag: "Doble punta", images: ["assets/products/marcadores-ilustrar-6-01.png", "assets/products/marcadores-ilustrar-12-01.png"], variantImageGroups: [[0], [1]] },
-  { id: "planificador-semanal", name: "Planificador semanal A5", category: "Cuadernos", price: 11.50, rating: "4.9", icon: "fa-calendar-days", color: "art-mint", tag: "Organiza tu semana", images: ["assets/products/planificador-semanal-a5-01.png", "assets/products/planificador-semanal-a5-02.png"] },
-  { id: "bloc-listas", name: "Bloc de listas desprendibles", category: "Cuadernos", price: 4.25, rating: "4.7", icon: "fa-list-check", color: "art-white", tag: "50 hojas", images: ["assets/products/bloc-listas-desprendibles-01.png", "assets/products/bloc-listas-desprendibles-02.png"] },
-  { id: "boligrafo-retractil", name: "Bolígrafo retráctil negro", category: "Bolígrafos", price: 1.80, rating: "4.6", icon: "fa-pen", color: "art-navy", tag: "Trazo 0.7 mm", images: ["assets/products/boligrafo-retractil-negro-01.png", "assets/products/boligrafo-retractil-negro-02.png"] },
-  { id: "set-boligrafos-color", name: "Set de bolígrafos de colores", category: "Bolígrafos", price: 6.20, rating: "4.8", icon: "fa-marker", color: "art-sky", tag: "Set x 6", images: ["assets/products/set-boligrafos-colores-01.png", "assets/products/set-boligrafos-colores-02.png"] },
-  { id: "portalapices", name: "Portalápices de escritorio", category: "Escritorio", price: 8.95, rating: "4.7", icon: "fa-pen-ruler", color: "art-mint", tag: "Orden práctico", images: ["assets/products/portalapices-verde-01.png", "assets/products/portalapices-verde-02.png", "assets/products/portalapices-azul-01.png", "assets/products/portalapices-azul-02.png"], variantImageGroups: [[0, 1], [2, 3]] },
-  { id: "cinta-decorativa", name: "Cinta decorativa washi", category: "Escritorio", price: 3.40, rating: "4.8", icon: "fa-tape", color: "art-sky", tag: "Set x 3", images: ["assets/products/citas-decorativas-washi-01.png", "assets/products/citas-decorativas-washi.02.png"] },
-  { id: "acuarelas", name: "Set de acuarelas compactas", category: "Arte", price: 10.75, rating: "4.9", icon: "fa-droplet", color: "art-white", tag: "12 colores", images: ["assets/products/set-acuarelas-compactas-01.png", "assets/products/set-acuarelas-compactas-02.png"] },
-  { id: "cuaderno-dibujo", name: "Cuaderno para dibujo A4", category: "Arte", price: 9.95, rating: "4.8", icon: "fa-pencil", color: "art-navy", tag: "Papel grueso", images: ["assets/products/cuaderno-A4-dibujo-01.png", "assets/products/cuaderno-A4-dibujo-02.png"] }
-];
+import { createAuthController } from "./src/controllers/auth-controller.js";
+import { sessionModel } from "./src/models/session-model.js";
+import { renderContactPage, renderLoginPage, renderRegisterPage } from "./src/views/page-views.js";
+import { apiConfigured, createOrder, createReview, fetchCart, fetchProducts, fetchReviews, saveCart } from "./src/client/api-client.js";
+import { authConfigured } from "./src/client/neon-auth-client.js";
+
+let products = [];
 const productDetails = {
   "cuaderno-a5": { description: "Un cuaderno ligero para apuntes, listas y bocetos cotidianos. Papel de buen cuerpo y una portada botánica que alegra el escritorio.", variants: ["A5 · rayado", "A5 · puntos", "A4 · rayado"] },
   "cuaderno-rayas": { description: "Una libreta sencilla para llevar ideas a todas partes, con hojas rayadas y encuadernación flexible.", variants: ["A5 · 80 hojas", "A6 · 80 hojas"] },
@@ -39,6 +27,7 @@ const productDetails = {
 const productGrid = document.querySelector("#productGrid");
 const searchInput = document.querySelector("#searchInput");
 const categoryFilters = document.querySelector("#categoryFilters");
+const offersFilterButton = categoryFilters.querySelector("[data-offers-toggle]");
 const cartDrawer = document.querySelector("#cartDrawer");
 const cartBackdrop = document.querySelector("#cartBackdrop");
 const toast = document.querySelector("#toast");
@@ -54,35 +43,37 @@ let currentRoute = "/";
 let detailQuantity = 1;
 let detailVariant = "";
 let detailImageIndex = 0;
+let pendingAdd = null;
+let pendingCheckout = false;
+let productLoadState = "loading";
 let pendingRemoval = null;
+let cartSync = Promise.resolve();
 let removalConfirmationResolve = null;
 let focusBeforeRemovalConfirmation = null;
 let bodyOverflowBeforeRemovalConfirmation = "";
-const reviewStorageKey = "pichupaper-product-reviews";
-
-function loadProductReviews() {
-  try {
-    const stored = JSON.parse(localStorage.getItem(reviewStorageKey) || "{}");
-    return stored && typeof stored === "object" && !Array.isArray(stored) ? stored : {};
-  } catch {
-    return {};
-  }
-}
-
-const reviewsByProduct = loadProductReviews();
-const exampleReviewDate = new Date().toISOString();
-const exampleReviewsByProduct = {
-  "cuaderno-a5": [{ rating: 5, comment: "El papel se siente agradable para tomar apuntes todos los días.", createdAt: exampleReviewDate, example: true }],
-  "boligrafo-gel": [{ rating: 5, comment: "La punta fina deja una escritura clara en mis apuntes.", createdAt: exampleReviewDate, example: true }],
-  "set-resaltadores": [{ rating: 4, comment: "Los tonos pastel ayudan a distinguir ideas sin recargar la página.", createdAt: exampleReviewDate, example: true }],
-  organizador: [{ rating: 5, comment: "El tamaño ampliado deja espacio para cuadernos y accesorios.", createdAt: exampleReviewDate, example: true }],
-  "notas-adhesivas": [{ rating: 4, comment: "Los colores permiten identificar rápido cada pendiente.", createdAt: exampleReviewDate, example: true }],
-  "boligrafo-retractil": [{ rating: 4, comment: "Cómodo para llevar en el estuche y tomar apuntes.", createdAt: exampleReviewDate, example: true }],
-  "set-boligrafos-color": [{ rating: 5, comment: "Los seis colores facilitan organizar materias y notas.", createdAt: exampleReviewDate, example: true }]
-};
+const reviewsByProduct = {};
 
 function money(value) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
+}
+
+function syncCart() {
+  if (!sessionModel.isSignedIn() || !apiConfigured) return;
+  const items = cart.map((item) => {
+    const variantIndex = productDetails[item.id]?.variants.indexOf(item.variant) ?? -1;
+    return {
+      variantSku: products.find((product) => product.id === item.id)?.variantSkus?.[variantIndex],
+      quantity: item.quantity
+    };
+  });
+  if (items.some((item) => !item.variantSku)) {
+    showToast("No se pudo identificar una variante del carrito.");
+    return;
+  }
+  cartSync = cartSync.then(() => saveCart(items)).catch((error) => {
+    console.error("No se pudo guardar el carrito en la cuenta.", error);
+    showToast(error.message || "No se pudo sincronizar el carrito.");
+  });
 }
 
 function escapeHtml(value) {
@@ -96,25 +87,18 @@ function escapeHtml(value) {
 }
 
 function renderProductReviews(product) {
-  const storedReviews = reviewsByProduct[product.id];
-  const userReviews = Array.isArray(storedReviews)
-    ? storedReviews.filter((review) => review && Number.isInteger(review.rating) && review.rating >= 1 && review.rating <= 5 && typeof review.comment === "string" && Number.isFinite(Date.parse(review.createdAt)))
-    : [];
-  const reviews = [...userReviews, ...(exampleReviewsByProduct[product.id] || [])];
+  const reviews = reviewsByProduct[product.id] || [];
   const reviewItems = reviews.length
     ? reviews.map((review) => `
         <article class="review-entry">
-          <div class="review-entry-meta"><span class="review-stars" aria-label="${review.rating} de 5 estrellas">${'<i class="fa-solid fa-star" aria-hidden="true"></i>'.repeat(review.rating)}</span><span class="review-entry-details">${review.example ? '<span class="review-example-badge">Ejemplo</span>' : ""}<time datetime="${escapeHtml(review.createdAt)}">${new Intl.DateTimeFormat("es-EC", { dateStyle: "medium" }).format(new Date(review.createdAt))}</time></span></div>
+          <div class="review-entry-meta"><span class="review-stars" aria-label="${review.rating} de 5 estrellas">${'<i class="fa-solid fa-star" aria-hidden="true"></i>'.repeat(review.rating)}</span><span class="review-entry-details"><span>${escapeHtml(review.author || "Cliente")}</span><time datetime="${escapeHtml(review.createdAt)}">${new Intl.DateTimeFormat("es-EC", { dateStyle: "medium" }).format(new Date(review.createdAt))}</time></span></div>
           <p>${escapeHtml(review.comment)}</p>
         </article>`).join("")
     : `<p class="reviews-empty">Aún no hay reseñas para este producto.</p>`;
-  return `<section class="reviews-section" data-testid="product-reviews-${product.id}" aria-labelledby="reviews-title-${product.id}">
-    <div class="reviews-heading"><div><span class="section-kicker">Opiniones de clientes</span><h2 id="reviews-title-${product.id}" tabindex="-1">Reseñas</h2></div><span class="reviews-count" data-testid="review-count-${product.id}">${reviews.length} ${reviews.length === 1 ? "reseña" : "reseñas"}</span></div>
-    <div class="reviews-layout">
-      <form class="review-form" data-review-form data-product-id="${product.id}">
+  const reviewForm = sessionModel.isSignedIn()
+    ? `<form class="review-form" data-review-form data-product-id="${product.id}">
         <h3>Comparte tu opinión</h3>
-        <label class="review-field-label" for="review-email-${product.id}">Correo electrónico</label>
-        <input class="review-input" id="review-email-${product.id}" name="review-email" type="email" autocomplete="email" maxlength="254" required data-testid="review-email-${product.id}" />
+        <p>Publicando como ${escapeHtml(sessionModel.getUser()?.name || sessionModel.getUser()?.email || "cliente")}.</p>
         <fieldset class="review-rating-fieldset">
           <legend class="review-field-label">Calificación</legend>
           <div class="review-star-options" aria-label="Elige de 1 a 5 estrellas">${[5, 4, 3, 2, 1].map((rating) => `<label class="review-star-option"><input class="sr-only" type="radio" name="review-rating" value="${rating}" required /><span class="review-star-glyph" aria-hidden="true"><i class="fa-solid fa-star"></i></span><span class="sr-only">${rating} ${rating === 1 ? "estrella" : "estrellas"}</span></label>`).join("")}</div>
@@ -122,8 +106,13 @@ function renderProductReviews(product) {
         <label class="review-field-label" for="review-comment-${product.id}">Comentario</label>
         <textarea class="review-input review-textarea" id="review-comment-${product.id}" name="review-comment" rows="4" maxlength="600" required data-testid="review-comment-${product.id}"></textarea>
         <button class="button-primary review-submit" type="submit" data-testid="review-submit-${product.id}">Publicar reseña <i class="fa-solid fa-paper-plane" aria-hidden="true"></i></button>
-        <p class="review-data-note">El correo se valida pero no se publica ni se guarda. Las reseñas quedan en este navegador.</p>
-      </form>
+        <p class="review-data-note">Tu opinión se guardará en tu cuenta.</p>
+      </form>`
+    : `<div class="review-form"><h3>Comparte tu opinión</h3><p>Inicia sesión para publicar una reseña.</p><a class="button-primary review-submit" href="#/login" data-route="/login">Iniciar sesión</a></div>`;
+  return `<section class="reviews-section" data-testid="product-reviews-${product.id}" aria-labelledby="reviews-title-${product.id}">
+    <div class="reviews-heading"><div><span class="section-kicker">Opiniones de clientes</span><h2 id="reviews-title-${product.id}" tabindex="-1">Reseñas</h2></div><span class="reviews-count" data-testid="review-count-${product.id}">${reviews.length} ${reviews.length === 1 ? "reseña" : "reseñas"}</span></div>
+    <div class="reviews-layout">
+      ${reviewForm}
       <div class="reviews-list" data-testid="review-list-${product.id}" aria-live="polite">${reviewItems}</div>
     </div>
   </section>`;
@@ -134,32 +123,42 @@ function productVisual(product, variant = "") {
   const imageIndex = product.variantImageGroups?.[variantIndex]?.[0] ?? (product.variantImages && variantIndex >= 0 ? variantIndex : 0);
   const image = product.images?.[imageIndex] || product.images?.[0] || product.image;
   if (image) {
-    return `<img class="product-photo" src="${image}" alt="" loading="lazy" decoding="async" />`;
+    return `<img class="product-photo" src="${escapeHtml(image)}" alt="" loading="lazy" decoding="async" />`;
   }
-  return `<i class="fa-solid ${product.icon}" aria-hidden="true"></i>`;
+  return `<i class="fa-solid ${escapeHtml(product.icon)}" aria-hidden="true"></i>`;
 }
 
 function renderDetailVisual(product) {
   const images = product.images || (product.image ? [product.image] : []);
   if (!images.length) {
-    return `<div class="detail-art product-art ${product.color}" role="img" aria-label="${product.name}"><span class="art-tag">${product.tag}</span>${productVisual(product)}</div>`;
+    return `<div class="detail-art product-art ${escapeHtml(product.color)}" role="img" aria-label="${escapeHtml(product.name)}"><span class="art-tag">${escapeHtml(product.tag)}</span>${productVisual(product)}</div>`;
   }
   const variantIndex = productDetails[product.id].variants.indexOf(detailVariant);
   const imageIndexes = product.variantImageGroups?.[variantIndex] || images.map((_, index) => index);
   const selectedIndex = imageIndexes.includes(detailImageIndex) ? detailImageIndex : imageIndexes[0];
   const thumbnails = imageIndexes.length > 1
-    ? `<div class="product-gallery-thumbnails" role="group" aria-label="Imágenes de ${product.name}">${imageIndexes.map((index) => `
-        <button class="product-gallery-thumbnail${index === selectedIndex ? " active" : ""}" type="button" data-detail-image="${index}" aria-label="Ver imagen ${index + 1} de ${images.length} de ${product.name}" aria-pressed="${index === selectedIndex}">
-          <img src="${images[index]}" alt="" loading="lazy" decoding="async" />
+    ? `<div class="product-gallery-thumbnails" role="group" aria-label="Imágenes de ${escapeHtml(product.name)}">${imageIndexes.map((index) => `
+        <button class="product-gallery-thumbnail${index === selectedIndex ? " active" : ""}" type="button" data-detail-image="${index}" aria-label="Ver imagen ${index + 1} de ${images.length} de ${escapeHtml(product.name)}" aria-pressed="${index === selectedIndex}">
+          <img src="${escapeHtml(images[index])}" alt="" loading="lazy" decoding="async" />
         </button>`).join("")}</div>`
     : "";
   return `<div class="product-gallery">
-    <div class="detail-art product-art detail-gallery-image ${product.color}" data-testid="detail-gallery-image"><span class="art-tag">${product.tag}</span><img class="product-photo" src="${images[selectedIndex]}" alt="${product.name}, imagen ${selectedIndex + 1} de ${images.length}" fetchpriority="high" /></div>
+    <div class="detail-art product-art detail-gallery-image ${escapeHtml(product.color)}" data-testid="detail-gallery-image"><span class="art-tag">${escapeHtml(product.tag)}</span><img class="product-photo" src="${escapeHtml(images[selectedIndex])}" alt="${escapeHtml(product.name)}${detailVariant ? `, ${escapeHtml(detailVariant)}` : ""}, fotografía ${selectedIndex + 1} de ${images.length}" fetchpriority="high" /></div>
     ${thumbnails}
   </div>`;
 }
 
 function renderProducts() {
+  if (productLoadState === "loading") {
+    document.querySelector("#productCount").textContent = "";
+    productGrid.innerHTML = `<div class="no-results" role="status" data-testid="catalog-loading"><p>Cargando el catálogo…</p></div>`;
+    return;
+  }
+  if (productLoadState === "error") {
+    document.querySelector("#productCount").textContent = "Catálogo no disponible";
+    productGrid.innerHTML = `<div class="no-results" role="alert" data-testid="catalog-error"><div><h3>No pudimos cargar el catálogo</h3><p>${escapeHtml(productLoadError)} Comprueba tu conexión e inténtalo de nuevo.</p><button class="category-filter" type="button" data-action="retry-products" data-testid="button-retry-products">Reintentar</button></div></div>`;
+    return;
+  }
   const query = searchInput.value.trim().toLocaleLowerCase("es");
   const visible = products.filter((product) => {
     const matchesCategory = activeCategory === "Todos" || product.category === activeCategory;
@@ -174,18 +173,66 @@ function renderProducts() {
   }
   productGrid.innerHTML = visible.map((product) => `
     <article class="product-card" data-testid="card-product-${product.id}">
-      <a class="product-art-link" href="#/product/${product.id}" data-route="/product/${product.id}" aria-label="Ver detalles de ${product.name}" data-testid="link-detail-image-${product.id}">
-        <div class="product-art ${product.color}" aria-hidden="true">
-          <span class="art-tag">${product.originalPrice ? `Oferta · ${product.tag}` : product.tag}</span>
+      <a class="product-art-link" href="#/product/${product.id}" data-route="/product/${product.id}" aria-label="Ver detalles de ${escapeHtml(product.name)}" data-testid="link-detail-image-${product.id}">
+        <div class="product-art ${escapeHtml(product.color)}" aria-hidden="true">
+          <span class="art-tag">${product.originalPrice ? `Oferta · ${escapeHtml(product.tag)}` : escapeHtml(product.tag)}</span>
           ${productVisual(product)}
         </div>
       </a>
       <div class="product-info">
-        <div class="product-meta"><span>${product.category}</span><span class="rating"><i class="fa-solid fa-star" aria-hidden="true"></i>${product.rating}</span></div>
-        <h3><a href="#/product/${product.id}" data-route="/product/${product.id}" data-testid="link-detail-${product.id}">${product.name}</a></h3>
-        <div class="product-bottom"><span class="price-stack"><span class="price" data-testid="text-price-${product.id}">${money(product.price)}</span>${product.originalPrice ? `<del class="old-price">${money(product.originalPrice)}</del>` : ""}</span><button class="add-button" type="button" data-add="${product.id}" aria-label="Añadir ${product.name} al carrito" data-testid="button-add-${product.id}"><span>Añadir al carrito</span><i class="fa-solid fa-plus" aria-hidden="true"></i></button></div>
+        <div class="product-meta"><span>${escapeHtml(product.category)}</span><span class="rating">${Number(product.rating) > 0 ? `<i class="fa-solid fa-star" aria-hidden="true"></i>${escapeHtml(product.rating)}` : "Sin reseñas"}</span></div>
+        <h3><a href="#/product/${product.id}" data-route="/product/${product.id}" data-testid="link-detail-${product.id}">${escapeHtml(product.name)}</a></h3>
+        <div class="product-bottom"><span class="price-stack"><span class="price" data-testid="text-price-${product.id}">${money(product.price)}</span>${product.originalPrice ? `<del class="old-price">${money(product.originalPrice)}</del>` : ""}</span><a class="add-button" href="#/product/${product.id}" data-route="/product/${product.id}" aria-label="Ver detalles de ${escapeHtml(product.name)}" data-testid="button-detail-${product.id}"><span>Ver detalles</span><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div>
       </div>
     </article>`).join("");
+}
+
+let productLoadError = "";
+async function loadProducts() {
+  if (!apiConfigured) {
+    productLoadState = "error";
+    productLoadError = "El catálogo requiere una API configurada.";
+    renderProducts();
+    return;
+  }
+  productLoadState = "loading";
+  renderProducts();
+  try {
+    const remoteProducts = await fetchProducts();
+    products = remoteProducts.map((product) => ({
+      ...product,
+      rating: String(product.rating),
+      originalPrice: product.originalPrice === null ? undefined : product.originalPrice
+    }));
+    products.forEach((product) => {
+      productDetails[product.id] = {
+        description: product.description,
+        variants: product.variants
+      };
+    });
+    productLoadState = "loaded";
+    productLoadError = "";
+  } catch (error) {
+    productLoadState = "error";
+    productLoadError = error instanceof Error ? error.message : "Error desconocido al cargar el catálogo.";
+    console.error("No se pudo cargar el catálogo desde la API configurada.", error);
+  }
+  renderProducts();
+  if (currentRoute.startsWith("/product/")) renderRoute();
+}
+
+function updateFilterControls() {
+  categoryFilters.querySelectorAll("[data-category]").forEach((filter) => {
+    const selected = filter.dataset.category === activeCategory;
+    filter.classList.toggle("active", selected);
+    filter.setAttribute("aria-pressed", String(selected));
+  });
+  offersFilterButton.classList.toggle("active", offersOnly);
+  offersFilterButton.setAttribute("aria-pressed", String(offersOnly));
+  document.querySelectorAll("[data-offers-only]").forEach((link) => {
+    if (offersOnly) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
+  });
 }
 
 function cartCount() {
@@ -208,15 +255,15 @@ function renderCart() {
     const product = products.find((entry) => entry.id === item.id);
     const variantKey = encodeURIComponent(item.variant || "");
     return `<article class="cart-row" data-testid="cart-item-${product.id}">
-      <div class="cart-thumb ${product.color}" aria-hidden="true">${productVisual(product, item.variant)}</div>
-      <div><p class="cart-product-name">${product.name}</p><span class="cart-product-price">${item.variant ? `${item.variant} · ` : ""}${money(product.price)} c/u</span>
-        <div class="quantity-control" aria-label="Cantidad de ${product.name}">
-          <button type="button" data-quantity="-1" data-id="${product.id}" data-variant="${variantKey}" aria-label="Restar una unidad de ${product.name}" data-testid="button-decrease-${product.id}">−</button>
+      <div class="cart-thumb ${escapeHtml(product.color)}" aria-hidden="true">${productVisual(product, item.variant)}</div>
+      <div><p class="cart-product-name">${escapeHtml(product.name)}</p><span class="cart-product-price">${item.variant ? `${escapeHtml(item.variant)} · ` : ""}${money(product.price)} c/u</span>
+        <div class="quantity-control" aria-label="Cantidad de ${escapeHtml(product.name)}">
+          <button type="button" data-quantity="-1" data-id="${product.id}" data-variant="${variantKey}" aria-label="Restar una unidad de ${escapeHtml(product.name)}" data-testid="button-decrease-${product.id}">−</button>
           <span data-testid="text-quantity-${product.id}">${item.quantity}</span>
-          <button type="button" data-quantity="1" data-id="${product.id}" data-variant="${variantKey}" aria-label="Añadir una unidad de ${product.name}" data-testid="button-increase-${product.id}">+</button>
+          <button type="button" data-quantity="1" data-id="${product.id}" data-variant="${variantKey}" aria-label="Añadir una unidad de ${escapeHtml(product.name)}" data-testid="button-increase-${product.id}">+</button>
         </div>
       </div>
-      <div class="cart-row-end"><button class="remove-item" type="button" data-remove="${product.id}" data-variant="${variantKey}" aria-label="Eliminar ${product.name}" data-testid="button-remove-${product.id}"><i class="fa-regular fa-trash-can" aria-hidden="true"></i></button><span class="line-total">${money(product.price * item.quantity)}</span></div>
+      <div class="cart-row-end"><button class="remove-item" type="button" data-remove="${product.id}" data-variant="${variantKey}" aria-label="Eliminar ${escapeHtml(product.name)}" data-testid="button-remove-${product.id}"><i class="fa-regular fa-trash-can" aria-hidden="true"></i></button><span class="line-total">${money(product.price * item.quantity)}</span></div>
     </article>`;
   }).join("");
   const subtotal = cart.reduce((sum, item) => sum + products.find((product) => product.id === item.id).price * item.quantity, 0);
@@ -277,6 +324,7 @@ async function removeCartItem(id, variant = "") {
   pendingRemoval = { item: cart[index], index };
   cart.splice(index, 1);
   renderCart();
+  syncCart();
   if (currentRoute === "/cart") renderRoute();
   const action = document.querySelector("#toastAction");
   document.querySelector("#toastMessage").textContent = `${product.name} se eliminó del carrito.`;
@@ -287,6 +335,7 @@ async function removeCartItem(id, variant = "") {
     cart.splice(Math.min(pendingRemoval.index, cart.length), 0, pendingRemoval.item);
     pendingRemoval = null;
     renderCart();
+    syncCart();
     renderRoute();
     toast.classList.remove("show");
     clearTimeout(toastTimer);
@@ -304,6 +353,16 @@ document.querySelector("#confirmRemove").addEventListener("click", () => finishR
 document.querySelector("#removeConfirmBackdrop").addEventListener("click", () => finishRemovalConfirmation(false));
 
 const routePage = document.querySelector("#routePage");
+function updateAccountControl() {
+  const account = document.querySelector("#accountOpen");
+  const label = account.querySelector(".account-label");
+  const signedIn = sessionModel.isSignedIn();
+  label.textContent = signedIn ? "Mi cuenta" : "Iniciar sesión";
+  account.setAttribute("aria-label", signedIn
+    ? `Mi cuenta: ${sessionModel.getUser()?.name || sessionModel.getUser()?.email || "usuario"}`
+    : "Iniciar sesión");
+}
+
 function navigate(path, replace = false) {
   const url = `${location.pathname}${location.search}#${path}`;
   if (replace) history.replaceState({}, "", url);
@@ -316,6 +375,7 @@ function renderRoute() {
     : "/";
   const previousRoute = currentRoute;
   if (previousRoute === "/payment" && path !== "/payment") clearCheckoutData();
+  if (previousRoute === "/login" && path !== "/login" && pendingAdd) pendingAdd = null;
   currentRoute = path;
   document.body.classList.toggle("page-route", path !== "/");
   routePage.hidden = path === "/" || path.startsWith("/payment");
@@ -324,6 +384,15 @@ function renderRoute() {
   checkoutModal.inert = true;
   checkoutModal.setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
+  if (apiConfigured && path.startsWith("/product/") &&
+      (productLoadState === "loading" || productLoadState === "error")) {
+    routePage.hidden = false;
+    document.title = "Ficha de producto — PichuPaper";
+    routePage.innerHTML = productLoadState === "loading"
+      ? `<div class="no-results" role="status"><p>Cargando el catálogo…</p></div>`
+      : `<div class="no-results" role="alert"><div><h1>No pudimos cargar el producto</h1><p>${escapeHtml(productLoadError)} Comprueba tu conexión e inténtalo de nuevo.</p><button class="category-filter" type="button" data-action="retry-products">Reintentar</button></div></div>`;
+    return;
+  }
   if (path === "/") {
     document.title = "PichuPaper — Ideas que toman forma";
     window.scrollTo(0, 0);
@@ -344,6 +413,27 @@ function renderRoute() {
     window.scrollTo(0, 0);
     return;
   }
+  if (path === "/contact") {
+    document.title = "Contacto — PichuPaper";
+    routePage.innerHTML = renderContactPage();
+    routePage.focus({ preventScroll: true });
+    window.scrollTo(0, 0);
+    return;
+  }
+  if (path === "/login") {
+    document.title = "Iniciar sesión — PichuPaper";
+    routePage.innerHTML = renderLoginPage(sessionModel.isSignedIn());
+    routePage.focus({ preventScroll: true });
+    window.scrollTo(0, 0);
+    return;
+  }
+  if (path === "/register") {
+    document.title = "Crear cuenta — PichuPaper";
+    routePage.innerHTML = renderRegisterPage(sessionModel.isSignedIn());
+    routePage.focus({ preventScroll: true });
+    window.scrollTo(0, 0);
+    return;
+  }
   if (path.startsWith("/product/")) {
     const product = products.find((item) => item.id === path.split("/")[2]);
     if (!product) { navigate("/", true); return; }
@@ -354,11 +444,18 @@ function renderRoute() {
     routePage.innerHTML = renderProductDetail(product);
     routePage.focus({ preventScroll: true });
     window.scrollTo(0, 0);
+    loadReviewsForProduct(product);
     return;
   }
   if (path === "/payment") {
     if (!cart.length) { navigate("/cart", true); return; }
-    document.title = "Pago de demostración — PichuPaper";
+    if (!sessionModel.isSignedIn()) {
+      pendingCheckout = true;
+      showToast("Inicia sesión para continuar con tu pedido.");
+      navigate("/login", true);
+      return;
+    }
+    document.title = "Completar pedido — PichuPaper";
     routePage.hidden = true;
     document.body.classList.add("page-route");
     checkoutModal.classList.add("open", "page-mode");
@@ -376,14 +473,29 @@ function renderRoute() {
 }
 function renderProductDetail(product) {
   const detail = productDetails[product.id];
-  return `<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="#/" data-route="/">Inicio</a><span aria-hidden="true">/</span><a href="#catalogo" data-route="/">Catálogo</a><span aria-hidden="true">/</span><span aria-current="page">${product.name}</span></nav>
+  return `<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="#/" data-route="/">Inicio</a><span aria-hidden="true">/</span><a href="#catalogo" data-route="/">Catálogo</a><span aria-hidden="true">/</span><span aria-current="page">${escapeHtml(product.name)}</span></nav>
     <section class="detail-layout" data-testid="product-detail-${product.id}">
       ${renderDetailVisual(product)}
-      <div class="detail-copy"><span class="section-kicker">${product.category} · PichuPaper</span><h1>${product.name}</h1><div class="rating"><i class="fa-solid fa-star" aria-hidden="true"></i> ${product.rating} · selección de la tienda</div><p class="detail-description">${detail.description}</p><div class="detail-price">${money(product.price)} <span>Precio de ejemplo</span></div>
-      <label class="detail-label" for="detailVariant">Formato o variante</label><select id="detailVariant" class="detail-select" data-testid="select-product-variant">${detail.variants.map((variant) => `<option>${variant}</option>`).join("")}</select>
+      <div class="detail-copy"><span class="section-kicker">${escapeHtml(product.category)} · PichuPaper</span><h1>${escapeHtml(product.name)}</h1><div class="rating">${Number(product.rating) > 0 ? `<i class="fa-solid fa-star" aria-hidden="true"></i> ${escapeHtml(product.rating)} · valoración de clientes` : "Aún sin reseñas"}</div><p class="detail-description">${escapeHtml(detail.description)}</p><div class="detail-price">${money(product.price)}</div>
+      <label class="detail-label" for="detailVariant">Formato o variante</label><select id="detailVariant" class="detail-select" data-testid="select-product-variant">${detail.variants.map((variant) => `<option>${escapeHtml(variant)}</option>`).join("")}</select>
       <div class="detail-buy"><div class="quantity-control detail-quantity"><button type="button" data-detail-quantity="-1" aria-label="Restar una unidad" data-testid="button-detail-decrease">−</button><span data-testid="text-detail-quantity">${detailQuantity}</span><button type="button" data-detail-quantity="1" aria-label="Añadir una unidad" data-testid="button-detail-increase">+</button></div><button class="button-primary" type="button" data-action="add-detail" data-testid="button-add-detail">Añadir al carrito <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i></button></div>
-      <p class="detail-delivery"><i class="fa-solid fa-truck-fast" aria-hidden="true"></i> Envíos ilustrativos a todo Ecuador. Compra de demostración.</p><button class="text-link" type="button" data-route="/cart" data-testid="button-detail-view-cart">Ver carrito <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>
-    </section>${renderProductReviews(product)}<div class="detail-footnote" role="note">Los productos y precios son ejemplos. No se procesa ningún pago ni se crea un pedido real.</div>`;
+      <p class="detail-delivery"><i class="fa-solid fa-truck-fast" aria-hidden="true"></i> Entregas a coordinar en Ecuador. El costo se confirma antes de procesar el pedido.</p><button class="text-link" type="button" data-route="/cart" data-testid="button-detail-view-cart">Ver carrito <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>
+    </section>${renderProductReviews(product)}`;
+}
+
+async function loadReviewsForProduct(product) {
+  if (!apiConfigured) return;
+  try {
+    reviewsByProduct[product.id] = await fetchReviews(product.id);
+    if (currentRoute === `/product/${product.id}`) {
+      const currentReviews = routePage.querySelector(`[data-testid="product-reviews-${product.id}"]`);
+      if (currentReviews) currentReviews.outerHTML = renderProductReviews(product);
+    }
+  } catch (error) {
+    console.error("No se pudieron cargar las reseñas.", error);
+    const list = routePage.querySelector(`[data-testid="review-list-${product.id}"]`);
+    if (list) list.innerHTML = `<p class="reviews-empty" role="alert">No se pudieron cargar las reseñas. Inténtalo más tarde.</p>`;
+  }
 }
 function renderCartPage() {
   const subtotal = cart.reduce((sum, item) => sum + products.find((product) => product.id === item.id).price * item.quantity, 0);
@@ -391,7 +503,7 @@ function renderCartPage() {
     return `<nav class="breadcrumbs"><a href="#/" data-route="/">Inicio</a><span>/</span><span>Carrito</span></nav>
       <section class="page-heading"><span class="section-kicker">Tu selección</span><h1>Tu carrito</h1><p>Un espacio para reunir tus ideas favoritas.</p></section>
       <div class="cart-page-empty" data-testid="cart-empty-state"><div class="empty-icon"><i class="fa-solid fa-bag-shopping" aria-hidden="true"></i></div><h2>Tu carrito está tomando aire</h2><p>Todavía no has elegido tus esenciales. Hay un montón de ideas esperándote.</p><a class="button-primary" href="#catalogo" data-route="/">Explorar productos</a></div>
-      <p class="detail-footnote" role="note">Precios y pagos de ejemplo. No hay compras reales.</p>`;
+      <p class="detail-footnote" role="note">El total de envío se confirma antes de procesar el pedido.</p>`;
   }
 
   const rows = cart.map((item) => {
@@ -402,15 +514,15 @@ function renderCartPage() {
     return `<article class="cart-page-row" data-testid="cart-item-${testKey}">
       <div class="cart-thumb ${product.color}" aria-hidden="true">${productVisual(product, item.variant)}</div>
       <div class="cart-page-info">
-        <a href="#/product/${product.id}" data-route="/product/${product.id}" class="cart-product-name">${product.name}</a>
-        <span class="cart-product-price">${variant} · ${money(product.price)} c/u</span>
-        <div class="quantity-control" aria-label="Cantidad de ${product.name}">
-          <button type="button" data-quantity="-1" data-id="${product.id}" data-variant="${variantKey}" aria-label="Restar una unidad de ${product.name}" data-testid="button-decrease-${testKey}">−</button>
+        <a href="#/product/${product.id}" data-route="/product/${product.id}" class="cart-product-name">${escapeHtml(product.name)}</a>
+        <span class="cart-product-price">${escapeHtml(variant)} · ${money(product.price)} c/u</span>
+        <div class="quantity-control" aria-label="Cantidad de ${escapeHtml(product.name)}">
+          <button type="button" data-quantity="-1" data-id="${product.id}" data-variant="${variantKey}" aria-label="Restar una unidad de ${escapeHtml(product.name)}" data-testid="button-decrease-${testKey}">−</button>
           <span data-testid="text-quantity-${testKey}">${item.quantity}</span>
-          <button type="button" data-quantity="1" data-id="${product.id}" data-variant="${variantKey}" aria-label="Añadir una unidad de ${product.name}" data-testid="button-increase-${testKey}">+</button>
+          <button type="button" data-quantity="1" data-id="${product.id}" data-variant="${variantKey}" aria-label="Añadir una unidad de ${escapeHtml(product.name)}" data-testid="button-increase-${testKey}">+</button>
         </div>
       </div>
-      <div class="cart-page-end"><strong>${money(product.price * item.quantity)}</strong><button class="remove-item" type="button" data-remove="${product.id}" data-variant="${variantKey}" aria-label="Eliminar ${product.name}" data-testid="button-remove-${testKey}">Eliminar</button></div>
+      <div class="cart-page-end"><strong>${money(product.price * item.quantity)}</strong><button class="remove-item" type="button" data-remove="${product.id}" data-variant="${variantKey}" aria-label="Eliminar ${escapeHtml(product.name)}" data-testid="button-remove-${testKey}">Eliminar</button></div>
     </article>`;
   }).join("");
 
@@ -418,11 +530,11 @@ function renderCartPage() {
     <section class="page-heading"><span class="section-kicker">Tu selección</span><h1>Tu carrito</h1><p>${cartCount()} ${cartCount() === 1 ? "artículo listo" : "artículos listos"} para revisar.</p></section>
     <div class="cart-page-layout"><div class="cart-page-items" data-testid="cart-page-items">${rows}</div>
       <aside class="cart-page-summary"><h2>Resumen</h2><div class="subtotal-line"><span>Subtotal</span><strong data-testid="text-cart-subtotal">${money(subtotal)}</strong></div>
-        <p class="shipping-note">El costo de envío que aparece al continuar es solo ilustrativo.</p>
-        <button class="checkout-button" type="button" data-action="go-payment" data-testid="button-checkout"><i class="fa-solid fa-lock" aria-hidden="true"></i> Continuar al pago</button>
-        <p class="demo-note">No se procesan pagos ni se guardan datos.</p><a href="#catalogo" class="continue-shopping" data-route="/">Seguir viendo productos</a>
+        <p class="shipping-note">El costo de envío se confirma antes de procesar el pedido.</p>
+        <button class="checkout-button" type="button" data-action="go-payment" data-testid="button-checkout"><i class="fa-solid fa-lock" aria-hidden="true"></i> Continuar con el pedido</button>
+        <p class="demo-note">El envío y el pago se coordinan después de registrar el pedido.</p><a href="#catalogo" class="continue-shopping" data-route="/">Seguir viendo productos</a>
       </aside>
-    </div><p class="detail-footnote" role="note">Advertencia: precios, envío y métodos de pago son ejemplos. No hay pago ni pedido real.</p>`;
+    </div><p class="detail-footnote" role="note">El pedido queda pendiente hasta que el equipo confirme el pago y el costo de envío.</p>`;
 }
 
 function renderDownloadsPage() {
@@ -433,13 +545,14 @@ function renderDownloadsPage() {
       <ul class="downloads-file-list">
         <li><code>index.html</code><span>Estructura y contenido</span></li>
         <li><code>style.css</code><span>Diseño adaptable</span></li>
-        <li><code>script.js</code><span>Catálogo, carrito y pago simulado</span></li>
+        <li><code>app.js</code><span>Catálogo, carrito y pedidos</span></li>
         <li><span class="downloads-file-names"><code>favicon.svg</code><code>robots.txt</code></span><span>Recursos del sitio</span></li>
         <li><span class="downloads-file-names"><code>server.mjs</code><code>README.md</code><code>package.json</code></span><span>Servidor local e instrucciones</span></li>
+        <li><span class="downloads-file-names"><code>api/</code><code>database/</code><code>DEPLOY.md</code></span><span>API y preparación de base de datos</span></li>
       </ul>
-      <a class="button-primary downloads-button" href="/downloads/pichupaper-source.zip" download="pichupaper-source.zip" data-testid="link-download-source"><i class="fa-solid fa-download" aria-hidden="true"></i> Descargar archivos (.zip)</a>
-      <p class="downloads-note">El ZIP no incluye carpetas generadas ni dependencias instaladas. Necesitas Node.js 18+ para ejecutar el servidor local.</p>
-      <p class="detail-footnote" role="note">PichuPaper es una demostración: no procesa pagos ni crea pedidos. Las fuentes e iconos se cargan desde sus CDN.</p>
+      <a class="button-primary downloads-button" href="https://github.com/KiddoMaki/ECOMERCE-IHC/archive/refs/heads/main.zip" target="_blank" rel="noopener noreferrer" data-testid="link-download-source"><i class="fa-solid fa-download" aria-hidden="true"></i> Descargar código fuente (.zip)</a>
+      <p class="downloads-note">El archivo se obtiene desde GitHub y no incluye dependencias instaladas. Requiere Node.js 20.19 o posterior para ejecutar la aplicación y el API.</p>
+      <p class="detail-footnote" role="note">Los pedidos permanecen pendientes hasta coordinar el pago y la entrega. Las fuentes e iconos se cargan desde sus CDN.</p>
     </section>`;
 }
 
@@ -449,9 +562,28 @@ function addToCart(productId, quantity = 1, variant = "") {
   if (found) found.quantity += quantity;
   else cart.push({ id: productId, quantity, variant: selectedVariant });
   renderCart();
+  syncCart();
   const product = products.find((entry) => entry.id === productId);
   showToast(`${product.name} se añadió a tu carrito.`);
 }
+
+const authController = createAuthController(() => {
+  updateAccountControl();
+  if (pendingCheckout) {
+    pendingCheckout = false;
+    navigate("/payment");
+    return;
+  }
+  if (pendingAdd) {
+    const queuedAdd = pendingAdd;
+    pendingAdd = null;
+    addToCart(queuedAdd.productId, queuedAdd.quantity, queuedAdd.variant);
+    navigate("/cart");
+    return;
+  }
+  navigate("/");
+  showToast("Sesión iniciada.");
+});
 
 function setCartOpen(open) {
   if (open) focusBeforeCart = document.activeElement;
@@ -474,7 +606,7 @@ function setDetailImage(index) {
   const mainImage = routePage.querySelector(".detail-gallery-image .product-photo");
   if (mainImage) {
     mainImage.src = image;
-    mainImage.alt = `${product.name}, imagen ${index + 1} de ${product.images.length}`;
+    mainImage.alt = `${product.name}${detailVariant ? `, ${detailVariant}` : ""}, fotografía ${index + 1} de ${product.images.length}`;
   }
   routePage.querySelectorAll("[data-detail-image]").forEach((button) => {
     const selected = Number(button.dataset.detailImage) === index;
@@ -493,16 +625,12 @@ function setDetailImage(index) {
 
 // Filtros y búsqueda comparten el mismo render para combinarse sin resultados inconsistentes.
 categoryFilters.addEventListener("click", (event) => {
-  const button = event.target.closest("[data-category]");
-  if (!button) return;
-  activeCategory = button.dataset.category;
-  offersOnly = false;
-  document.querySelectorAll("[data-offers-only]").forEach((link) => link.removeAttribute("aria-current"));
-  categoryFilters.querySelectorAll("[data-category]").forEach((filter) => {
-    const selected = filter === button;
-    filter.classList.toggle("active", selected);
-    filter.setAttribute("aria-pressed", String(selected));
-  });
+  const categoryButton = event.target.closest("[data-category]");
+  const offerButton = event.target.closest("[data-offers-toggle]");
+  if (categoryButton) activeCategory = categoryButton.dataset.category;
+  else if (offerButton) offersOnly = !offersOnly;
+  else return;
+  updateFilterControls();
   renderProducts();
 });
 searchInput.addEventListener("input", () => {
@@ -511,19 +639,17 @@ searchInput.addEventListener("input", () => {
 });
 document.querySelectorAll("[data-offers-only]").forEach((link) => {
   link.addEventListener("click", () => {
-    offersOnly = true;
-    activeCategory = "Todos";
-    searchInput.value = "";
-    categoryFilters.querySelectorAll("[data-category]").forEach((filter) => {
-      const selected = filter.dataset.category === "Todos";
-      filter.classList.toggle("active", selected);
-      filter.setAttribute("aria-pressed", String(selected));
-    });
-    document.querySelectorAll("[data-offers-only]").forEach((offerLink) => offerLink.setAttribute("aria-current", "page"));
+    offersOnly = !offersOnly;
+    if (offersOnly) searchInput.value = "";
+    updateFilterControls();
     renderProducts();
   });
 });
 productGrid.addEventListener("click", (event) => {
+  if (event.target.closest('[data-action="retry-products"]')) {
+    loadProducts();
+    return;
+  }
   const routeLink = event.target.closest("[data-route]");
   if (routeLink) { event.preventDefault(); navigate(routeLink.dataset.route); return; }
   const clearButton = event.target.closest('[data-action="clear-search"]');
@@ -531,17 +657,10 @@ productGrid.addEventListener("click", (event) => {
     activeCategory = "Todos";
     offersOnly = false;
     searchInput.value = "";
-    document.querySelectorAll("[data-offers-only]").forEach((link) => link.removeAttribute("aria-current"));
-    categoryFilters.querySelectorAll("[data-category]").forEach((filter) => {
-      const selected = filter.dataset.category === "Todos";
-      filter.classList.toggle("active", selected);
-      filter.setAttribute("aria-pressed", String(selected));
-    });
+    updateFilterControls();
     renderProducts();
     return;
   }
-  const addButton = event.target.closest("[data-add]");
-  if (addButton) addToCart(addButton.dataset.add);
 });
 
 document.querySelector("#cartOpen").addEventListener("click", () => navigate("/cart"));
@@ -611,11 +730,10 @@ function clearCheckoutData() {
   document.querySelector("#shippingProvinceOther").required = false;
   document.querySelector("#shippingProvinceOther").value = "";
   checkoutForm.hidden = false;
-  document.querySelector("#cardNumber").value = "";
-  document.querySelector("#cardExpiry").value = "";
-  document.querySelector("#cardCvv").value = "";
-  document.querySelector("#cardDemoFields").hidden = false;
-  document.querySelector("#transferDemoFields").hidden = true;
+  const signedInEmail = sessionModel.getUser()?.email || "";
+  document.querySelector("#shippingEmail").value = signedInEmail;
+  document.querySelector("#paymentNotice").textContent =
+    "No compartas datos de tarjeta ni realices transferencias hasta recibir instrucciones verificadas.";
   checkoutModal.querySelector('[data-step="success"]').hidden = true;
   setCheckoutStep(1);
 }
@@ -679,92 +797,112 @@ function selectedPayment() {
   return checkoutForm.querySelector('input[name="paymentMethod"]:checked').value;
 }
 
-function validatePaymentField(input, allowIncomplete = false) {
-  const rules = {
-    cardNumber: { expected: "0000000000000000", normalize: (value) => value.replace(/\s/g, ""), message: "Para esta demo, usa solo 0000 0000 0000 0000." },
-    cardExpiry: { expected: "12/30", normalize: (value) => value.trim(), message: "Para esta demo, usa solo 12/30." },
-    cardCvv: { expected: "000", normalize: (value) => value.trim(), message: "Para esta demo, usa solo 000." }
-  };
-  const rule = rules[input.id];
-  if (!rule) return true;
-  const value = rule.normalize(input.value);
-  const valid = value === rule.expected;
-  const possiblePrefix = rule.expected.startsWith(value);
-  const error = checkoutModal.querySelector(`[data-error-for="${input.id}"]`);
-  if (valid || (allowIncomplete && possiblePrefix)) {
-    input.removeAttribute("aria-invalid");
-    if (error) error.textContent = "";
-    return valid;
-  }
-  setFieldError(input.id, rule.message);
-  return false;
-}
-
 function validatePayment() {
   clearFieldErrors();
-  if (selectedPayment() === "transfer") return true;
-  const fields = [document.querySelector("#cardNumber"), document.querySelector("#cardExpiry"), document.querySelector("#cardCvv")];
-  const valid = fields.map((input) => validatePaymentField(input)).every(Boolean);
-  if (!valid) {
-    checkoutError.textContent = "Completa los campos con los valores ficticios indicados. Nunca uses datos reales.";
-    checkoutError.hidden = false;
-    checkoutModal.querySelector("[aria-invalid='true']")?.focus();
-    return false;
-  }
-  // Card data is validated in place and immediately discarded; it is never copied to application state.
-  document.querySelector("#cardNumber").value = "";
-  document.querySelector("#cardExpiry").value = "";
-  document.querySelector("#cardCvv").value = "";
   return true;
 }
 
 function renderReview() {
   const contact = checkoutContact;
   document.querySelector("#reviewContact").textContent = `${contact.name}\n${contact.email} · ${contact.phone}\n${contact.address}\n${contact.city}, ${contact.province}`;
-  document.querySelector("#reviewPayment").textContent = selectedPayment() === "card" ? "Tarjeta · demo ficticia" : "Transferencia bancaria · datos ficticios (no transferir)";
+  document.querySelector("#reviewPayment").textContent = selectedPayment() === "card"
+    ? "Tarjeta (pendiente de coordinación)"
+    : "Transferencia (pendiente de coordinación)";
   const rows = cart.map((item) => {
     const product = products.find((entry) => entry.id === item.id);
     const variant = item.variant ? ` · ${item.variant}` : "";
-    return `<div class="review-item"><span>${product.name}${variant} × ${item.quantity}</span><strong>${money(product.price * item.quantity)}</strong></div>`;
+    return `<div class="review-item"><span>${escapeHtml(product.name)}${escapeHtml(variant)} × ${item.quantity}</span><strong>${money(product.price * item.quantity)}</strong></div>`;
   }).join("");
   document.querySelector("#reviewItems").innerHTML = rows;
   const subtotal = cart.reduce((sum, item) => sum + products.find((product) => product.id === item.id).price * item.quantity, 0);
   document.querySelector("#reviewSubtotal").textContent = money(subtotal);
-  document.querySelector("#reviewTotal").textContent = money(subtotal + 4.25);
+  document.querySelector("#reviewTotal").textContent = money(subtotal);
 }
 
-function renderSuccessConfirmation() {
-  const isCardPayment = selectedPayment() === "card";
-  const subtotal = cart.reduce((sum, item) => sum + products.find((product) => product.id === item.id).price * item.quantity, 0);
-  const total = subtotal + 4.25;
+function renderSuccessConfirmation(order) {
   const province = checkoutContact?.province || "";
   const city = checkoutContact?.city || "";
-  document.querySelector("#successHeading").textContent = isCardPayment ? "¡Tu pedido está confirmado!" : "¡Tu pedido quedó registrado!";
-  document.querySelector("#successLead").textContent = isCardPayment
-    ? `La compra de prueba por ${money(total)} quedó confirmada.`
-    : "El pedido quedó registrado; la transferencia sigue pendiente en esta simulación.";
-  document.querySelector("#successOrderNumber").textContent = `PP-DEMO-${Date.now().toString().slice(-6)}`;
-  document.querySelector("#successPaymentTitle").textContent = isCardPayment ? "Pago aprobado" : "Pago pendiente";
-  document.querySelector("#successPaymentDescription").textContent = isCardPayment
-    ? "Tarjeta ficticia validada para esta demostración."
-    : "No se recibió una transferencia; no envíes dinero.";
-  document.querySelector("#successPaymentBadge").textContent = isCardPayment ? "Aprobado · demo" : "Pendiente · demo";
-  document.querySelector("#successShippingDescription").textContent = `Destino de prueba: ${city}, ${province}.`;
-  document.querySelector("#successOrderItems").innerHTML = cart.map((item) => {
-    const product = products.find((entry) => entry.id === item.id);
-    const variant = item.variant ? ` · ${escapeHtml(item.variant)}` : "";
-    return `<div class="success-order-item"><span>${escapeHtml(product.name)}${variant} × ${item.quantity}</span><strong>${money(product.price * item.quantity)}</strong></div>`;
+  document.querySelector("#successHeading").textContent = "Tu pedido está pendiente";
+  document.querySelector("#successLead").textContent = "El pedido se guardó correctamente. El pago y el envío todavía no están confirmados.";
+  document.querySelector("#successOrderNumber").textContent = `PP-${order.orderId}`;
+  document.querySelector("#successPaymentTitle").textContent = "Pago pendiente";
+  document.querySelector("#successPaymentDescription").textContent = "No se realizó ningún cobro; espera la coordinación del equipo.";
+  document.querySelector("#successPaymentBadge").textContent = "Pendiente";
+  document.querySelector("#successShippingDescription").textContent = `Destino: ${city}, ${province}. Costo de envío por coordinar.`;
+  document.querySelector("#successOrderItems").innerHTML = order.items.map((item) => {
+    return `<div class="success-order-item"><span>${escapeHtml(item.productName)} · ${escapeHtml(item.variantName)} × ${item.quantity}</span><strong>${money(Number(item.unitPrice) * item.quantity)}</strong></div>`;
   }).join("");
-  document.querySelector("#successOrderTotal").textContent = money(total);
+  document.querySelector("#successOrderTotal").textContent = money(Number(order.total));
+}
+
+async function submitOrder(button) {
+  if (!checkoutContact && !validateContact()) return;
+  const items = cart.map((item) => {
+    const product = products.find((entry) => entry.id === item.id);
+    const variantIndex = productDetails[item.id]?.variants.indexOf(item.variant) ?? -1;
+    return {
+      productId: item.id,
+      variantSku: product?.variantSkus?.[variantIndex],
+      quantity: item.quantity
+    };
+  });
+  if (items.some((item) => !item.variantSku)) {
+    checkoutError.textContent = "No se pudo identificar una variante del carrito. Vuelve al catálogo y selecciona el producto nuevamente.";
+    checkoutError.hidden = false;
+    return;
+  }
+
+  button.disabled = true;
+  button.setAttribute("aria-busy", "true");
+  checkoutError.hidden = true;
+  try {
+    const order = await createOrder({
+      items,
+      shipping: {
+        name: checkoutContact.name,
+        phone: checkoutContact.phone,
+        province: checkoutContact.province,
+        city: checkoutContact.city,
+        address: checkoutContact.address
+      },
+      paymentMethod: selectedPayment()
+    });
+    renderSuccessConfirmation(order);
+    cart = [];
+    renderCart();
+    checkoutForm.hidden = true;
+    checkoutModal.querySelector('[data-step="success"]').hidden = false;
+    checkoutProgress.forEach((node) => { node.classList.add("done"); node.classList.remove("active"); });
+    const successHeading = checkoutModal.querySelector("#successHeading");
+    successHeading.setAttribute("tabindex", "-1");
+    successHeading.focus({ preventScroll: true });
+  } catch (error) {
+    checkoutError.textContent = error.message || "No se pudo registrar el pedido.";
+    checkoutError.hidden = false;
+    checkoutError.focus?.();
+  } finally {
+    button.disabled = false;
+    button.removeAttribute("aria-busy");
+  }
 }
 
 document.querySelector("#checkoutButton").addEventListener("click", () => {
   if (!cart.length) return;
+  if (!sessionModel.isSignedIn()) {
+    pendingCheckout = true;
+    showToast("Inicia sesión para continuar con tu pedido.");
+    navigate("/login");
+    return;
+  }
   navigate("/payment");
 });
 document.querySelector("#checkoutClose").addEventListener("click", () => navigate("/cart"));
 checkoutBackdrop.addEventListener("click", () => navigate("/cart"));
 routePage.addEventListener("click", (event) => {
+  if (event.target.closest('[data-action="retry-products"]')) {
+    loadProducts();
+    return;
+  }
   const routeLink = event.target.closest("[data-route]");
   if (routeLink) {
     event.preventDefault();
@@ -790,8 +928,24 @@ routePage.addEventListener("click", (event) => {
   if (event.target.closest('[data-action="add-detail"]')) {
     const id = currentRoute.split("/")[2];
     detailVariant = routePage.querySelector("#detailVariant").value;
+    if (!sessionModel.isSignedIn()) {
+      pendingAdd = { productId: id, quantity: detailQuantity, variant: detailVariant };
+      showToast("Inicia sesión para añadir este producto al carrito.");
+      navigate("/login");
+      return;
+    }
     addToCart(id, detailQuantity, detailVariant);
     navigate("/cart");
+    return;
+  }
+  if (event.target.closest('[data-action="sign-out"]')) {
+    authController.signOut().then(() => {
+      pendingAdd = null;
+      pendingCheckout = false;
+      updateAccountControl();
+      renderRoute();
+      showToast("Sesión cerrada.");
+    }).catch((error) => showToast(error.message));
     return;
   }
   if (event.target.closest('[data-action="go-payment"]')) {
@@ -810,6 +964,7 @@ routePage.addEventListener("click", (event) => {
     item.quantity += Number(qty.dataset.quantity);
     if (item.quantity < 1) cart = cart.filter((entry) => entry !== item);
     renderCart();
+    syncCart();
     renderRoute();
   }
 });
@@ -817,44 +972,76 @@ routePage.addEventListener("change", (event) => {
   if (event.target.id !== "detailVariant") return;
   const productId = currentRoute.split("/")[2];
   const product = products.find((item) => item.id === productId);
-  if (product?.variantImageGroups) {
+  detailVariant = event.target.value;
+  if (!product) return;
+  if (product.variantImageGroups) {
     const imageIndex = product.variantImageGroups[event.target.selectedIndex]?.[0];
-    if (imageIndex !== undefined) {
-      detailVariant = event.target.value;
-      detailImageIndex = imageIndex;
-      const gallery = routePage.querySelector(".product-gallery");
-      if (gallery) gallery.outerHTML = renderDetailVisual(product);
-    }
+    if (imageIndex !== undefined) detailImageIndex = imageIndex;
   }
+  const gallery = routePage.querySelector(".product-gallery");
+  if (gallery) gallery.outerHTML = renderDetailVisual(product);
 });
 routePage.addEventListener("input", (event) => {
   if (event.target.matches('[name="review-comment"]')) event.target.setCustomValidity("");
 });
 routePage.addEventListener("submit", (event) => {
+  const loginForm = event.target.closest("[data-login-form]");
+  if (loginForm) {
+    event.preventDefault();
+    const message = loginForm.querySelector("[data-auth-message]");
+    const button = loginForm.querySelector('[type="submit"]');
+    button.disabled = true;
+    message.textContent = "";
+    authController.signIn(loginForm).catch((error) => {
+      message.textContent = error.message;
+      message.setAttribute("role", "alert");
+    }).finally(() => { button.disabled = false; });
+    return;
+  }
+  const registerForm = event.target.closest("[data-register-form]");
+  if (registerForm) {
+    event.preventDefault();
+    const message = registerForm.querySelector("[data-auth-message]");
+    const button = registerForm.querySelector('[type="submit"]');
+    button.disabled = true;
+    message.textContent = "";
+    authController.signUp(registerForm).then((signedIn) => {
+      if (!signedIn) {
+        showToast("Cuenta creada. Revisa tu correo para verificarla y luego inicia sesión.");
+        navigate("/login");
+      }
+    }).catch((error) => {
+      message.textContent = error.message;
+      message.setAttribute("role", "alert");
+    }).finally(() => { button.disabled = false; });
+    return;
+  }
   const form = event.target.closest("[data-review-form]");
   if (!form) return;
   event.preventDefault();
+  if (!sessionModel.isSignedIn()) {
+    navigate("/login");
+    return;
+  }
+  if (!form.reportValidity()) return;
   const commentInput = form.elements.namedItem("review-comment");
   const comment = commentInput.value.trim();
-  if (!comment) {
-    commentInput.setCustomValidity("Escribe un comentario antes de publicar.");
-    commentInput.reportValidity();
-    return;
-  }
   const productId = form.dataset.productId;
   const rating = Number(new FormData(form).get("review-rating"));
-  const nextReviews = [{ rating, comment, createdAt: new Date().toISOString() }, ...(Array.isArray(reviewsByProduct[productId]) ? reviewsByProduct[productId] : [])];
-  try {
-    localStorage.setItem(reviewStorageKey, JSON.stringify({ ...reviewsByProduct, [productId]: nextReviews }));
-  } catch {
-    showToast("No se pudo guardar la reseña en este navegador.");
-    return;
-  }
-  reviewsByProduct[productId] = nextReviews;
-  const product = products.find((item) => item.id === productId);
-  routePage.querySelector(`[data-testid="product-reviews-${productId}"]`).outerHTML = renderProductReviews(product);
-  routePage.querySelector(`#reviews-title-${productId}`).focus({ preventScroll: true });
-  showToast("Gracias por compartir tu reseña.");
+  const button = form.querySelector('[type="submit"]');
+  button.disabled = true;
+  createReview(productId, { rating, comment }).then(async () => {
+    reviewsByProduct[productId] = await fetchReviews(productId);
+    const product = products.find((item) => item.id === productId);
+    if (product && reviewsByProduct[productId].length) {
+      product.rating = String(reviewsByProduct[productId]
+        .reduce((sum, review) => sum + review.rating, 0) / reviewsByProduct[productId].length);
+    }
+    renderRoute();
+    showToast("Tu reseña se guardó correctamente.");
+  }).catch((error) => {
+    showToast(error.message);
+  }).finally(() => { button.disabled = false; });
 });
 checkoutModal.addEventListener("click", (event) => {
   const action = event.target.closest("[data-action]")?.dataset.action;
@@ -870,15 +1057,9 @@ checkoutModal.addEventListener("click", (event) => {
     setCheckoutStep(3);
   } else if (action === "edit-payment" || action === "back-to-payment") {
     setCheckoutStep(2);
-  } else if (action === "finish-demo") {
-    renderSuccessConfirmation();
-    checkoutForm.hidden = true;
-    checkoutModal.querySelector('[data-step="success"]').hidden = false;
-    checkoutProgress.forEach((node) => { node.classList.add("done"); node.classList.remove("active"); });
-    const successHeading = checkoutModal.querySelector("#successHeading");
-    successHeading.setAttribute("tabindex", "-1");
-    successHeading.focus({ preventScroll: true });
-  } else if (action === "reset-demo") {
+  } else if (action === "finish-order") {
+    submitOrder(event.target.closest("button"));
+  } else if (action === "reset-order") {
     cart = [];
     renderCart();
     navigate("/");
@@ -901,19 +1082,15 @@ checkoutForm.addEventListener("change", (event) => {
     return;
   }
   if (event.target.name !== "paymentMethod") return;
-  const isCard = selectedPayment() === "card";
-  document.querySelector("#cardDemoFields").hidden = !isCard;
-  document.querySelector("#transferDemoFields").hidden = isCard;
-  document.querySelector("#cardNumber").value = "";
-  document.querySelector("#cardExpiry").value = "";
-  document.querySelector("#cardCvv").value = "";
-  clearFieldErrors();
+  document.querySelector("#paymentNotice").textContent = selectedPayment() === "card"
+    ? "No ingreses datos de tarjeta; el pago se coordinará mediante un canal seguro."
+    : "No transfieras dinero hasta recibir instrucciones verificadas del equipo.";
 });
 checkoutForm.addEventListener("input", (event) => {
-  if (selectedPayment() !== "card" || !["cardNumber", "cardExpiry", "cardCvv"].includes(event.target.id)) return;
-  validatePaymentField(event.target, true);
-  checkoutError.hidden = true;
-  checkoutError.textContent = "";
+  if (event.target.name === "paymentMethod") {
+    checkoutError.hidden = true;
+    checkoutError.textContent = "";
+  }
 });
 document.querySelector("#shippingProvinceOther").addEventListener("input", (event) => {
   const input = event.target;
@@ -948,6 +1125,12 @@ mobileNav.addEventListener("click", (event) => {
   }
 });
 document.querySelector(".site-header").addEventListener("click", (event) => {
+  const routeLink = event.target.closest("a[data-route]");
+  if (!routeLink) return;
+  event.preventDefault();
+  navigate(routeLink.dataset.route);
+});
+document.querySelector(".site-footer").addEventListener("click", (event) => {
   const routeLink = event.target.closest("a[data-route]");
   if (!routeLink) return;
   event.preventDefault();
@@ -1024,6 +1207,35 @@ document.addEventListener("click", (event) => {
   }
 });
 window.addEventListener("popstate", renderRoute);
-renderProducts();
+updateAccountControl();
+const productsReady = loadProducts();
 renderCart();
 renderRoute();
+authController.restoreSession().then(async () => {
+  updateAccountControl();
+  if (sessionModel.isSignedIn() && apiConfigured) {
+    await productsReady;
+    if (productLoadState === "loaded") {
+      try {
+        const savedItems = await fetchCart();
+        cart = savedItems.flatMap((item) => {
+          const product = products.find((entry) => entry.id === item.productId);
+          const variantIndex = product?.variantSkus?.indexOf(item.variantSku) ?? -1;
+          return variantIndex < 0
+            ? []
+            : [{ id: item.productId, variant: productDetails[item.productId].variants[variantIndex], quantity: item.quantity }];
+        });
+        renderCart();
+        if (currentRoute === "/cart") renderRoute();
+      } catch (error) {
+        console.error("No se pudo restaurar el carrito de la cuenta.", error);
+        showToast(error.message || "No se pudo cargar el carrito guardado.");
+      }
+    }
+  }
+  if (currentRoute === "/login" || currentRoute === "/register") renderRoute();
+}).catch((error) => {
+  sessionModel.setUser(null);
+  updateAccountControl();
+  console.error("No se pudo recuperar la sesión de usuario.", error);
+});

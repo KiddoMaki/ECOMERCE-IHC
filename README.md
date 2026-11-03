@@ -1,139 +1,43 @@
-# PichuPaper — prototipo de e-commerce para IHC
+# PichuPaper
 
-PichuPaper es un prototipo de baja fidelidad de una tienda ecuatoriana de papelería y útiles de escritorio. El proyecto está pensado para cumplir con el reto de Interacción Humano-Computador, integrando principios de usabilidad, accesibilidad y diseño de flujo de compra en una interfaz funcional y coherente.
+Tienda web de papelería con frontend estático y API Express. Neon PostgreSQL almacena catálogo, cuentas de perfil, direcciones, reseñas, pedidos y estados de pago. La autenticación de cuentas usa Neon Auth.
 
-## Alcance del proyecto
-- Catálogo de productos con búsqueda y filtros.
-- 16 productos distribuidos en las categorías existentes.
-- Fichas con galerías de fotos; las opciones de color o tamaño pueden mostrar grupos de imágenes distintos.
-- Carrito de compras, resumen de pedido y checkout simulado con validación de entrega y pago ficticios.
-- Confirmación de demostración con número de pedido, artículos, total y estados simulados de pago y envío.
-- Reseñas por producto con calificación de 1 a 5 estrellas y comentario; el correo se valida y no se publica ni se guarda.
-- Reseñas de muestra identificadas con la etiqueta «Ejemplo».
-- Vistas por ruta para catálogo, carrito, detalle de producto y descargas.
-- Diseño responsivo y navegación con foco visible.
-- Validación de datos con mensajes claros en una demo sin backend real.
+## Funcionalidad
 
-## Reseñas y checkout de demostración
-Las reseñas enviadas se guardan en `localStorage` de ese navegador, asociadas al producto. El correo solo se usa para validar el formulario y no se almacena ni aparece en la reseña. Las reseñas precargadas son ejemplos, están etiquetadas y no representan opiniones verificadas.
+- Catálogo, filtros combinables, detalle de producto, galería y variantes cargados desde la API.
+- Registro, inicio y cierre de sesión con Neon Auth; las cuentas se recuperan al volver a abrir el sitio.
+- Carrito persistente por cuenta; requiere sesión para añadir productos y registrar pedidos.
+- Pedidos con precios y variantes recalculados en el servidor, vinculados a la cuenta y guardados como pendientes.
+- Reseñas persistentes asociadas a la cuenta.
+- Los pagos no se cobran ni se declaran aprobados. No se piden ni almacenan números de tarjeta o CVV. El costo de envío queda por coordinar.
+- Diseño adaptable, controles accesibles y navegación interna con rutas de fragmento (`#/...`).
 
-El checkout no procesa pagos, no crea pedidos reales y no envía productos. La pantalla final ilustra cómo se vería una compra: muestra un número `PP-DEMO`, los artículos, el total y estados como «Aprobado · demo» y «En camino / Simulado». Si se elige transferencia, el estado de pago permanece pendiente.
+## Estructura
 
-Para recorrer la tarjeta de demostración usa exclusivamente estos valores ficticios: número `0000 0000 0000 0000`, vencimiento `12/30` y código `000`. Un teléfono válido de prueba es `0991234567`. No introduzcas datos reales.
+- `index.html`, `style.css`, `script.js`: aplicación del navegador.
+- `src/models/`, `src/views/`, `src/controllers/`: modelos y vistas MVC para cuenta y contacto; `src/client/` conecta Neon Auth y el API.
+- `api/`: Express, verificación JWT con las claves públicas de Neon Auth, consultas PostgreSQL y endpoints de catálogo, reseñas y pedidos.
+- `sql/pichupaper_schema.sql`: esquema canónico.
+- `sql/migrations/001_neon_auth_profiles.sql`: vincula perfiles existentes con IDs de Neon Auth.
+- `sql/catalog_seed.sql`: carga idempotente del catálogo inicial.
+- `scripts/build-static.mjs`: copia recursos públicos y compila el JavaScript del navegador a `dist/`.
+- `DEPLOY.md`: configuración local, Neon, Render y Netlify.
 
-Los campos de tarjeta muestran avisos mientras se escriben si el valor ya no puede coincidir con los datos de prueba; los prefijos correctos no se marcan como error. La transferencia no solicita datos bancarios y su pago permanece pendiente en la confirmación simulada.
+## Configuración
 
-## Heurísticas aplicadas
-En este prototipo hay 7 heurísticas de Nielsen aplicadas funcionalmente y 3 con alcance parcial por tratarse de una demo estática sin perfiles, persistencia, sistema de soporte ni contenido de ayuda completo.
+1. Crea `.env.local` en la raíz y configura `DATABASE_URL`, `NEON_AUTH_BASE_URL`, `NEON_AUTH_JWKS_URL` y, para la compilación, `PICHUPAPER_API_URL`. Usa `.env.example` como referencia; nunca publiques los valores privados.
+2. En la base Neon que ya tiene el esquema anterior, aplica una vez `sql/migrations/001_neon_auth_profiles.sql` y luego `sql/catalog_seed.sql`. No vuelvas a ejecutar el esquema completo sobre una base con datos.
+3. En una base nueva, ejecuta `sql/pichupaper_schema.sql` y después `sql/catalog_seed.sql`; no ejecutes la migración de perfiles adicional.
+4. En Neon Auth, registra como dominio de confianza el dominio local y el de Netlify. Configura un proveedor de correo para la verificación de cuentas en producción.
+5. Inicia el API en `api/` con `npm install` y `npm start`.
+6. Desde la raíz, ejecuta `npm install`, configura las variables requeridas y `npm start` para compilar e iniciar la aplicación local. La compilación de despliegue usa `npm run build` y publica `dist/`.
 
-### Aplicadas funcionalmente
-- Visibilidad del estado del sistema.
-- Relación entre el sistema y el mundo real.
-- Consistencia y estándares.
-- Control y libertad del usuario.
-- Prevención de errores.
-- Reconocimiento antes que recuerdo.
-- Diseño estético y minimalista.
+El API debe recibir `DATABASE_URL`, `NEON_AUTH_BASE_URL` y `NEON_AUTH_JWKS_URL`. Netlify requiere `PICHUPAPER_API_URL` (origen HTTPS del API) y `NEON_AUTH_BASE_URL` (URL pública de Neon Auth). Configura el origen exacto del sitio en `ALLOWED_ORIGINS` del API.
 
-### Aplicación parcial
-- Flexibilidad y eficiencia de uso.
-- Ayuda al usuario para reconocer, diagnosticar y recuperarse de errores.
-- Ayuda y documentación.
+## Despliegue
 
-La auditoría actualizada, con evidencias y límites de alcance, está en [AUDITORIA_PICHUPAPER.md](./AUDITORIA_PICHUPAPER.md).
+- Netlify: base del proyecto en la raíz, comando `npm run build`, directorio de publicación `dist`.
+- Render: Root Directory `api`, Build Command `npm install`, Start Command `npm start`.
+- No se suben archivos `.env.local`, credenciales, URLs de conexión ni secretos del API.
 
-## Archivos incluidos
-- `index.html`: estructura y contenido principal.
-- `style.css`: estilos visuales y responsividad.
-- `script.js`: lógica del catálogo, carrito, navegación y checkout simulado.
-- `favicon.svg` y `robots.txt`: recursos del sitio.
-- `assets/logo-pichupaper.jpg`: logo mostrado en el encabezado y pie.
-- `assets/products/`: fotografías conectadas a las galerías del catálogo.
-- `server.mjs`: servidor local para ejecutar la demo.
-- `package.json`: ejecución del proyecto en Node.js.
-
-## Añadir productos e imágenes
-El catálogo está definido al inicio de `script.js`, en el arreglo `products`. Para crear un producto:
-
-1. Añade un objeto con `id` único, `name`, `category`, `price`, `rating`, `icon`, `color` y `tag`.
-2. Añade su descripción y las opciones en el objeto `productDetails`, usando el mismo `id`.
-3. Para mostrar fotografías, coloca los archivos en `assets/products/` con el formato `<id-del-producto>-01.webp`, `<id-del-producto>-02.webp`, etc. Agrega sus rutas, en el mismo orden, al arreglo `images`.
-
-Ejemplo de producto con imagen:
-
-```js
-{
-  id: "cuaderno-floral",
-  name: "Cuaderno floral",
-  category: "Cuadernos",
-  price: 8.50,
-  rating: "4.8",
-  icon: "fa-book-open",
-  color: "art-mint",
-  tag: "Nuevo",
-  images: [
-    "assets/products/cuaderno-floral-01.webp",
-    "assets/products/cuaderno-floral-02.webp",
-    "assets/products/cuaderno-floral-03.webp"
-  ]
-}
-```
-
-Luego, junto a los otros detalles del catálogo:
-
-```js
-"cuaderno-floral": {
-  description: "Cuaderno para apuntes y bocetos.",
-  variants: ["A5 · rayado", "A5 · puntos"]
-}
-```
-
-La primera imagen del arreglo es la foto principal y también se usa en la tarjeta y el carrito. En la ficha aparecen miniaturas que permiten cambiar entre las fotos. Para asociar grupos de imágenes con variantes, usa `variantImageGroups`: cada grupo contiene los índices de `images` correspondientes a la variante en la misma posición de `productDetails.variants`. Por ejemplo, el organizador agrupa dos fotos compactas y dos ampliadas.
-
-Puedes usar JPG, PNG o WebP optimizado; recomendamos WebP y nombres en minúsculas, sin espacios ni tildes. Conserva exactamente las mayúsculas/minúsculas de nombres y rutas existentes. Sube las imágenes al repositorio junto con el código: Pages no puede mostrar archivos que solo estén en tu computadora. Si un producto no tiene imágenes, se usa automáticamente el icono de Font Awesome.
-
-Estas son las imágenes que ya están conectadas:
-
-| Producto (`id`) | Archivos |
-|-----------------|----------|
-| `cuaderno-a5` | `cuaderno-a5-01.png`, `cuaderno-a5-02.png`, `cuaderno-a5-03.png` |
-| `cuaderno-rayas` | `libreta-rayas-del-dia-01.png`, `libreta-rayas-del-dia-02.png`, `libreta-rayas-del-dia-03.png` |
-| `boligrafo-gel` | `boligrafo-gel-punta-fina-azul-01.png`, `boligrafo-gel-punta-fina-negrop-01.png`, `boligrafo-gel-punta-fina-verde-01.png` (Azul, Negro y Verde) |
-| `set-resaltadores` | `set-resaltadores-pastel-01.png`, `set-resaltadores-pastel-02.png` |
-| `organizador` | `organizador-escritorio-compacto-01.png`, `organizador-escritorio-compacto-02.png`, `organizador-escritorio-ampliado-01.png`, `organizador-escritorio-ampliado-02.png` |
-| `notas-adhesivas` | `notas-adhesivas-colores-01.png`, `notas-adhesivas-colores-02.png`, `notas-adhesivas-colores-03.png` |
-| `lapices-color` | `set-lapices-12-colores-01.png`, `set-lapices-12-colores-02.png` |
-| `marcadores-arte` | `marcadores-ilustrar-6-01.png`, `marcadores-ilustrar-12-01.png` (sets de 6 y 12) |
-| `planificador-semanal` | `planificador-semanal-a5-01.png`, `planificador-semanal-a5-02.png` |
-| `bloc-listas` | `bloc-listas-desprendibles-01.png`, `bloc-listas-desprendibles-02.png` |
-| `boligrafo-retractil` | `boligrafo-retractil-negro-01.png`, `boligrafo-retractil-negro-02.png` |
-| `set-boligrafos-color` | `set-boligrafos-colores-01.png`, `set-boligrafos-colores-02.png` |
-| `portalapices` | `portalapices-verde-01.png`, `portalapices-verde-02.png`, `portalapices-azul-01.png`, `portalapices-azul-02.png` (Verde y Azul) |
-| `cinta-decorativa` | `citas-decorativas-washi-01.png`, `citas-decorativas-washi.02.png` |
-| `acuarelas` | `set-acuarelas-compactas-01.png`, `set-acuarelas-compactas-02.png` |
-| `cuaderno-dibujo` | `cuaderno-A4-dibujo-01.png`, `cuaderno-A4-dibujo-02.png` |
-
-Incluí una guía de nombres y carga dentro de [assets/products/README.md](./assets/products/README.md).
-
-## Ejecutar localmente
-Necesitas Node.js 18 o posterior. En esta carpeta ejecuta:
-
-```sh
-node server.mjs
-```
-
-Después abre `http://127.0.0.1:4173`.
-
-Puedes definir `PORT` antes de iniciar si quieres usar otro puerto.
-
-## Preparación para GitHub
-- El proyecto se mantiene sin dependencias externas.
-- El sitio se publica como una demo estática en GitHub Pages desde la rama `main`.
-- La navegación interna usa fragmentos (`#/cart`, `#/product/...`) para funcionar en el subdirectorio del repositorio sin backend ni redirecciones del servidor.
-- El workflow `.github/workflows/pages.yml` publica automáticamente cada push a `main`.
-- Se incluye un archivo `.gitignore` para evitar subir artefactos del entorno.
-
-Para habilitar Pages en el repositorio, entra a **Settings → Pages** y selecciona **GitHub Actions** como fuente de despliegue. El enlace público aparecerá en la ejecución del workflow `Deploy static site to Pages`.
-
-## Alcance de la tienda
-El carrito y el checkout son una demostración: no se guardan datos, no se procesan pedidos ni se realizan pagos reales. Las fuentes Inter y los iconos Font Awesome se cargan desde sus CDN; sin internet, el navegador usará alternativas visuales.
+El estado pendiente del pago y la coordinación del envío se muestran deliberadamente: la aplicación registra pedidos, pero no cuenta con pasarela de pago ni confirmación operativa del vendedor.
