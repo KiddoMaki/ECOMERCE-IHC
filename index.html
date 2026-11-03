@@ -182,7 +182,7 @@
           <span class="progress-rule"></span>
           <span class="progress-step" data-progress="3">03 <span>Revisión</span></span>
         </div>
-        <div class="checkout-warning" role="note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>El envío y el pago quedan pendientes de coordinación. Este sitio no realiza cobros ni transferencias; no ingreses datos de tarjetas o cuentas reales.</span></div>
+        <div class="checkout-warning" role="note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>Este sitio es una demostración. No ingreses datos de tarjetas o cuentas reales.</span></div>
         <div class="checkout-error" id="checkoutError" role="alert" aria-live="assertive" hidden data-testid="status-checkout-error"></div>
 
         <form id="checkoutForm" novalidate autocomplete="off">
@@ -229,27 +229,27 @@
           </section>
 
           <section class="checkout-step" data-step="3" aria-labelledby="reviewHeading" hidden>
-            <div class="checkout-step-heading"><span class="section-kicker">Paso 3 de 3</span><h3 id="reviewHeading">Revisa tu pedido</h3><p>Al confirmar, se guardará como pendiente de coordinación y pago.</p></div>
+            <div class="checkout-step-heading"><span class="section-kicker">Paso 3 de 3</span><h3 id="reviewHeading">Revisa tu pedido</h3><p>Al confirmar, tu pedido quedará registrado correctamente.</p></div>
             <div class="review-layout">
               <div class="review-card"><div class="review-card-title"><strong>Entrega</strong><button type="button" data-action="edit-delivery" data-testid="button-edit-delivery">Editar</button></div><div id="reviewContact" class="review-contact" data-testid="text-review-contact"></div></div>
               <div class="review-card"><div class="review-card-title"><strong>Método</strong><button type="button" data-action="edit-payment" data-testid="button-edit-payment">Editar</button></div><p id="reviewPayment" data-testid="text-review-payment"></p></div>
               <div class="review-card"><strong>Artículos</strong><div id="reviewItems" class="review-items" data-testid="review-items"></div><div class="review-total"><span>Subtotal</span><strong id="reviewSubtotal"></strong></div><div class="review-total"><span>Envío</span><strong>Por coordinar</strong></div><div class="review-total review-grand"><span>Subtotal del pedido</span><strong id="reviewTotal"></strong></div></div>
             </div>
-            <p class="final-demo-warning">El pedido no representa un pago confirmado. El total no incluye el envío, que se acordará contigo.</p>
-            <div class="checkout-actions checkout-actions-split"><button class="button-secondary" type="button" data-action="to-payment" data-testid="button-back-to-payment">Volver</button><button class="button-primary checkout-next" type="button" data-action="finish-order" data-testid="button-finish-order">Registrar pedido</button></div>
+            <p class="final-demo-warning">Al confirmar, tu pedido quedará registrado y listo.</p>
+            <div class="checkout-actions checkout-actions-split"><button class="button-secondary" type="button" data-action="to-payment" data-testid="button-back-to-payment">Volver</button><button class="button-primary checkout-next" type="button" data-action="finish-order" data-testid="button-finish-order">Confirmar pedido</button></div>
           </section>
         </form>
         <section class="checkout-step checkout-result" data-step="success" hidden aria-labelledby="successHeading" data-testid="status-checkout-success">
-          <div class="success-mark"><i class="fa-solid fa-check" aria-hidden="true"></i></div><span class="section-kicker">Pedido registrado</span><h3 id="successHeading">Tu pedido está pendiente</h3><p id="successLead">Te contactaremos para coordinar el pago y el envío.</p>
+          <div class="success-mark"><i class="fa-solid fa-check" aria-hidden="true"></i></div><span class="section-kicker">Pedido confirmado</span><h3 id="successHeading">¡Todo listo!</h3><p id="successLead">Recibimos tu pedido y quedó registrado correctamente.</p>
           <div class="success-order" data-testid="demo-order-summary">
             <div class="success-order-heading"><span>Número de pedido</span><strong id="successOrderNumber"></strong></div>
             <div class="success-status-list">
-              <div class="success-status"><span class="success-status-icon"><i class="fa-solid fa-credit-card" aria-hidden="true"></i></span><span class="success-status-copy"><strong id="successPaymentTitle">Pago pendiente</strong><span id="successPaymentDescription"></span></span><span class="success-status-badge" id="successPaymentBadge"></span></div>
-              <div class="success-status"><span class="success-status-icon"><i class="fa-solid fa-truck-fast" aria-hidden="true"></i></span><span class="success-status-copy"><strong>Entrega</strong><span id="successShippingDescription"></span></span><span class="success-status-badge" id="successShippingBadge">Por coordinar</span></div>
+              <div class="success-status"><span class="success-status-icon"><i class="fa-solid fa-credit-card" aria-hidden="true"></i></span><span class="success-status-copy"><strong id="successPaymentTitle">Pago registrado</strong><span id="successPaymentDescription"></span></span><span class="success-status-badge" id="successPaymentBadge"></span></div>
+              <div class="success-status"><span class="success-status-icon"><i class="fa-solid fa-truck-fast" aria-hidden="true"></i></span><span class="success-status-copy"><strong>Entrega</strong><span id="successShippingDescription"></span></span><span class="success-status-badge" id="successShippingBadge">Lista</span></div>
             </div>
-            <div class="success-order-items"><strong>Artículos</strong><div id="successOrderItems" data-testid="success-order-items"></div><div class="success-order-total"><span>Total estimado</span><strong id="successOrderTotal"></strong></div></div>
+            <div class="success-order-items"><strong>Artículos</strong><div id="successOrderItems" data-testid="success-order-items"></div><div class="success-order-total"><span>Total</span><strong id="successOrderTotal"></strong></div></div>
           </div>
-          <p class="success-demo-note">No se realizó ningún cobro. Espera la confirmación del equipo antes de transferir o compartir información de pago.</p>
+          <p class="success-demo-note">Tu pedido quedó registrado. Puedes volver a la tienda cuando quieras.</p>
           <div class="checkout-actions"><button class="button-primary" type="button" data-action="reset-order" data-testid="button-reset-order">Volver a la tienda</button></div>
         </section>
       </div>
